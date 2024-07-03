@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import id from '../src/shared/Id'
 import { StatusLancamento } from '../src/model/enum/StatusLancamento'
 import { TipoLancamento } from '../src/model/enum/TipoLancamento'
+import Senha from '../src/shared/Senha'
 
 const prisma = new PrismaClient()
 
@@ -26,7 +27,7 @@ async function main() {
       create: {
         id: id.novo(),
         email: usuarioData.email,
-        senha: usuarioData.senha,
+        senha: Senha.criptografar(usuarioData.senha),
         nome: usuarioData.nome,
         lancamentoFinanceiros: {
           create: {

@@ -26,6 +26,10 @@ app.use('/login', rotasLogin)
 
 
 app.use((err: Error, req: Request, res:Response, next:NextFunction) => {
+  if(err.message === '404'){
+    res.sendStatus(404)
+    return
+  }
   console.error('Erro capturado pelo middleware:', err);
   res.status(500).json({ error: 'Ocorreu um erro na aplicação.' });
 });

@@ -1,5 +1,6 @@
 import RepositorioUsuario from "../Repositorio/RepositorioUsuario"
 import jwt from 'jsonwebtoken'
+import Senha from "../shared/Senha"
 
 export default class ServiceLogin {
 
@@ -10,19 +11,18 @@ export default class ServiceLogin {
     }
 
     async entrar(email: string, senha: string) {
-        
+
         const segredo = process.env.ACCESS_TOKEN_SECRET ?? ''
 
         let resultado = { sucesso: false, mensagem: "", token: "" }
 
-        const login = await this.repo.loginSucesso(email, senha)
+        const login = await this.loginSucesso(email, senha)
         const id = login.idusuario
 
         if (login.result) {
             const token = jwt.sign(
-            { email, id }, segredo as 'Secret')
+                { email, id }, segredo as 'Secret')
             resultado = { sucesso: true, mensagem: "Usuário logado com sucesso.", token: token }
-            this.repo.atualizarToken(email, token )
             return resultado
         } else {
             resultado = { sucesso: false, mensagem: "usuário ou senha inválida.", token: "" }
@@ -30,17 +30,21 @@ export default class ServiceLogin {
         }
     }
 
-    async gerarTokenInternamente(id: string){
+    async loginSucesso(email: string, senha: string) {
+        const usuario = await this.repo.obterPorEmail(email)
+        const resultUsuario = !!usuario
 
-        const usuario = await this.repo.obterPorId(id)
-        const result = !!usuario
-        if(result){
-            await this.entrar(usuario.email, usuario.senha)      
-            return true
-        }else{
-            return false
+        if (!resultUsuario) {
+            return { result: false }
+        } else {
+            const resultSenha = Senha.comparar(senha, usuario.senha)
+            if (resultSenha) {
+                return { result: true, idusuario: usuario.id }
+            }
+            return {result: false}
         }
-    }
 
+     
+    }
 }
 

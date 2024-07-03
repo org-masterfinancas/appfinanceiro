@@ -8,13 +8,36 @@ export default class RepositorioLancamentoFinanceiro {
         this.db = new PrismaClient()
     }
 
-
     async obterPorUsuario(usuarioId: string): Promise<any> {
 
         return this.db.lancamentoFinanceiros.findMany({
-            where: { usuarioId: String(usuarioId) }
+            where: { usuarioId: String(usuarioId) },
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
         })
     }
+
+    async obterUmPorUsuario(idLancamento: string, usuarioId: string): Promise<any> {
+
+        const usuario = this.db.lancamentoFinanceiros.findUnique({
+            where: { id: idLancamento, usuarioId: usuarioId },
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
+        })
+        return usuario
+    }
+
+
 
     async NovoPorUsuario(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string): Promise<any> {
         const { id, descricaoLancamento, valorLancamento, tipoLancamento, statusLancamento, dataCriacaoLancamento } = lancamentoFinanceiro
@@ -28,68 +51,99 @@ export default class RepositorioLancamentoFinanceiro {
                 valorLancamento,
                 dataCriacaoLancamento,
                 usuario: { connect: { id: usuarioId } },
-            }
-        })
-        return lancamento
-    }
-
-    async lancamentoExistePorUsuario(idLancamento: string, usuarioId: string): Promise<boolean> {
-        const lancamento = await this.db.lancamentoFinanceiros.findUnique({
-            where: {
-                    id: idLancamento,
-                    usuarioId: usuarioId,
+            },
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
                 }
-        })
-    
-        return !!lancamento;
-    }
-    
-    async excluirPoUsuario(idLancamento: string, usuarioId: string): Promise<any> {
-        const lancamento = await this.db.lancamentoFinanceiros.delete({
-            where: {
-                id: idLancamento,
-                usuarioId: usuarioId,
             }
         })
         return lancamento
     }
 
-    async alterarPorUsuario(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string) : Promise<any> {
-            const {id, ...data} = lancamentoFinanceiro
+    async alterarPorUsuario(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string): Promise<any> {
+        const { id, ...data } = lancamentoFinanceiro
         try {
             const lancamentoAlterar = await this.db.lancamentoFinanceiros.update({
                 where: {
                     id,
                     usuarioId: usuarioId
                 },
-                data
-            }) 
+                data,
+                include: {
+                    usuario: {
+                        select: {
+                            nome: true
+                        }
+                    }
+                }
+            })
+            return lancamentoAlterar
         } catch (error) {
             console.error('Erro ao atualizar o usuario', error)
         }
+
     }
 
-    async obterUmPorUsuario(idLancamento: string, usuarioId: string): Promise<any> {
-
-        return this.db.lancamentoFinanceiros.findUnique({
-            where: { 
+    async excluirPorUsuario(idLancamento: string, usuarioId: string): Promise<any> {
+        const lancamento = await this.db.lancamentoFinanceiros.delete({
+            where: {
                 id: idLancamento,
-                usuarioId: usuarioId }
+                usuarioId: usuarioId,
+            },
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
         })
+        return lancamento
     }
 
 
-    
-  
-    async obterTodos(): Promise<any> {
+    async lancamentoExistePorUsuario(idLancamento: string, usuarioId: string): Promise<boolean> {
+        const lancamento = await this.db.lancamentoFinanceiros.findUnique({
+            where: {
+                id: idLancamento,
+                usuarioId: usuarioId,
+            }
+        })
 
-        return this.db.lancamentoFinanceiros.findMany()
+        return !!lancamento;
+    }
+
+
+
+    //
+
+    async obterTodos(): Promise<any> {
+        const lancamentos = await this.db.lancamentoFinanceiros.findMany({
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
+        })
+        return lancamentos
     }
 
     async obterPorId(id: any): Promise<any> {
 
-        return this.db.lancamentoFinanceiros.findUnique({
-            where: { id: String(id) }
+        return await this.db.lancamentoFinanceiros.findUnique({
+            where: { id: String(id) },
+            include: {
+                usuario: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
         })
     }
 }

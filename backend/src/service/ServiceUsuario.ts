@@ -1,5 +1,6 @@
 import RepositorioUsuario from '../Repositorio/RepositorioUsuario';
 import Usuario from '../model/Usuario';
+import Senha from '../shared/Senha';
 
 export class ServiceUsuario {
   private repo: RepositorioUsuario
@@ -24,7 +25,15 @@ export class ServiceUsuario {
 
   //
   adicionar(user: Usuario): Promise<void> {
-    return this.repo.adicionar(user);
+
+    const senhaUsuario = user.senha ? user.senha : null
+
+    if (senhaUsuario) {
+      user.senha = Senha.criptografar(senhaUsuario)
+      return this.repo.adicionar(user);
+    } else {
+      return this.repo.adicionar(user)
+    }
   }
 
   //

@@ -13,7 +13,6 @@ model Usuarios {
     email                     String @unique
     senha                     String?
     nome                      String
-    token                     String?
     dataCriacao               DateTime @default(now())
     lancamentoFinanceiros     LancamentoFinanceiros[]
 }

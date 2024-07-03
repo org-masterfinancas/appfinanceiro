@@ -26,16 +26,16 @@ export default class ServiceLancamentoFinaceiros {
     async excluir(idLancamento: string, usuarioId: string): Promise<void>{
         const consultaLancamento = await this.repo.lancamentoExistePorUsuario(idLancamento, usuarioId)
         if (!consultaLancamento){
-            throw new Error('Excluir - Lançamento não existe')
+            throw new Error('404')
         }
-        return this.repo.excluirPoUsuario(idLancamento, usuarioId)
+        return this.repo.excluirPorUsuario(idLancamento, usuarioId)
 
     }
 
     async alterar(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string) {
         const resultadoLancamentoFinanceiro = await this.repo.lancamentoExistePorUsuario(lancamentoFinanceiro.id, usuarioId)
         if (!resultadoLancamentoFinanceiro) {
-            throw new Error('Alterar - Lançamento não existe')
+            throw new Error('404')
         }
         return this.repo.alterarPorUsuario(lancamentoFinanceiro, usuarioId)
     }
@@ -44,13 +44,13 @@ export default class ServiceLancamentoFinaceiros {
 
     async ObterTodos(): Promise<any> {
 
-        return this.repo.obterTodos()
+        return await this.repo.obterTodos()
 
     }
    
     async ObterPorIdLancamentoFinanceiro(id: any): Promise<any> {
 
-        return this.repo.obterPorId(id)
+        return await this.repo.obterPorId(id)
     }
 
   

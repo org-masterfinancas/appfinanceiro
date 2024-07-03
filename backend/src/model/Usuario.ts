@@ -1,11 +1,11 @@
 import Id from  '../shared/Id'
+import Senha from '../shared/Senha'
 
 export default class Usuario {
     id: string
     nome: string
     email: string
     senha?: string | null
-    token?: string | null
     dataCriacao: Date
     
     constructor(nome: string, email: string, senha: string ){

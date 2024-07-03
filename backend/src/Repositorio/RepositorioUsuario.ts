@@ -57,30 +57,6 @@ export default class RepositorioUsuario {
         return false
     }
 
-    async loginSucesso(email: string, senha: string) {
-        const usuario = await this.db.usuarios.findUnique({
-            where: { email }
-        })
-        const result = !!usuario
-        
-        if (result && (senha === usuario.senha)){
-            return { result: true, idusuario: usuario.id}
-        }
-        return { result: false}
-    }
-
-    async atualizarToken(email: string, token: string): Promise<any> {
-        try {
-            const usuarioAtualizar = await this.db.usuarios.update({
-                where: { email },
-                data: {token}
-            })
-            console.log('Token Atualizado com sucesso')
-        } catch (error) {
-            console.error('Erro ao atualizar o o Token', error)
-        }
-    }
-
     async obterPorId(id: any): Promise<any> {
 
         return await this.db.usuarios.findUnique({
