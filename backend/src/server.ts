@@ -2,8 +2,9 @@ import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'; 
 import cors from 'cors'
 import autenticacao from './middleware/MiddlewareAutenticacao'
-import rotasLancamentoFinanceiros from './router/RouterV2LancamentoFinaceiros'
 import rotasV1LancamentoFinanceiros from './router/RouterV1LancamentoFinaceiros'
+import rotasV2LancamentoFinanceiros from './router/RouterV2LancamentoFinaceiros'
+
 import rotasLogin from './router/Routerlogin'
 import rotasUsuarios from './router/RouterUsuarios'
 
@@ -18,7 +19,7 @@ app.use(cors())
 
 
 app.use('/v1/lancamentoFinanceiros', rotasV1LancamentoFinanceiros)
-app.use('/v2/lancamentoFinanceiros', autenticacao, rotasLancamentoFinanceiros)
+app.use('/v2/lancamentoFinanceiros', autenticacao, rotasV2LancamentoFinanceiros)
 app.use('/usuarios', rotasUsuarios)
 app.use('/login', rotasLogin)
 

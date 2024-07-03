@@ -33,7 +33,8 @@ export default class ServiceLogin {
     async loginSucesso(email: string, senha: string) {
         const usuario = await this.repo.obterPorEmail(email)
         const resultUsuario = !!usuario
-
+        
+        console.log(usuario)
         if (!resultUsuario) {
             return { result: false }
         } else {

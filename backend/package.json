@@ -7,7 +7,7 @@
     "node": "20"
   },
   "scripts": {
-    "dev": "tsx src/server.ts",
+    "dev": "nodemon --exec tsx src/server.ts",
     "build": "tsup src",
     "start": "node dist/server.js"
   },
@@ -30,13 +30,14 @@
     "@types/jsonfile": "^6.1.4",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.5",
+    "nodemon": "^3.1.4",
     "prisma": "^5.15.1",
-    "ts-node": "10.9.2",
+    "ts-node": "^10.9.2",
     "tsup": "^8.1.0",
     "tsx": "^4.15.9",
     "typescript": "^5.4.5"
   },
   "prisma": {
-  "seed": "ts-node prisma/seed.ts"
-}
+    "seed": "ts-node prisma/seed.ts"
+  }
 }

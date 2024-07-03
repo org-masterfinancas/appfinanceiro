@@ -6,7 +6,6 @@ const service = new ServiceLogin()
 
 router.post('/', async (req, res) => {
     const { email, senha } = req.body
-    
     const resultado = await service.entrar(email, senha)
     const token = resultado.token
 
