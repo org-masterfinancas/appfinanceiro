@@ -34,7 +34,7 @@ export default class ServiceLogin {
         const usuario = await this.repo.obterPorEmail(email)
         const resultUsuario = !!usuario
         
-        console.log(usuario)
+        // console.log(usuario)
         if (!resultUsuario) {
             return { result: false }
         } else {

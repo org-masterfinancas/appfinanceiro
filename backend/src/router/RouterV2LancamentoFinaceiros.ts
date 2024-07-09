@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response, Router } from "express";
-import ServiceLancementoFinanceiros from '../service/ServiceLancamentoFinanceiros'
+import ServiceLancamentoFinanceiros from '../service/ServiceLancamentoFinanceiros'
 import { ServiceUsuario } from "../service/ServiceUsuario";
 import LancamentoFinanceiro from "../model/LancamentoFinanceiro";
+import ServiceValidador from "../service/ServiceValidador";
 
 const router = Router()
-const service = new ServiceLancementoFinanceiros()
+const service = new ServiceLancamentoFinanceiros()
 const serviceUsuario = new ServiceUsuario()
 
 
@@ -15,7 +16,8 @@ router.get('/todos', async (req:Request, res: Response) => {
 })
 
 router.get('/todos/:id', async (req:Request, res:Response) => {
-    const { id } = req.params
+    let { id } = req.params
+    id = ServiceValidador.idValido(id);
     const lancamento = await service.ObterPorIdLancamentoFinanceiro(id)
     if (lancamento) {
         res.status(200).send(lancamento)
@@ -28,29 +30,77 @@ router.get('/todos/:id', async (req:Request, res:Response) => {
 //todos de um usuário
 router.get('/', async (req: Request, res: Response) => {
     const usuarioId = req.usuarioId
-    const todosLancamentosDeUmUsuario = await service.ObterTodosDeUmUsuario(usuarioId)
+    let status = req.query?.status as string || '';
+    if (status) {
+        status = status.trim().toLowerCase();
+        if (status !== 'cancelado' && status !== 'consolidado' && status !== 'pendente') {
+            status = ''
+        }
+    }
+    const todosLancamentosDeUmUsuario = await service.ObterTodosDeUmUsuario(usuarioId, status)
     res.status(200).send(todosLancamentosDeUmUsuario)
 
 })
 //novo de um usuário
 router.post('/', async (req:Request, res:Response) => {
 
-    const { descricaoLancamento, valorLancamento, statusLancamento, tipoLancamento, dataCriacaoLancamento } = req.body.lancamentofinanceiro
+    ServiceValidador.lancamentoFinanceiroValido(req.body.lancamentofinanceiro);
+    let { descricaoLancamento, valorLancamento, statusLancamento, tipoLancamento, dataCriacaoLancamento } = req.body.lancamentofinanceiro ?? {};
+    descricaoLancamento = ServiceValidador.descricaoValida(descricaoLancamento);
+    valorLancamento = ServiceValidador.valorMonetarioValido(valorLancamento);
+    statusLancamento = ServiceValidador.statusLancamentoValido(statusLancamento);
+    tipoLancamento = ServiceValidador.tipoLancamentoValido(tipoLancamento);
+    dataCriacaoLancamento = ServiceValidador.dataLancamentoValida(dataCriacaoLancamento);
+
     const lancamentoNovo = new LancamentoFinanceiro(descricaoLancamento, valorLancamento, tipoLancamento, statusLancamento, dataCriacaoLancamento)
 
     const usuarioId = req.usuarioId
 
     const resultado = await service.Novo(lancamentoNovo, usuarioId)
-    res.sendStatus(201)
+    res.status(201).json({ ...resultado });
 })
 
 //alterar de um usuário
 router.put('/:id', async (req: Request, res: Response) => {
-    const idParams = req.params.id
-    const { descricaoLancamento, valorLancamento, statusLancamento, tipoLancamento, dataCriacaoLancamento } = req.body.lancamentofinanceiro
+    let idParams = req.params.id
+    idParams = ServiceValidador.idValido(idParams);
+    ServiceValidador.lancamentoFinanceiroValido(req.body.lancamentofinanceiro);
+
+    const usuarioId = req.usuarioId;
+    const lancamentoOriginal = await service.ObterUmPorUsuario(idParams, usuarioId);
+    if (!lancamentoOriginal) {
+        res.sendStatus(404);
+        return;
+    }
+
+    let { descricaoLancamento, valorLancamento, statusLancamento, tipoLancamento, dataCriacaoLancamento } = req.body.lancamentofinanceiro
+    if (descricaoLancamento) {
+        descricaoLancamento = ServiceValidador.descricaoValida(descricaoLancamento);
+    } else {
+        descricaoLancamento = lancamentoOriginal.descricaoLancamento;
+    }
+    if (valorLancamento !== undefined) {
+        valorLancamento = ServiceValidador.valorMonetarioValido(valorLancamento);
+    } else {
+        valorLancamento = lancamentoOriginal.valorLancamento;
+    }
+    if (statusLancamento) {
+        statusLancamento = ServiceValidador.statusLancamentoValido(statusLancamento);
+    } else {
+        statusLancamento = lancamentoOriginal.statusLancamento;
+    }
+    if (tipoLancamento) {
+        tipoLancamento = ServiceValidador.tipoLancamentoValido(tipoLancamento);
+    } else {
+        tipoLancamento = lancamentoOriginal.tipoLancamento;
+    }
+    if (dataCriacaoLancamento) {
+        dataCriacaoLancamento = ServiceValidador.dataLancamentoValida(dataCriacaoLancamento);
+    } else {
+        dataCriacaoLancamento = lancamentoOriginal.dataCriacaoLancamento;
+    }
 
     const lancamento = new LancamentoFinanceiro(descricaoLancamento, valorLancamento, tipoLancamento, statusLancamento, dataCriacaoLancamento, idParams)
-    const usuarioId = req.usuarioId
 
     const lancamentoAlterado =  await service.alterar(lancamento, usuarioId)
     return res.status(200).send(lancamentoAlterado)
@@ -58,7 +108,8 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 //excluir de um usuário
 router.delete('/:id', async (req: Request, res: Response) => {
-    const id = req.params.id
+    let id = req.params.id
+    id = ServiceValidador.idValido(id);
     const usuarioId = req.usuarioId
 
     const lancamentoExcluido = await service.excluir(id, usuarioId)
@@ -70,17 +121,21 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
 //obter um Por Usuário
 router.get('/:id', async (req:Request, res:Response) => {
-    const { id } = req.params
+    let { id } = req.params
+    id = ServiceValidador.idValido(id);
     const usuarioId = req.usuarioId
 
     const lancamento = await service.ObterUmPorUsuario(id, usuarioId)
     if (lancamento) {
-        res.status(200).send(lancamento)
+        res.status(200).json({ ...lancamento });
         return
     }
-    res.sendStatus(404)
+    res.status(404).json({ error: 'Lançamento não encontrado' });
 })
 
+router.use(async (req: Request, res: Response) => {
+    res.status(400).json({ error: 'Rota ou Método não tratados' });
+});
 
 export default router
 

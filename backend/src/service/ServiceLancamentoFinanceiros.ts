@@ -1,23 +1,23 @@
-import RepositorioLancementoFinaceiros from '../Repositorio/RepositorioLancementoFinanceiros'
-import LancementoFinaceiros from '../model/LancamentoFinanceiro'
+import RepositorioLancamentoFinaceiros from '../Repositorio/RepositorioLancamentoFinanceiros'
+import LancamentoFinaceiros from '../model/LancamentoFinanceiro'
 
 export default class ServiceLancamentoFinaceiros {
 
-    private repo: RepositorioLancementoFinaceiros
+    private repo: RepositorioLancamentoFinaceiros
 
     constructor() {
-        this.repo = new RepositorioLancementoFinaceiros()
+        this.repo = new RepositorioLancamentoFinaceiros();
     }
 
-    async ObterTodosDeUmUsuario(idusuario: string): Promise<any> {
-        return this.repo.obterPorUsuario(idusuario)
+    async ObterTodosDeUmUsuario(idusuario: string, status: string): Promise<any> {
+        return this.repo.obterPorUsuario(idusuario, status)
     }
 
     async ObterUmPorUsuario(idLancamento: string, usuarioId: string){
         return this.repo.obterUmPorUsuario(idLancamento, usuarioId)
     }
 
-    async Novo(lancamento: LancementoFinaceiros, usuarioId: string): Promise<LancementoFinaceiros> {
+    async Novo(lancamento: LancamentoFinaceiros, usuarioId: string): Promise<LancamentoFinaceiros> {
         const resultado = this.repo.NovoPorUsuario(lancamento, usuarioId)
 
         return resultado
@@ -32,11 +32,11 @@ export default class ServiceLancamentoFinaceiros {
 
     }
 
-    async alterar(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string) {
-        const resultadoLancamentoFinanceiro = await this.repo.lancamentoExistePorUsuario(lancamentoFinanceiro.id, usuarioId)
-        if (!resultadoLancamentoFinanceiro) {
-            throw new Error('404')
-        }
+    async alterar(lancamentoFinanceiro: LancamentoFinaceiros, usuarioId: string) {
+        // const resultadoLancamentoFinanceiro = await this.repo.lancamentoExistePorUsuario(lancamentoFinanceiro.id, usuarioId)
+        // if (!resultadoLancamentoFinanceiro) {
+        //     throw new Error('404')
+        // }
         return this.repo.alterarPorUsuario(lancamentoFinanceiro, usuarioId)
     }
 

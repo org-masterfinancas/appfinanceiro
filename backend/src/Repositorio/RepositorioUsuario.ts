@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import DBConnection from "../shared/DbConnection";
 import Usuario from "../model/Usuario"
 
 export default class RepositorioUsuario {
@@ -6,7 +7,7 @@ export default class RepositorioUsuario {
     private db: PrismaClient
 
     constructor() {
-        this.db = new PrismaClient()
+        this.db = DBConnection.getConnection();
     }
 
 

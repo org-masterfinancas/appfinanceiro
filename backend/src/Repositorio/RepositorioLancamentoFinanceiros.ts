@@ -1,17 +1,20 @@
 import { PrismaClient } from "@prisma/client";
-import LancementoFinaceiros from "../model/LancamentoFinanceiro";
+import DBConnection from "../shared/DbConnection";
+import LancamentoFinaceiros from "../model/LancamentoFinanceiro";
 
 export default class RepositorioLancamentoFinanceiro {
     private db: PrismaClient
 
     constructor() {
-        this.db = new PrismaClient()
+        this.db = DBConnection.getConnection();
     }
 
-    async obterPorUsuario(usuarioId: string): Promise<any> {
-
+    async obterPorUsuario(usuarioId: string, status: string): Promise<any> {
         return this.db.lancamentoFinanceiros.findMany({
-            where: { usuarioId: String(usuarioId) },
+            where: { 
+                usuarioId: String(usuarioId), 
+                statusLancamento: status || undefined
+            },
             include: {
                 usuario: {
                     select: {
@@ -39,7 +42,7 @@ export default class RepositorioLancamentoFinanceiro {
 
 
 
-    async NovoPorUsuario(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string): Promise<any> {
+    async NovoPorUsuario(lancamentoFinanceiro: LancamentoFinaceiros, usuarioId: string): Promise<any> {
         const { id, descricaoLancamento, valorLancamento, tipoLancamento, statusLancamento, dataCriacaoLancamento } = lancamentoFinanceiro
 
         const lancamento = await this.db.lancamentoFinanceiros.create({
@@ -63,7 +66,7 @@ export default class RepositorioLancamentoFinanceiro {
         return lancamento
     }
 
-    async alterarPorUsuario(lancamentoFinanceiro: LancementoFinaceiros, usuarioId: string): Promise<any> {
+    async alterarPorUsuario(lancamentoFinanceiro: LancamentoFinaceiros, usuarioId: string): Promise<any> {
         const { id, ...data } = lancamentoFinanceiro
         try {
             const lancamentoAlterar = await this.db.lancamentoFinanceiros.update({
