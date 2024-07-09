@@ -1,0 +1,17 @@
+services:
+  pg:
+    image: postgres:16.3
+    restart: always
+    volumes:
+      - postgres_data_volume:/var/lib/postgresql/data
+    environment:
+     - POSTGRES_DB=financeiroDB
+     - POSTGRES_USER=admin
+     - POSTGRES_PASSWORD=123456
+    ports:
+     - 5432:5432
+
+volumes:
+  postgres_data_volume:
+    external: true
+# docker volume create postgres_data_volume

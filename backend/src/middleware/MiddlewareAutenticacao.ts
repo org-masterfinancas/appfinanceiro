@@ -6,12 +6,13 @@ export default function verificaToken(req: any, res: any, next: any) {
     const token = headerAuthon?.split(' ')[1]
 
     if (!token) {
-        res.status(401).send()
+        res.status(401).json({ error: 'O Token deve ser informado' });
+        return;
     }
 
     jwt.verify(token, segredo as 'Secret', (err: any, dados: any) => {
         if (err) {
-            res.status(403).send()
+            res.status(403).json({ error: 'O Token informado está inválido' });
         } else {
             req.usuarioId = dados.id
             next()
