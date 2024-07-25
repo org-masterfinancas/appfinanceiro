@@ -3,7 +3,7 @@
 //@ts-ignore
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
-import { novoLancamento } from "../actions/actions";
+import { novoLancamento } from "../serverActions/actionsLacamentoFinanceiros";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
@@ -15,7 +15,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" aria-disabled={pending}>
+    <button className="bg-green-500 rounded-md p-1 m-2" type="submit" aria-disabled={pending}>
       Inserir Lançamento
     </button>
   );
@@ -26,7 +26,7 @@ export function   AdicionarForm() {
   
   useEffect(() => {
     if (state?.message === 'ok') {
-      redirect('/')
+      redirect('/lancamentofinanceiros/')
     }
   }, [state?.message]);
  
@@ -48,9 +48,7 @@ export function   AdicionarForm() {
       <input type="date" id="data-criacao-lancamento" name="data-criacao-lancamento" required />
       <br/>
       <SubmitButton />
-      <p>
         {state?.message}
-      </p>
     </form>
   );
 }
