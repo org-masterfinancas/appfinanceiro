@@ -1,3 +1,5 @@
+import ProvedorToken from './data/contexts/ContextoToken'
+import ProvedorUsuario from './data/contexts/ContextoUsuario'
 import './globals.css'
 
 export const metadata = {
@@ -5,10 +7,14 @@ export const metadata = {
   description: 'Lancamento Financeiros',
 }
 
-export default function RootLayout({children,}: {children: React.ReactNode}) {
+export default function RootLayout({ children, }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body>{children}</body>
-    </html>
+    <ProvedorToken>
+      <ProvedorUsuario>
+        <html lang="pt-BR">
+          <body>{children}</body>
+        </html>
+      </ProvedorUsuario>
+    </ProvedorToken>
   )
 }
