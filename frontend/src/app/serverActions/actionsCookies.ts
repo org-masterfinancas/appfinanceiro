@@ -7,7 +7,7 @@ export async function cookiesInserirToken(token: string) {
     cookies().set({
         name: 'token',
         value: token,
-        httpOnly: true,
+        httpOnly: false,
         path: '/',
         secure: true,
         expires: Date.now() + umDia

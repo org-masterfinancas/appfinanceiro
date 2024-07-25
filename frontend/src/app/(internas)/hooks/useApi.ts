@@ -3,8 +3,8 @@ import {ContextoToken} from '@/app/data/contexts/ContextoToken';
 import RequisicaoApi from '@/app/requisicao/requisicaoApi';
 
 function useApi() {
-    
     const requisicaoApi = RequisicaoApi
+    
     const { jwt } = useContext(ContextoToken)
 
     useEffect(() => {
