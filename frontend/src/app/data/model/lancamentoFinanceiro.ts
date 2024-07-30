@@ -6,7 +6,7 @@ interface Usuario {
 export interface LancamentoFinanceiro {
   id?: string;
   descricaoLancamento: string;
-  valorLancamento: string;
+  valorLancamento: number;
   tipoLancamento: string;
   statusLancamento: string;
   dataCriacaoLancamento: string;

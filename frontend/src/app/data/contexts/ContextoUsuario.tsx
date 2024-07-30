@@ -3,13 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { ContextoToken } from "./ContextoToken"
 import decodificarJwt from '../../Utils/utilsJwt'
 import useCookies from "@/app/(internas)/hooks/useCookies"
-import RequisicaoApi from "@/app/requisicao/requisicaoApi"
 import { cookiesInserirToken, cookiesObterToken, cookiesRemoverToken } from "@/app/serverActions/actionsCookies"
+import RequisicaoApi from "@/app/requisicao/requisicaoApi"
+import { adicionaToken, apagaToken }  from "../../serverActions/requisicaoApiServerAction"
+
 
 const ContextoUsuario = createContext<any>({})
 export { ContextoUsuario }
-
-const requisicaoApi = RequisicaoApi
 
 export default function ProvedorUsuario(props: any) {
     const [carregando, setCarregando] = useState(true)
@@ -24,7 +24,8 @@ export default function ProvedorUsuario(props: any) {
                 const usuario = decodificarJwt(token)
                 setUsuario(usuario)
                 setJwt(token)
-                requisicaoApi.adicionaToken(token)
+                await adicionaToken(token)
+                RequisicaoApi.adicionaToken(token)
             }
             setCarregando(false)
         }
@@ -36,16 +37,19 @@ export default function ProvedorUsuario(props: any) {
 
         setUsuario(usuario)
         setJwt(token)
-        requisicaoApi.adicionaToken(token)
+        RequisicaoApi.adicionaToken(token)
         await cookiesInserirToken(token)
+        await adicionaToken(token)
     }
 
     async function logout() {
         setUsuario(null)
         setJwt(null)
-        requisicaoApi.apagaToken()
+        RequisicaoApi.apagaToken()
         await cookiesRemoverToken()
+        await apagaToken()
     }
+
 
     return (
         <ContextoUsuario.Provider

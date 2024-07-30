@@ -4,7 +4,9 @@ import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
 import useApi from '../../../hooks/useApi';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import BotaoLink from '@/app/components/BotaoLInk';
+import BotaoLink from '@/app/components/BotaoLink';
+import FormularioLancamentoFinanceiros from '@/app/components/FormularioLancamentoFinanceiros';
+import { formatDate } from '@/app/Utils/utilsdata';
 
 interface LancamentoFormPageProps {
   params: { id: string };
@@ -25,11 +27,13 @@ export default function LancamentoFormPage({ params }: LancamentoFormPageProps) 
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <div className='p-10'>
-        <BotaoLink rotulo='Início' link="/lancamentofinanceiros/"/>
+    <main className="flex flex-col">
+      <div className=''>
+        <BotaoLink rotulo='< Voltar' link="/lancamentofinanceiros/" />
       </div>
-      <EditarForm lancamento={lancamento} />
+      <div>
+        <FormularioLancamentoFinanceiros lancamento={lancamento} />
+      </div>
     </main>
   )
 }

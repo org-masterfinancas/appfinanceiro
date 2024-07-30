@@ -9,7 +9,7 @@ import { ContextoToken } from "@/app/data/contexts/ContextoToken";
 import { redirect } from "next/navigation";
 
 const estadoInicial = {
-  message: "Estado Inicial"
+  message: ""
 }
 
 export default function Home() {
@@ -40,16 +40,13 @@ export default function Home() {
           <input
             id="senha"
             name="senha"
-            type="text"
+            type="password"
             placeholder="Senha"
             className="border p-2 rounded-md font-black"
           />
           <BotaoSubmeter titulo="Entrar" />
         </form>
       </div>
-      <Link href='/lancamentofinanceiros' className='bg-green-500 px-4 py-2 rounded-md text-white'>
-        Lancamentos
-      </Link>
     </div>
   )
 }

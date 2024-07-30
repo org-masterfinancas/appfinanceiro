@@ -1,14 +1,14 @@
 import { AdicionarForm } from "@/app/components/adicionarForm";
-import BotaoLink from "@/app/components/BotaoLInk";
-import Link from "next/link";
+import AdicionarLancamentoFinanceiro from "@/app/components/AdicionarLancamentoFinanceiro";
+import BotaoLink from "@/app/components/BotaoLink";
 
 export default function Page() {
     return (
-        <main className='flex min-h-screen flex-col items-center p-24'>
-            <div className="p-10">
-                <BotaoLink rotulo="Início" link="/lancamentofinanceiros/"/>
+        <main className='flex flex-col'>
+            <div className="">
+                <BotaoLink rotulo="< Voltar" link="/lancamentofinanceiros/"/>
             </div>
-            <AdicionarForm />
+            <AdicionarLancamentoFinanceiro />
         </main>
     )
 }

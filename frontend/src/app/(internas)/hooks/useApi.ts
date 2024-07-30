@@ -1,28 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
-import {ContextoToken} from '@/app/data/contexts/ContextoToken';
 import RequisicaoApi from '@/app/requisicao/requisicaoApi';
 
-function useApi() {
-    const requisicaoApi = RequisicaoApi
-    
-    const { jwt } = useContext(ContextoToken)
-
-    useEffect(() => {
-        if (jwt) {
-            requisicaoApi.adicionaToken(jwt);
-        } else {
-            requisicaoApi.apagaToken();
-        }
-    }, [jwt]);
-
-   
+export default function useApi() {
     return {
-        exibirHeaders: requisicaoApi.exibirHeaders,
-        getApi: requisicaoApi.httpGet,
-        postApi: requisicaoApi.httpPost,
-        putApi: requisicaoApi.httpPut,
-        delApi: requisicaoApi.httpDelete
+        exibirHeaders: RequisicaoApi.headers,
+        getApi: RequisicaoApi.httpGet,
+        postApi: RequisicaoApi.httpPost,
+        putApi: RequisicaoApi.httpPut,
+        delApi: RequisicaoApi.httpDelete
     };
 }
 
-export default useApi
+// const { jwt } = useContext(ContextoToken)
+
+// useEffect(() => {
+//     if (jwt) {
+//         RequisicaoApi.adicionaToken(jwt);
+//     } else {
+//         RequisicaoApi.apagaToken();
+//     }
+// }, [jwt]);

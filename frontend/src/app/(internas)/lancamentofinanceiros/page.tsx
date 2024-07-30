@@ -5,7 +5,8 @@ import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
 import Link from "next/link"
 import { formatDate } from "@/app/Utils/utilsdata"
-import BotaoLink from "@/app/components/BotaoLInk"
+import BotaoLink from "@/app/components/BotaoLink"
+import TabelaLancamentoFinanceiros from "@/app/components/TabelaLancamentoFinanceiros"
 
 
 export default function LancamentoPage() {
@@ -22,31 +23,18 @@ export default function LancamentoPage() {
 
 
     return (
-        <main className="flex  flex-col items-center p-10">
-            <div className="p-10">
-                <span>Lançamentos</span>
+        <div className="flex  flex-col gap-10">
+            <div className="flex justify-between"> {/* Cabeçalho Lancamento Financeiro */}
+                <div className="">
+                    <div>Minhas Finanças</div>
+                    <div className="text-xs">Você possui ... registro </div>
+                </div>
+                <div className="">
+                    <div>Filtro</div>
+                    <BotaoLink rotulo="+ Novo Lancamento" link="/lancamentofinanceiros/registro" />
+                </div>
             </div>
-            <div className="flex flex-col p-10">
-                <BotaoLink rotulo="Novo Lancamento"link="/lancamentofinanceiros/registro"/>
-                <BotaoLink rotulo="Lab" link="/lab"/>
-            </div>
-            <ul>
-                {lancamentos?.map((lancamento: LancamentoFinanceiro) => (
-                    <li className='font-bold' key={lancamento.id}>
-                        Id: #{lancamento.id?.split('-')[0]} |
-                        Descrição:  {lancamento.descricaoLancamento} |
-                        Status:   {lancamento.statusLancamento} |
-                        Data Registro:  {formatDate(lancamento.dataCriacaoLancamento)} |
-                        Tipo:   {lancamento.tipoLancamento} |
-                        valor:  {lancamento.valorLancamento} |
-                        Nome:   {lancamento.usuario?.nome} |
-                        <BotaoLink
-                            rotulo="Editar"
-                            link={`/lancamentofinanceiros/registro/${lancamento.id}`}>
-                        </BotaoLink>
-                    </li>
-                ))}
-            </ul>
-        </main>
+            <TabelaLancamentoFinanceiros lancamentos={lancamentos} />
+        </div>
     )
 }

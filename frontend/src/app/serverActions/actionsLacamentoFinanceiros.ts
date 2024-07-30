@@ -1,9 +1,5 @@
 "use server";
-import RequisicaoApi from "../requisicao/requisicaoApi";
-import { cookies } from 'next/headers'
-
-const cookieStore = cookies();
-const token = cookieStore.get('token')?.value
+import { httpPost, httpPut, httpGet, httpDelete } from './requisicaoApiServerAction'
 
 export async function novoLancamento(prevState: { message: string; }, formData: FormData,) {
   const dados = {
@@ -15,13 +11,8 @@ export async function novoLancamento(prevState: { message: string; }, formData: 
       dataCriacaoLancamento: formData.get('data-criacao-lancamento')
     }
   }
-  const requisicaoApi = RequisicaoApi;
-  if (token) {
-    requisicaoApi.adicionaToken(token); 
-  } 
 
-  const resultado = await requisicaoApi.httpPost('/lancamentofinanceiros/', dados)
-  requisicaoApi.apagaToken()
+  const resultado = await httpPost('/lancamentofinanceiros/', dados)
   if (resultado.error) return { message: resultado.error }
   return { message: 'ok' };
 
@@ -39,35 +30,19 @@ export async function atualizarLancamento(prevState: { message: string; }, formD
     }
   }
   const id = dados.lancamentofinanceiro.id?.toString()
-  
-  const requisicaoApi = RequisicaoApi
-  if (token) {
-    requisicaoApi.adicionaToken(token); 
-  } 
 
-  const resultado = await requisicaoApi.httpPut(`/lancamentofinanceiros/${id}`, dados)
-  requisicaoApi.apagaToken()
+  const resultado = await httpPut(`/lancamentofinanceiros/${id}`, dados)
   if (resultado.error) return { message: resultado.error }
   return { message: 'ok' };
 }
 
-export async function excluirLancamento(
-  prevState: {
-    message: string;
-  },
-  formData: FormData,
-) {
+export async function excluirLancamento(prevState: { message: string; }, formData: FormData) {
 
   const data = {
     id: formData.get("id"),
   }
-  
-  const requisicaoApi = RequisicaoApi;
-  if (token) {
-    requisicaoApi.adicionaToken(token); 
-  } 
-  const resultado = await requisicaoApi.httpDelete(`/lancamentofinanceiros/${data.id}`)
-  requisicaoApi.apagaToken()
+
+  const resultado = await httpDelete(`/lancamentofinanceiros/${data.id}`)
   if (resultado.error) return { message: resultado.error }
   return { message: 'ok' };
 }

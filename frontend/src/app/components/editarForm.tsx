@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { LancamentoFinanceiro } from "../data/model/lancamentoFinanceiro";
 import { formatDate } from "@/app/Utils/utilsdata";
 import { ExcluirForm } from "./excluirForm";
-import BotaoLink from "./BotaoLInk";
+import BotaoLink from "./BotaoLink";
 
 const initialState = {
   message: "",
@@ -59,16 +59,14 @@ export default function EditarForm({ lancamento }: AddFormProps) {
           name="id"
           value={lancamento?.id}
         />
-        <label htmlFor="descricao">Descrição:</label>
+        <label htmlFor="descricao">Descriçãoooo:</label>
         <input
           type="text"
           id="descricao-lancamento"
           name="descricao-lancamento"
           required
-          {...(useDefaultValue
-            ? { defaultValue: lancamento?.descricaoLancamento }
-            : { value: lancamento?.descricaoLancamento })}
           readOnly={editar}
+          {...(useDefaultValue ? { defaultValue: lancamento?.descricaoLancamento }: { value: lancamento?.descricaoLancamento })}
         />
 
         <label htmlFor="valor-lancamento">Valor:</label>

@@ -7,10 +7,6 @@ export default class RequisicaoApi {
     }
     static urlBase = `https://appfinanceiro.onrender.com`
 
-    static exibirHeaders(): any{
-        return RequisicaoApi.headers
-    }
-
     static adicionaToken(token: string) {
         RequisicaoApi.headers = { ...RequisicaoApi.headers, Authorization: `Bearer ${token}`}
         return
