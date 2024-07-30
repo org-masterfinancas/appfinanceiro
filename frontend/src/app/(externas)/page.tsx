@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-10">
-      <h1 className="text-xl font-black" >Minha Aplicação</h1>
+      <h1 className="text-xl font-black" >Minhas Finanças</h1>
       <h2 >{state?.message}</h2>
       <span>{usuario}</span>
       <div >

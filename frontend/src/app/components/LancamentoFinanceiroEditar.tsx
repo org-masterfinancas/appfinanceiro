@@ -7,11 +7,11 @@ import { formatDate } from "../Utils/utilsdata";
 import useToggle from "../(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
 
-interface FormularioLancamentoFinanceirosProps {
+interface LancamentoFinanceiroEditarProps {
   lancamento?: LancamentoFinanceiro;
 }
 
-export default function FormularioLancamentoFinanceiros({ lancamento }: FormularioLancamentoFinanceirosProps) {
+export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFinanceiroEditarProps) {
   
   const router = useRouter();
 
@@ -95,7 +95,7 @@ export default function FormularioLancamentoFinanceiros({ lancamento }: Formular
   }
 
   return (
-    <div className="flex flex-col gap-5 border border-zinc-500 p-5">
+    <div className="flex flex-col gap-5 p-5">
       { mensagem && <div>{JSON.stringify(mensagem)}</div> }
       <div className="flex justify-between border border-green-500 p-5"> {/*Cabeçalho Formulário */}
         <div>
@@ -104,7 +104,7 @@ export default function FormularioLancamentoFinanceiros({ lancamento }: Formular
         {!EhAlterado ?
           <button className=" bg-zinc-500 rounded-lg p-2" onClick={atlernar}>Editar</button> : ""}
       </div>
-      <form onSubmit={handleSalvar} className="border border-green-500 p-5"> {/*Formulário */}
+      <form onSubmit={handleSalvar} className=" p-5">
         <h1>Formulário</h1>
         <EntradaFormulario
           labelTexto="Id"
@@ -154,7 +154,7 @@ export default function FormularioLancamentoFinanceiros({ lancamento }: Formular
           valor={dataCriacaoLancamento}
           className="pb-5"
         />
-        <div className="flex gap-2 border border-green-500 p-5">
+        <div className="flex gap-2  p-5">
         {EhAlterado && (
           <>
           <button type="submit" className="bg-green-500 rounded-lg p-2" >Salvar</button>

@@ -1,5 +1,4 @@
-import { AdicionarForm } from "@/app/components/adicionarForm";
-import AdicionarLancamentoFinanceiro from "@/app/components/AdicionarLancamentoFinanceiro";
+import LancamentoFinanceiroAdicionar from "../../../components/LancamentoFinanceiroAdicionar";
 import BotaoLink from "@/app/components/BotaoLink";
 
 export default function Page() {
@@ -8,7 +7,7 @@ export default function Page() {
             <div className="">
                 <BotaoLink rotulo="< Voltar" link="/lancamentofinanceiros/"/>
             </div>
-            <AdicionarLancamentoFinanceiro />
+            <LancamentoFinanceiroAdicionar />
         </main>
     )
 }

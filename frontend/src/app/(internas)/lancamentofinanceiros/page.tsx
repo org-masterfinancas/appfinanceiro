@@ -1,12 +1,9 @@
 'use client'
-import { ContextoUsuario } from "@/app/data/contexts/ContextoUsuario"
-import { useContext, useEffect, useState } from "react"
 import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
-import Link from "next/link"
-import { formatDate } from "@/app/Utils/utilsdata"
-import BotaoLink from "@/app/components/BotaoLink"
-import TabelaLancamentoFinanceiros from "@/app/components/TabelaLancamentoFinanceiros"
+import BotaoLink from "../../components/BotaoLink"
+import LancamentoFinanceiroTabela from "../../components/LancamentoFinanceiroTabela"
+import { useEffect, useState } from "react"
 
 
 export default function LancamentoPage() {
@@ -24,7 +21,7 @@ export default function LancamentoPage() {
 
     return (
         <div className="flex  flex-col gap-10">
-            <div className="flex justify-between"> {/* Cabeçalho Lancamento Financeiro */}
+            <div className="flex justify-between">
                 <div className="">
                     <div>Minhas Finanças</div>
                     <div className="text-xs">Você possui ... registro </div>
@@ -34,7 +31,7 @@ export default function LancamentoPage() {
                     <BotaoLink rotulo="+ Novo Lancamento" link="/lancamentofinanceiros/registro" />
                 </div>
             </div>
-            <TabelaLancamentoFinanceiros lancamentos={lancamentos} />
+            <LancamentoFinanceiroTabela lancamentos={lancamentos} />
         </div>
     )
 }

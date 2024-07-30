@@ -5,7 +5,7 @@ import useApi from "../(internas)/hooks/useApi";
 import useToggle from "../(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
 
-export default function AdicionarLancamentoFinanceiro() {
+export default function LancamentoFinanceiroAdicionar() {
   
   const router = useRouter();
 
@@ -51,9 +51,9 @@ export default function AdicionarLancamentoFinanceiro() {
 
  
   return (
-    <div className="flex flex-col gap-5 border border-zinc-500 p-5">
+    <div className="flex flex-col gap-5  p-5">
     { mensagem && <div>{JSON.stringify(mensagem)}</div> }
-      <form onSubmit={handleSalvar} className="flex flex-col border border-green-500 p-5"> {/*Formulário */}
+      <form onSubmit={handleSalvar} className="flex flex-col p-5"> {/*Formulário */}
         <EntradaFormulario
           labelTexto="Descrição"
           tipo="text"
@@ -84,7 +84,7 @@ export default function AdicionarLancamentoFinanceiro() {
           nome="datalancamento"
           className="pb-5"
         />
-        <div className="flex gap-2 border border-green-500 p-5">
+        <div className="flex gap-2 p-5">
           <button type="submit" className="bg-green-500 rounded-lg p-2" >Salvar</button>
           <button type="button" className="bg-zinc-500 rounded-lg p-2" onClick={handleCancelar}>Cancelar</button>
         </div> 

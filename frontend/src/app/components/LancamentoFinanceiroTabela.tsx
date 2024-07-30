@@ -2,11 +2,11 @@ import { LancamentoFinanceiro } from "../data/model/lancamentoFinanceiro"
 import { formatDate } from "../Utils/utilsdata"
 import BotaoLink from "./BotaoLink"
 
-interface propsTabelaLancamentoFinanceiros {
+interface LancamentoFinanceiroTabelaProps {
     lancamentos?: LancamentoFinanceiro[]
 }
 
-export default function TabelaLancamentoFinanceiros(props: propsTabelaLancamentoFinanceiros) {
+export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTabelaProps) {
     const lancamentos = props.lancamentos
 
     function renderizarCabecalho() {
