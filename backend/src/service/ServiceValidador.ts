@@ -65,6 +65,16 @@ export default class ServiceValidador {
 
     public static valorMonetarioValido(valor: string | number): number {
         
+        if (valor === undefined) {
+            throw new ValidationError('O Valor do Lançamento deve ser informado');
+        }
+
+        if (typeof valor === 'string') {
+            valor = valor.trim();
+        } else {
+            valor = valor.toString()
+        }
+
         const currencyOptions = {
             symbol: 'R$',
             require_symbol: false,
@@ -82,23 +92,18 @@ export default class ServiceValidador {
             digits_after_decimal: [2],
             allow_space_after_digits: false
         }
-        
-        if (valor === undefined) {
-            throw new ValidationError('O Valor do Lançamento deve ser informado');
-        }
-        if (typeof valor === 'string') {
-            valor = valor.trim();
-        } else {
-            valor = valor.toString()
-        }
+
         if (!validator.isCurrency(valor, currencyOptions)) {
             throw new ValidationError('O Valor do Lançamento informado está inválido');
         }
-        valor = parseFloat(valor);
-        if (valor <= 0.0) {
+
+        valor = valor.replace('.', '').replace(',', '.');
+        const valorNumerico = parseFloat(valor);
+
+        if (valorNumerico <= 0.0) {
             throw new ValidationError('O Valor do Lançamento informado está inválido');
         }
-        return Math.trunc(valor * 100) / 100;
+        return Math.trunc(valorNumerico * 100) / 100;
     }
 
     public static tipoLancamentoValido(tipo: string): string {
