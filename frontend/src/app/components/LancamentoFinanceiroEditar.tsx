@@ -1,49 +1,54 @@
 "use client";
 import { useEffect, useState } from "react";
 import { LancamentoFinanceiro } from "../data/model/lancamentoFinanceiro";
-import EntradaFormulario from "./EntradaFormulario";
+import EntradaFormulario from "./LancamentoFinanceiroFormularioEntrada";
 import useApi from "../(internas)/hooks/useApi";
 import { formatDate } from "../Utils/utilsdata";
 import useToggle from "../(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
+import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroCabecalho";
+import LancamentoFinanceiroRodape from "./LancamentoFinanceiroRodape";
+import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormulario";
 
 interface LancamentoFinanceiroEditarProps {
   lancamento?: LancamentoFinanceiro;
 }
 
 export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFinanceiroEditarProps) {
-  
+
   const router = useRouter();
 
   const idItem = lancamento?.id ?? "";
   const id = lancamento?.id?.split('-')[0]
 
-  const [descricaoLancamento, setDescricaoLancamento] = useState("");
-  const [valorLancamento, setValorLancamento] = useState<any>("");
-  const [tipoLancamento, setTipoLancamento] = useState("");
-  const [statusLancamento, setstatusLancamento] = useState("");
-  const [dataCriacaoLancamento, setDataCriacaoLancamento] = useState("");
+  // const [descricaoLancamento, setDescricaoLancamento] = useState("");
+  // const [valorLancamento, setValorLancamento] = useState<any>("");
+  // const [tipoLancamento, setTipoLancamento] = useState("");
+  // const [statusLancamento, setstatusLancamento] = useState("");
+  // const [dataCriacaoLancamento, setDataCriacaoLancamento] = useState("");
+  // const [formData, setFormData] = useState({ valor: '' })
+
   const [carregando, setCarregando] = useState<boolean>(true);
   const [mensagem, setMensagem] = useState<string>("");
   const [EhAlterado, atlernar] = useToggle()
-  const [formData, setFormData] = useState({valor: ''})
 
   const { postApi, delApi, putApi } = useApi();
 
   useEffect(() => {
     if (lancamento) {
-      setDescricaoLancamento(lancamento.descricaoLancamento);
-      setValorLancamento(lancamento.valorLancamento);
-      setTipoLancamento(lancamento.tipoLancamento);
-      setstatusLancamento(lancamento.statusLancamento);
-      setDataCriacaoLancamento(formatDate(lancamento.dataCriacaoLancamento));
+      // setDescricaoLancamento(lancamento.descricaoLancamento);
+      // setValorLancamento(lancamento.valorLancamento);
+      // setTipoLancamento(lancamento.tipoLancamento);
+      // setstatusLancamento(lancamento.statusLancamento);
+      // setDataCriacaoLancamento(formatDate(lancamento.dataCriacaoLancamento));
       setCarregando(false);
     }
   }, [lancamento]);
 
-  if (carregando) return <div>...</div>;
+  if (carregando) return <div>...</div>
+  
 
-  const handleExcluir = async (id: string) => {
+  const handleExcluir = async () => {
     try {
       const result = await delApi(`/lancamentofinanceiros/${idItem}`,);
 
@@ -58,14 +63,14 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
       setMensagem("Erro ao salvar o lançamento. Tente novamente.");
     }
   }
- 
+
   const handleSalvar = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget)
     const dadosFormulario = Object.fromEntries(formData.entries())
-    
+
     const dados = {
-      lancamentofinanceiro:{
+      lancamentofinanceiro: {
         descricaoLancamento: dadosFormulario.descricaolancamento,
         valorLancamento: dadosFormulario.valorlancamento,
         tipoLancamento: dadosFormulario.tipolancamento,
@@ -74,7 +79,7 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
 
       }
     }
-   
+
 
     try {
       const result = await putApi(`/lancamentofinanceiros/${idItem}`, dados);
@@ -90,80 +95,77 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
     }
   };
 
-  const handleCancelar = async ()=>{
+  const handleCancelar = async () => {
     router.push('/lancamentofinanceiros')
   }
 
   return (
-    <div className="flex flex-col gap-5 p-5">
-      { mensagem && <div>{JSON.stringify(mensagem)}</div> }
-      <div className="flex justify-between border border-green-500 p-5"> {/*Cabeçalho Formulário */}
-        <div>
-          Modo: {EhAlterado ? <span>Edição</span> : <span>Vizualização</span>}
+    <div className="">
+      <LancamentoFinanceiroCabecalho EhAlterado={EhAlterado} alternar={atlernar} />
+      <form onSubmit={handleSalvar} className=" pt-5 pb-5">
+        {mensagem && <div className="p-2 text-sm">{JSON.stringify(mensagem)}</div>}
+        <LancamentoFinanceiroFormulario EhAlterado={EhAlterado} lancamento={lancamento} />
+        <div className="mt-5">
+          <LancamentoFinanceiroRodape EhAlterado={EhAlterado} handleCancelar={handleCancelar} handleExcluir={handleExcluir} />
         </div>
-        {!EhAlterado ?
-          <button className=" bg-zinc-500 rounded-lg p-2" onClick={atlernar}>Editar</button> : ""}
-      </div>
-      <form onSubmit={handleSalvar} className=" p-5">
-        <h1>Formulário</h1>
-        <EntradaFormulario
-          labelTexto="Id"
-          tipo="text"
-          nome="id"
-          valor={id}
-          somenteLeitura={true}
-          className=""
-        />
-        <EntradaFormulario
-          labelTexto="Descrição"
-          tipo="text"
-          nome="descricaolancamento"
-          somenteLeitura={!EhAlterado}
-          valor={descricaoLancamento}
-          className=""
-        />
-        <EntradaFormulario
-          labelTexto="Valor"
-          tipo="number"
-          nome="valorlancamento"
-          somenteLeitura={!EhAlterado}
-          valor={valorLancamento}
-          className=""
-        />
-        <EntradaFormulario
-          labelTexto="Tipo"
-          tipo="text"
-          nome="tipolancamento"
-          somenteLeitura={!EhAlterado}
-          valor={tipoLancamento}
-          className=""
-        />
-        <EntradaFormulario
-          labelTexto="Status"
-          tipo="text"
-          nome="statuslancamento"
-          somenteLeitura={!EhAlterado}
-          valor={statusLancamento}
-          className=""
-        />
-        <EntradaFormulario
-          labelTexto="Data"
-          tipo="text"
-          nome="datalancamento"
-          somenteLeitura={!EhAlterado}
-          valor={dataCriacaoLancamento}
-          className="pb-5"
-        />
-        <div className="flex gap-2  p-5">
-        {EhAlterado && (
-          <>
-          <button type="submit" className="bg-green-500 rounded-lg p-2" >Salvar</button>
-          <button type="button" className="bg-zinc-500 rounded-lg p-2" onClick={handleCancelar}>Cancelar</button>
-          <button type="button" className="ml-auto bg-red-500 rounded-lg p-2" onClick={() => handleExcluir(idItem)}>Excluir</button>
-          </>
-        )} 
-        </div> 
       </form>
     </div>
   )
 }
+
+/**
+ *         <div className="flex flex-col">
+          <div className="flex flex-row gap-2">
+            <EntradaFormulario
+              labelTexto="Id"
+              tipo="text"
+              nome="id"
+              valor={id}
+              somenteLeitura={true}
+              className="flex flex-1"
+            />
+            <EntradaFormulario
+              labelTexto="Descrição"
+              tipo="text"
+              nome="descricaolancamento"
+              somenteLeitura={!EhAlterado}
+              valor={lancamento?.descricaoLancamento}
+              className="flex flex-1"
+            />
+            <EntradaFormulario
+              labelTexto="Status"
+              tipo="text"
+              nome="statuslancamento"
+              somenteLeitura={!EhAlterado}
+              valor={statusLancamento}
+              className="flex-1"
+            />
+          </div>
+          <div className="flex flex-row gap-2 mt-2">
+            <EntradaFormulario
+              labelTexto="Data"
+              tipo="date"
+              nome="datalancamento"
+              somenteLeitura={!EhAlterado}
+              valor={dataCriacaoLancamento}
+              className="flex-1"
+            />
+            <EntradaFormulario
+              labelTexto="Valor"
+              tipo="number"
+              nome="valorlancamento"
+              somenteLeitura={!EhAlterado}
+              valor={valorLancamento}
+              className="flex flex-1"
+            />
+            <EntradaFormulario
+              labelTexto="Tipo"
+              tipo="text"
+              nome="tipolancamento"
+              somenteLeitura={!EhAlterado}
+              valor={tipoLancamento}
+              className="flex-1"
+            />
+          </div>
+        </div>
+ */

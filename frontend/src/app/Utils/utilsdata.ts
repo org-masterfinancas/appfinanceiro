@@ -11,7 +11,7 @@ export const obterDataHoraBr = () => {
   //const dataFormatada = utc3Date.toISOString();
   return utc3Date
 }
-export const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: any): string => {
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
