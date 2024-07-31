@@ -29,7 +29,7 @@ export default function LancamentoFinanceiroTipo(props: LancamentoFinanceiroTipo
         className={`
           border border-orange-600 rounded-lg 
           focus:outline-none 
-          ${tipo === "Despesa" ? "bg-red-200" : "bg-gray-100" }
+          ${tipo === "Despesa" ? "bg-red-200" : "bg-green-200" }
           px-4 py-2  
           ${props.EhEditavel ? "cursor-pointer" : ""}
             `}

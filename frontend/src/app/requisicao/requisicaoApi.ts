@@ -2,7 +2,6 @@ export default class RequisicaoApi {
     
     static headers: Record<string, string> = {
         "Content-Type": "application/json",
-        "ContentType": "meu-ContentType"
 
     }
     static urlBase = `https://appfinanceiro.onrender.com`
@@ -29,7 +28,7 @@ export default class RequisicaoApi {
             const resultado = await response.json();
             return resultado;
         } catch (error) {
-            console.error("Erro ao processar resposta JSON:", error);
+            console.error("Erro ao processar resposta do SERVIDOR - requisicao")
             return null;
         }
     }

@@ -1,4 +1,5 @@
 import { LancamentoFinanceiro } from "../data/model/lancamentoFinanceiro"
+import Real from "../Utils/Real"
 import { formatDate } from "../Utils/utilsdata"
 import BotaoLink from "./BotaoLink"
 
@@ -30,7 +31,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
                 <tr key={lancamento.id} className={`${i % 2 === 0 ? 'bg-orange-200' : 'bg-orange-100'}`}>
                     <td className="text-left p-4">{lancamento.id?.split('-')[0]}</td>
                     <td className="text-left p-4">{lancamento.descricaoLancamento}</td>
-                    <td className="text-left p-4">{lancamento.valorLancamento}</td>
+                    <td className="text-left p-4">{Real.format(lancamento.valorLancamento)}</td>
                     <td className="text-left p-4">{lancamento.tipoLancamento}</td>
                     <td className="text-left p-4">{lancamento.statusLancamento}</td>
                     <td className="text-left p-4">{formatDate(lancamento.dataCriacaoLancamento)}</td>
@@ -50,7 +51,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
     }
 
     return (
-        <table>
+        <table className="">
             <thead className={` text-gray-100 bg-gradient-to-r from-orange-400 to-orange-600`}>
                 {renderizarCabecalho()}
             </thead>

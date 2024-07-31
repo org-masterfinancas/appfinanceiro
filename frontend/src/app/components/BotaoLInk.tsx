@@ -7,7 +7,7 @@ interface BotaoLinkPropos {
 
 export default function BotaoLink(props: BotaoLinkPropos) {
     return (
-        <button className="bg-orange-500 rounded-md mb-2">
+        <button className="bg-orange-500 rounded-xl p-2 text-white ">
             <Link href={props.link}>
                 {props.rotulo}
             </Link>

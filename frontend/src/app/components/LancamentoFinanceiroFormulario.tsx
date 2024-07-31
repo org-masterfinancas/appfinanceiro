@@ -12,7 +12,7 @@ import SelectStatus from "./LancamentoFinanceiroStatus";
 import LancamentoFinanceiroFormularioEntrada from "./LancamentoFinanceiroFormularioEntrada";
 import LancamentoFinanceiroStatus from "./LancamentoFinanceiroStatus";
 import LancamentoFinanceiroTipo from "./LancamentoFinanceiroTipo";
-import InputFormatado from "./InputFormatado";
+import Real from "../Utils/Real";
 
 interface LancamentoFinanceiroFormularioProps {
   lancamento?: LancamentoFinanceiro;
@@ -25,13 +25,14 @@ interface LancamentoFinanceiroFormularioProps {
 }
 
 export default function LancamentoFinanceiroFormulario({ lancamento, EhAlterado, novoLancamento }: LancamentoFinanceiroFormularioProps) {
+ 
   const id = lancamento?.id?.split('-')[0]
   if (novoLancamento) {
     EhAlterado = true
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border border-red-500 p-5" >
       <div className="flex flex-row gap-2">
         {novoLancamento ?
           false
@@ -76,13 +77,15 @@ export default function LancamentoFinanceiroFormulario({ lancamento, EhAlterado,
         />
 
         <LancamentoFinanceiroFormularioEntrada
-          labelTexto="Valor"
+          labelTexto="Valor R$"
           tipo="number"
           nome="valorlancamento"
           valor={lancamento?.valorLancamento}
           somenteLeitura={!EhAlterado}
+          place="1,00"
           className="flex flex-1"
         />
+       
         <LancamentoFinanceiroTipo EhEditavel={EhAlterado} />
       </div>
     </div>

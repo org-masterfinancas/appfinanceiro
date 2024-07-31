@@ -2,7 +2,6 @@
 
 const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "ContentType": "RequisicaoApiServerAction"
 }
 
 const urlBase = `https://appfinanceiro.onrender.com`

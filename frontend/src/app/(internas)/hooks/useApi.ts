@@ -10,13 +10,3 @@ export default function useApi() {
         delApi: RequisicaoApi.httpDelete
     };
 }
-
-// const { jwt } = useContext(ContextoToken)
-
-// useEffect(() => {
-//     if (jwt) {
-//         RequisicaoApi.adicionaToken(jwt);
-//     } else {
-//         RequisicaoApi.apagaToken();
-//     }
-// }, [jwt]);

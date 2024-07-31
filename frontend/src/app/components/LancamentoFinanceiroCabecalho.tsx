@@ -10,11 +10,11 @@ export default function LancamentoFinanceiroCabecalho({ EhAlterado, alternar, no
   return (
     <div>
       {novoLancamento ?
-        <div className=" border border-green-500 mt-5">
+        <div className="border border-red-500 p-5 mt-5">
           Modo: <span>Visualização</span>
         </div>
         :
-        <div className="flex justify-between border border-green-500 mt-5">
+        <div className="flex justify-between border border-red-500 p-5 mt-5">
           <div>
             Modo: {EhAlterado ? <span>Edição</span> : <span>Visualização</span>}
           </div>

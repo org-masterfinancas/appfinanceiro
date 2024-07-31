@@ -1,6 +1,7 @@
 interface LancamentoFinanceiroFormularioEntradaProps {
     tipo?: "text" | "number" | "hidden"| "date"
     labelTexto: string;
+    place?: string
     valor?: any;
     nome?: string;
     somenteLeitura?: boolean;
@@ -19,10 +20,11 @@ export default function LancamentoFinanceiroFormularioEntrada(props: LancamentoF
                 id={props.nome}
                 name={props.nome}
                 readOnly={props.somenteLeitura}
-                defaultValue={props.tipo === 'number' ? +props.valor : props.valor}
+                defaultValue={props.valor}
                 required
-                onChange={(e) => props.valorMudou?.(+e.target.value)}
+                onChange={(e) => props.valorMudou?.(e.target.value)}
                 step="any"
+                placeholder={props.place}
                 className={`
                     border border-orange-600 rounded-lg
                     focus:outline-none bg-gray-100 px-4 py-2
