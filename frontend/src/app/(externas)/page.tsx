@@ -35,14 +35,14 @@ export default function Home() {
             name="email"
             type="text"
             placeholder="E-mail"
-            className="border p-2 rounded-md font-black"
+            className="border p-2 rounded-md text-black font-black"
           />
           <input
             id="senha"
             name="senha"
             type="password"
             placeholder="Senha"
-            className="border p-2 rounded-md font-black"
+            className="border p-2 rounded-md text-black font-black"
           />
           <BotaoSubmeter titulo="Entrar" />
         </form>
