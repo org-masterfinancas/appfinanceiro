@@ -1,11 +1,12 @@
 'use client'
 import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
-import BotaoLink from "../../components/BotaoLink"
 import LancamentoFinanceiroTabela from "../../components/LancamentoFinanceiroTabela"
 import { useEffect, useState, useContext } from "react"
 import LancamentoFinanceiroFiltro from "@/app/components/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
+import ButtonLink from "@/app/components/ButtonLink"
+
 
 
 export default function LancamentoPage() {
@@ -48,7 +49,7 @@ export default function LancamentoPage() {
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
                     />
-                    <BotaoLink rotulo="+ Novo Lançamento" link="/lancamentofinanceiros/registro" />
+                    <ButtonLink rotulo="+ Novo Lançamento" link="/lancamentofinanceiros/registro" />
                 </div>
             </div>
             {lancamentos.length ?

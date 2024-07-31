@@ -1,7 +1,7 @@
 import { LancamentoFinanceiro } from "../data/model/lancamentoFinanceiro"
 import Real from "../Utils/Real"
 import { formatDate } from "../Utils/utilsdata"
-import BotaoLink from "./BotaoLink"
+import ButtonLink from "@/app/components/ButtonLink"
 
 interface LancamentoFinanceiroTabelaProps {
     lancamentos?: LancamentoFinanceiro[]
@@ -45,7 +45,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
     function renderizarAcoes(id?: string) {
         return (
             <td>
-                <BotaoLink rotulo="Editar"link={`/lancamentofinanceiros/registro/${id}`}/>
+                <ButtonLink rotulo="Editar"link={`/lancamentofinanceiros/registro/${id}`}/>
             </td>
         )
     }
