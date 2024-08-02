@@ -24,9 +24,13 @@ export default function Home() {
   }, [state?.message, login]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-10">
+    <div className="
+     min-h-screen 
+     flex flex-col 
+     items-center content-center gap-10
+     p-24"> {/* flex flex-col justify-center items-center border border-red-500 m-10 p-5 h-screen gap-10 */}
       <h1 className="text-xl font-black" >Minhas Finanças</h1>
-      <h2 >{state?.message}</h2>
+      <span className="text-red-500" >{state?.message}</span>
       <span>{usuario}</span>
       <div >
         <form action={formAction} className="flex flex-col gap-5">

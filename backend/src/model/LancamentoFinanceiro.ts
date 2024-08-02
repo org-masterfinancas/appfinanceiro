@@ -1,4 +1,3 @@
-import { Decimal } from "@prisma/client/runtime/library"
 import Id from "../shared/Id"
 import { StatusLancamento } from "./enum/StatusLancamento"
 import { TipoLancamento } from "./enum/TipoLancamento"

@@ -17,6 +17,10 @@ export class ServiceUsuario {
     return this.repo.obterPorEmail(email)
   }
 
+  async ObterPorId(id: string): Promise<Usuario> {
+    return this.repo.obterPorId(id)
+  }
+
   async ObterIdPorEmail(email: string): Promise<string> {
     const usuario = await this.repo.obterPorEmail(email)
     const id = usuario.id
@@ -47,7 +51,7 @@ export class ServiceUsuario {
   }
 
   //
-  async excluir(id: string): Promise<void> {
+  async excluir(id: string): Promise<any> {
     const resultadoUsuario = await this.repo.usuarioExiste(id);
     if (!resultadoUsuario) {
       throw new Error('404')

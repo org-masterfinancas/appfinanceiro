@@ -10,9 +10,12 @@ datasource db {
 
 model Usuarios {
     id                        String @id
+    nome                      String
+    sobrenome                 String
     email                     String @unique
     senha                     String?
-    nome                      String
+    perfil                    String?
+    avatar                    String?
     dataCriacao               DateTime @default(now())
     lancamentoFinanceiros     LancamentoFinanceiros[]
 }
@@ -28,7 +31,3 @@ model LancamentoFinanceiros {
     usuarioId               String
 
 }
-
-
-
-

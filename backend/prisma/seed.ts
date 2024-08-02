@@ -8,16 +8,16 @@ const prisma = new PrismaClient()
 
 async function main() {
   const usuariosData = [
-    { email: 'dev@financeiro.io', senha: 'd123', nome: 'dev', descricaoLancamento: 'dev', valorLancamento: 3000 },
-    { email: 'evandro@financeiro.io', senha: 'e123', nome: 'evandro', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'jair@financeiro.io', senha: 'j123', nome: 'jair', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'marllon@financeiro.io', senha: 'm123', nome: 'marllon', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'rafael@financeiro.io', senha: 'r123', nome: 'rafael', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'emannuel@financeiro.io', senha: 'e123', nome: 'emannuel', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'francisco@financeiro.io', senha: 'f123', nome: 'francisco', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'itajacy@financeiro.io', senha: 'i123', nome: 'itajacy', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'leonardo@financeiro.io', senha: 'l123', nome: 'leonardo', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'victor@financeiro.io', senha: 'v123', nome: 'victor', descricaoLancamento: 'aws', valorLancamento: 1850 }
+    { email: 'dev@financeiro.io', senha: 'd123', nome: 'dev', sobrenome: 'sobrenome', descricaoLancamento: 'dev', valorLancamento: 3000 },
+    { email: 'evandro@financeiro.io', senha: 'e123', nome: 'evandro', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'jair@financeiro.io', senha: 'j123', nome: 'jair', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'marllon@financeiro.io', senha: 'm123', nome: 'marllon', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'rafael@financeiro.io', senha: 'r123', nome: 'rafael', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'emannuel@financeiro.io', senha: 'e123', nome: 'emannuel', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'francisco@financeiro.io', senha: 'f123', nome: 'francisco', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'itajacy@financeiro.io', senha: 'i123', nome: 'itajacy', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'leonardo@financeiro.io', senha: 'l123', nome: 'leonardo', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'victor@financeiro.io', senha: 'v123', nome: 'victor', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 }
   ];
 
   for (const usuarioData of usuariosData) {
@@ -29,6 +29,7 @@ async function main() {
         email: usuarioData.email,
         senha: Senha.criptografar(usuarioData.senha),
         nome: usuarioData.nome,
+        sobrenome: usuarioData.sobrenome,
         lancamentoFinanceiros: {
           create: {
             id: id.novo(),

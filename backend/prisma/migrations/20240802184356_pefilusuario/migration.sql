@@ -1,10 +1,12 @@
 -- CreateTable
 CREATE TABLE "Usuarios" (
     "id" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "sobrenome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senha" TEXT,
-    "nome" TEXT NOT NULL,
-    "token" TEXT,
+    "perfil" TEXT,
+    "avatar" TEXT,
     "dataCriacao" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Usuarios_pkey" PRIMARY KEY ("id")
