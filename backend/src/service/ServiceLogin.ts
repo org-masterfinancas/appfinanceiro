@@ -21,10 +21,10 @@ export default class ServiceLogin {
         const login: any = await this.loginSucesso(email, senha)
 
         if (login.result) {
-            const { nome, sobrenome, email, avatar, perfil } = login.usuario
+            const { id, nome, sobrenome, email, avatar, perfil } = login.usuario
             
             const token = jwt.sign(
-                { nome, sobrenome, email, avatar, perfil, }, segredo as 'Secret')
+                { id, nome, sobrenome, email, avatar, perfil, }, segredo as 'Secret')
 
             resultado = { sucesso: true, mensagem: "Usuário logado com sucesso.", token: token }
             return resultado
