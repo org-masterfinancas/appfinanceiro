@@ -1,4 +1,10 @@
 export default interface  Usuario{
-    email: string
-    senha: string
+    id?: string
+    nome?: string
+    sobrenome?: string
+    email?: string
+    perfil?: string
+    avatar?: string
+    dataCriacao?: string
+    senha?: string
 }

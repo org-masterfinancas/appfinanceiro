@@ -4,7 +4,8 @@ export default class RequisicaoApi {
         "Content-Type": "application/json",
 
     }
-    static urlBase = `https://appfinanceiro.onrender.com`
+    static urlBase1 = `https://appfinanceiro.onrender.com`
+    static urlBase = `http://localhost:7000`
 
     static adicionaToken(token: string) {
         RequisicaoApi.headers = { ...RequisicaoApi.headers, Authorization: `Bearer ${token}`}
@@ -28,8 +29,8 @@ export default class RequisicaoApi {
             const resultado = await response.json();
             return resultado;
         } catch (error) {
-            console.error("Erro ao processar resposta do SERVIDOR - requisicao")
-            return null;
+            console.error("Erro ao processar resposta do SERVIDOR - requisicaooo")
+            return error;
         }
     }
 

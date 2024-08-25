@@ -89,6 +89,7 @@ export default class RepositorioUsuario {
                     avatar: true,
                 }
             })
+            return usuarioAtualizar
         } catch (error) {
             console.error('Erro ao atualizar o usuario', error)
         }

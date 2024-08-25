@@ -5,7 +5,7 @@ import decodificarJwt from '../../Utils/utilsJwt'
 import useCookies from "@/app/(internas)/hooks/useCookies"
 import { cookiesInserirToken, cookiesObterToken, cookiesRemoverToken } from "@/app/serverActions/actionsCookies"
 import RequisicaoApi from "@/app/requisicao/requisicaoApi"
-import { adicionaToken, apagaToken }  from "../../serverActions/requisicaoApiServerAction"
+import { adicionaToken, apagaToken } from "../../serverActions/requisicaoApiServerAction"
 
 
 const ContextoUsuario = createContext<any>({})
@@ -13,7 +13,7 @@ export { ContextoUsuario }
 
 export default function ProvedorUsuario(props: any) {
     const [carregando, setCarregando] = useState(true)
-    const [usuario, setUsuario] = useState<string | null>(null)
+    const [usuario, setUsuario] = useState<{} | null>(null)
     const { getCookies, setCookies, delCookies } = useCookies()
     const { jwt, setJwt } = useContext(ContextoToken)
 
@@ -43,11 +43,21 @@ export default function ProvedorUsuario(props: any) {
     }
 
     async function logout() {
-        setUsuario(null)
-        setJwt(null)
-        RequisicaoApi.apagaToken()
         await cookiesRemoverToken()
+        RequisicaoApi.apagaToken()
         await apagaToken()
+        setJwt(null)
+        setUsuario(null)
+    }
+
+    async function atualizarUsuario(nome: string, sobrenome: string, avatar: string) {
+        const usuarioAtualizado = {
+            ...usuario,
+            nome: nome,
+            sobrenome: sobrenome,
+            avatar: avatar
+        }
+        setUsuario(usuarioAtualizado)
     }
 
 
@@ -58,6 +68,7 @@ export default function ProvedorUsuario(props: any) {
                 usuario,
                 login,
                 logout,
+                atualizarUsuario,
             }}>
             {props.children}
         </ContextoUsuario.Provider>
