@@ -1,6 +1,5 @@
 "use client";
-
-import { Box, Button, Stack } from "@mantine/core";
+import { Box, Button } from "@mantine/core";
 
 interface LancamentoFinanceiroRodapeProps {
   EhAlterado: boolean;

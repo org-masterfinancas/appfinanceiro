@@ -1,44 +1,24 @@
 'use client'
-
 import cx from 'clsx';
 import { useContext, useState } from 'react';
 import {
-  Container,
   Avatar,
   UnstyledButton,
   Group,
   Text,
   Menu,
-  Tabs,
-  Burger,
   rem,
-  useMantineTheme,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import {
   IconLogout,
-  IconHeart,
-  IconStar,
-  IconMessage,
-  IconSettings,
-  IconPlayerPause,
-  IconTrash,
-  IconSwitchHorizontal,
   IconChevronDown,
 } from '@tabler/icons-react';
 import classes from './UserMenu.module.css';
 import { ContextoUsuario } from '@/app/data/contexts/ContextoUsuario';
 import Link from 'next/link';
 
-const user = {
-  name: 'Jane Spoonfighter',
-  email: 'janspoon@fighter.dev',
-  image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-};
 
 export default function UserMenu() {
-  const theme = useMantineTheme();
-  const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(true);
   const { usuario } = useContext(ContextoUsuario)
 

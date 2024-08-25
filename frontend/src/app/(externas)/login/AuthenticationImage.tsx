@@ -7,7 +7,6 @@ import {
   Button,
   Title,
   Text,
-  Anchor,
 } from '@mantine/core';
 import classes from './AuthenticationImage.module.css';
 import { useRouter } from 'next/navigation';

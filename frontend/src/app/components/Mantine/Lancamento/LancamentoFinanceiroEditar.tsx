@@ -11,7 +11,7 @@ import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { DateInput, DateInputProps } from "@mantine/dates";
 import dayjs from "dayjs";
-import { NumberInput, SegmentedControl, Select, TextInput, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 
 interface LancamentoFinanceiroEditarProps {
   lancamento: LancamentoFinanceiro

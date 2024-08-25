@@ -1,11 +1,8 @@
 'use client'
-
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import UserMenu from './UserMenu/UserMenu';
 import NavbarSimple from './NavBar/NavbarSimple';
-import HeaderMegaMenu from './Header/page';
 import MeuLogo from './logo/MeuLogo';
 
 export default function ThemaMantine(props: any) {
@@ -29,13 +26,12 @@ export default function ThemaMantine(props: any) {
             hiddenFrom="sm"
             size="sm"
           />
-          <MeuLogo/>
-          <UserMenu/>
+          <MeuLogo />
+          <UserMenu />
         </Group>
       </AppShell.Header>
-
       <AppShell.Navbar>
-        <NavbarSimple toggle={toggle}/>
+        <NavbarSimple toggle={toggle} />
       </AppShell.Navbar>
       <AppShell.Main>{props.children}</AppShell.Main>
     </AppShell>

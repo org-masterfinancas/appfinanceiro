@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Select, Box, Text } from '@mantine/core';
+import { Select } from '@mantine/core';
 
 interface LancamentoFinanceiroFiltroProps {
   labelTexto?: string;

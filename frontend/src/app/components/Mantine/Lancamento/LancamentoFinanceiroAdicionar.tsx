@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
 import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
 import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
-import { Container, Box, Text } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";

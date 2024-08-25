@@ -1,11 +1,9 @@
 'use client'
-
 import { DateInput, DateInputProps } from "@mantine/dates";
 import dayjs from "dayjs";
 import { NumberInput, SegmentedControl, Select, TextInput } from "@mantine/core";
 import { UseFormReturnType } from '@mantine/form';
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
-import { useEffect } from "react";
 
 interface LancamentoFinanceiroFormConteudoProps {
   form: UseFormReturnType<LancamentoFinanceiro>;

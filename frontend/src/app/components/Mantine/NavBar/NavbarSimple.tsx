@@ -1,19 +1,11 @@
 'use client'
 import { useState } from 'react';
-import { Group, Code, Button } from '@mantine/core';
 import {
   IconBellRinging,
   IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
   IconReceipt2,
-  IconSwitchHorizontal,
-  IconLogout,
   IconChartDots2
 } from '@tabler/icons-react';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarSimple.module.css';
 import Link from 'next/link';
 
