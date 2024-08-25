@@ -4,8 +4,7 @@ export default class RequisicaoApi {
         "Content-Type": "application/json",
 
     }
-    static urlBase1 = `https://appfinanceiro.onrender.com`
-    static urlBase = `http://localhost:7000`
+    static urlBase = `https://appfinanceiro.onrender.com`
 
     static adicionaToken(token: string) {
         RequisicaoApi.headers = { ...RequisicaoApi.headers, Authorization: `Bearer ${token}`}
