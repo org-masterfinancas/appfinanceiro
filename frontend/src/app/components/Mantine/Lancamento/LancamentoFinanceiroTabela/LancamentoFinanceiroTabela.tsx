@@ -3,6 +3,7 @@
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
 import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, rem } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 
 
@@ -39,7 +40,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
         </Badge>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.dataCriacaoLancamento}</Text>
+        <Text fz="sm">{dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}</Text>
       </Table.Td>
       <Table.Td>
         <Text fz="sm">{item.usuario?.nome}</Text>
