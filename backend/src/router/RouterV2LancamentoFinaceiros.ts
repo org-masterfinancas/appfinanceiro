@@ -74,31 +74,12 @@ router.put('/:id', async (req: Request, res: Response) => {
     }
 
     let { descricaoLancamento, valorLancamento, statusLancamento, tipoLancamento, dataCriacaoLancamento } = req.body.lancamentofinanceiro
-    if (descricaoLancamento) {
+   
         descricaoLancamento = ServiceValidador.descricaoValida(descricaoLancamento);
-    } else {
-        descricaoLancamento = lancamentoOriginal.descricaoLancamento;
-    }
-    if (valorLancamento !== undefined) {
         valorLancamento = ServiceValidador.valorMonetarioValido(valorLancamento);
-    } else {
-        valorLancamento = lancamentoOriginal.valorLancamento;
-    }
-    if (statusLancamento) {
         statusLancamento = ServiceValidador.statusLancamentoValido(statusLancamento);
-    } else {
-        statusLancamento = lancamentoOriginal.statusLancamento;
-    }
-    if (tipoLancamento) {
         tipoLancamento = ServiceValidador.tipoLancamentoValido(tipoLancamento);
-    } else {
-        tipoLancamento = lancamentoOriginal.tipoLancamento;
-    }
-    if (dataCriacaoLancamento) {
         dataCriacaoLancamento = ServiceValidador.dataLancamentoValida(dataCriacaoLancamento);
-    } else {
-        dataCriacaoLancamento = lancamentoOriginal.dataCriacaoLancamento;
-    }
 
     const lancamento = new LancamentoFinanceiro(descricaoLancamento, valorLancamento, tipoLancamento, statusLancamento, dataCriacaoLancamento, idParams)
 

@@ -4,12 +4,12 @@ interface Usuario {
 }
 
 export interface LancamentoFinanceiro {
-  id?: string;
+  id: string;
   descricaoLancamento: string;
   valorLancamento: number;
   tipoLancamento: string;
   statusLancamento: string;
-  dataCriacaoLancamento: string;
+  dataCriacaoLancamento: Date;
   usuarioId: string;
-  usuario?: Usuario;
+  usuario: Usuario;
 }

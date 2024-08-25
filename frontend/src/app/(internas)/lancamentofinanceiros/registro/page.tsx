@@ -1,13 +1,14 @@
-import LancamentoFinanceiroAdicionar from "../../../components/LancamentoFinanceiroAdicionar";
-import ButtonLink from "@/app/components/ButtonLink";
+import LancamentoFinanceiroAdicionar from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroAdicionar";
+import { Box, Button } from "@mantine/core";
+import Link from "next/link";
 
 export default function Page() {
     return (
-        <main className='flex flex-col'>
-            <div className="">
-                <ButtonLink rotulo="< Voltar" link="/lancamentofinanceiros/"/>
+        <Box>
+            <div>
+                <Button component={Link} href="/lancamentofinanceiros/">Voltar</Button>
             </div>
             <LancamentoFinanceiroAdicionar />
-        </main>
+        </Box>
     )
 }

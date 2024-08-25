@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import { DateInput, DateInputProps } from '@mantine/dates';
+
+
 export function formatarData(dateString: string): string {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('pt-BR', options);
@@ -18,3 +22,13 @@ export const formatDate = (dateString: any): string => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
+
+
+
+export const dateParser: DateInputProps['dateParser'] = (input) => {
+  if (input === 'WW2') {
+    return new Date(1939, 8, 1);
+  }
+
+  return dayjs(input, 'YYYY-MM-DD').toDate();
+};

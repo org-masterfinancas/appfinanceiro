@@ -1,11 +1,12 @@
 'use client'
 import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
-import LancamentoFinanceiroTabela from "../../components/LancamentoFinanceiroTabela"
 import { useEffect, useState, useContext } from "react"
-import LancamentoFinanceiroFiltro from "@/app/components/LancamentoFinanceiroFiltro"
+import LancamentoFinanceiroFiltro from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
-import ButtonLink from "@/app/components/ButtonLink"
+import Link from "next/link"
+import { Box, Button, Container, Group, Select, Stack, Text, Paper } from "@mantine/core"
+import LancamentoFinanceiroTabela from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroTabela/LancamentoFinanceiroTabela"
 
 
 
@@ -16,9 +17,6 @@ export default function LancamentoPage() {
     const [lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([]);
     const [filtroStatus, setFiltroStatus] = useState<string>("Todos")
 
-    const nome = usuario.split('@')[0];
-    const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
-
     useEffect(() => {
         async function obterLancamentos() {
             const dados = await getApi('/lancamentofinanceiros/')
@@ -28,8 +26,8 @@ export default function LancamentoPage() {
         obterLancamentos();
     }, [])
 
- 
-      if (carregando) return <div>...</div>
+
+    if (carregando) return <div>...</div>
 
     const lancamentosFiltrados = filtroStatus === "Todos"
         ? lancamentos
@@ -37,28 +35,31 @@ export default function LancamentoPage() {
 
 
     return (
-        <div className="flex  flex-col gap-10">
-            <div className="flex justify-between">
-                <div className="">
-                    <div>Minhas Finanças</div>
-                    <div className="text-xs">Você possui {lancamentosFiltrados.length || 0} registro(s) </div>
-                </div>
-                <div className="flex gap-4">
+        <Container size={"xl"}>
+            <Group justify="space-between" >
+                <Paper radius="md" withBorder p="xs">
+                    <Text>Minhas Finanças</Text>
+                    <Text>Você possui {lancamentosFiltrados.length || 0} registro(s) </Text>
+                </Paper>
+                <Group >
                     <LancamentoFinanceiroFiltro
                         labelTexto="Filtro por Status"
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
+
                     />
-                    <ButtonLink rotulo="+ Novo Lançamento" link="/lancamentofinanceiros/registro" />
-                </div>
-            </div>
+                    <Button component={Link} href="/lancamentofinanceiros/registro"> + Novo Lançamento</Button>
+                </Group>
+            </Group>
             {lancamentos.length ?
                 <LancamentoFinanceiroTabela lancamentos={lancamentosFiltrados} />
                 :
-                <span className="flex content-center flex-col items-center
-                 bg-orange-400 text-2xl text-white rounded-full m-10 p-10">
-                  Olá {nomeFormatado}, você não possui lançamento cadastrado!</span>
+                <Container size={"xs"}>
+                    <Text p={"xl"}>
+                        Olá {usuario.nome}, você não possui lançamento cadastrado!
+                    </Text>
+                </Container>
             }
-        </div>
+        </Container>
     )
 }
