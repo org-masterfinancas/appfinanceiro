@@ -1,10 +1,11 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
+import dayjs from "dayjs";
 
 export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinanceiro[]) {
     const hoje = new Date()
     const vinteDiasAtras = new Date(hoje)
     vinteDiasAtras.setDate(hoje.getDate() - 20)
-
+    
     return lancamentos.filter(lancamento => {
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         return (
@@ -19,7 +20,7 @@ export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinance
     const hoje = new Date()
     const vinteDiasAtras = new Date(hoje)
     vinteDiasAtras.setDate(hoje.getDate() - 20)
-
+    
     return lancamentos.filter(lancamento => {
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         return (

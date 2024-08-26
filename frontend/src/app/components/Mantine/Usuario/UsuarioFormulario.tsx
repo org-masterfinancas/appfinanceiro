@@ -30,8 +30,15 @@ export default function UsuarioFormulario() {
     validate: {
       nome: hasLength({ min: 3, max: 20 }, 'O nome de ter 3 a 20 caracteres'),
       sobrenome: hasLength({ min: 3, max: 20 }, 'O nome de ter 3 a 20 caracteres'),
-      avatar: (value) => (/^https:\/\/[\w\-.]+(\.[\w\-.]+)+(\/[\w\-./?%&=]*)?$/.test(value ?? '') ? null : 'Invalid URL'
-      )
+      avatar: (value) => {
+        if (value && value.trim() !== '') {
+          return /^https:\/\/[\w\-.]+(\.[\w\-.]+)+(\/[\w\-./?%&=]*)?$/.test(value)
+            ? null
+            : 'URL inválida';
+        }
+        return null;
+      }
+      
     }
 
   })

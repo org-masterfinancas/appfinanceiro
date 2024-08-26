@@ -7,6 +7,7 @@ import { FiltrarLancamentoAtrasadoDespesas, FiltrarLancamentoAtrasadoReceitas } 
 import { Container, Group, List, NavLink, ThemeIcon, rem } from '@mantine/core';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
 import Link from 'next/link';
+import dayjs from 'dayjs';
 
 
 export default function Alertas() {
@@ -28,8 +29,8 @@ export default function Alertas() {
     }, [])
     return (
         <Container size={'xl'} bg={'green.1'}>
-            <Group p={'xl'}justify='space-between'>
-               
+            <Group p={'xl'} justify='space-between'>
+
                 <List
                     spacing="md"
                     size="sm"
@@ -44,14 +45,18 @@ export default function Alertas() {
                 >
                     {filtroVinteDiasAtrasoReceita.map(item => (
                         <List.Item key={item.id}>
-                            <NavLink 
-                            component={Link} 
-                            label={`${item.descricaoLancamento} R$ ${item.valorLancamento} - ${item.dataCriacaoLancamento}`} 
-                            href={`/lancamentofinanceiros/registro/${item.id}`}
-                            style={{ lineHeight: '1.5', paddingRight: '8px' }} />
+                            <NavLink
+                                component={Link}
+                                label={`${item.descricaoLancamento.length > 20
+                                    ? `${item.descricaoLancamento.slice(0, 20)}...`
+                                    : item.descricaoLancamento} 
+                                R$ ${item.valorLancamento} - 
+                                ${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
+                                href={`/lancamentofinanceiros/registro/${item.id}`}
+                                style={{ lineHeight: '1.5', paddingRight: '8px' }} />
                         </List.Item>
-
                     ))}
+
                 </List>
                 <List
                     spacing="md"
@@ -67,11 +72,15 @@ export default function Alertas() {
                 >
                     {filtroVinteDiasAtrasoDespesa.map(item => (
                         <List.Item key={item.id}>
-                            <NavLink 
-                            component={Link} 
-                            label={`${item.descricaoLancamento} R$ ${item.valorLancamento} - ${item.dataCriacaoLancamento}`} 
-                            href={`/lancamentofinanceiros/registro/${item.id}`}
-                            style={{ lineHeight: '1.5', paddingRight: '8px' }} />
+                            <NavLink
+                                component={Link}
+                                label={`${item.descricaoLancamento.length > 20
+                                    ? `${item.descricaoLancamento.slice(0, 20)}...`
+                                    : item.descricaoLancamento} 
+                                R$ ${item.valorLancamento} - 
+                                ${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
+                                href={`/lancamentofinanceiros/registro/${item.id}`}
+                                style={{ lineHeight: '1.5', paddingRight: '8px' }} />
                         </List.Item>
                     ))}
                 </List>

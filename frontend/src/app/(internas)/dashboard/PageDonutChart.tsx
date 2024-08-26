@@ -7,5 +7,5 @@ interface PageDonutChartProps {
 }
 
 export default function PageDonutChart({resumo}: PageDonutChartProps) {
-  return <DonutChart size={300} thickness={40} withLabelsLine withLabels data={resumo} />;
+  return <DonutChart size={280} thickness={30} withLabelsLine withLabels data={resumo} />;
 }
