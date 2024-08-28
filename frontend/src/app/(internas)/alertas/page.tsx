@@ -1,17 +1,24 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import { Badge, Box, Card, Container, Group, Switch, Text } from '@mantine/core';
+import classes from './SwitchesCard.module.css';
 import useApi from '../hooks/useApi';
+import { useEffect, useState } from 'react';
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
 import { FiltrarLancamentoAtrasadoDespesas, FiltrarLancamentoAtrasadoReceitas } from './dadosFiltrar';
-
-import { Container, Group, List, NavLink, ThemeIcon, rem } from '@mantine/core';
-import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
+const data = [
+    { title: 'Messages', description: 'Direct messages you have received from other users' },
+    { title: 'Review requests', description: 'Code review requests from your team members' },
+    { title: 'Comments', description: 'Daily digest with comments on your posts' },
+    {
+        title: 'Recommendations',
+        description: 'Digest with best community posts from previous week',
+    },
+];
 
-export default function Alertas() {
-
+export default function SwitchesCard() {
     const { getApi } = useApi()
     const [carregando, setCarregando] = useState<boolean>(true)
     const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<LancamentoFinanceiro[]>([])
@@ -27,65 +34,42 @@ export default function Alertas() {
         }
         obterLancamentos()
     }, [])
+
+    const items = filtroVinteDiasAtrasoReceita.map((item) => (
+        <Group justify="space-between" className={classes.item} wrap="nowrap" gap="xl" key={item.id}>
+            <div>
+                <Text>{item.descricaoLancamento}</Text>
+                <Text size="xs" c="dimmed">
+                    {`${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
+                </Text>
+                <Text>
+                    {`R$ ${item.valorLancamento}`}
+                </Text>
+            </div>
+            <Badge component={Link} href={`/lancamentofinanceiros/registro/${item.id}`} >Vizualizar</Badge>
+        </Group>
+    ));
+
     return (
-        <Container size={'xl'} bg={'green.1'}>
-            <Group p={'xl'} justify='space-between'>
-
-                <List
-                    spacing="md"
-                    size="sm"
-                    center
-                    bg={'red.1'}
-                    p={'xl'}
-                    icon={
-                        <ThemeIcon color="red" size={24} radius="xl">
-                            <IconCircleDashed style={{ width: rem(16), height: rem(16) }} />
-                        </ThemeIcon>
-                    }
-                >
-                    {filtroVinteDiasAtrasoReceita.map(item => (
-                        <List.Item key={item.id}>
-                            <NavLink
-                                component={Link}
-                                label={`${item.descricaoLancamento.length > 20
-                                    ? `${item.descricaoLancamento.slice(0, 20)}...`
-                                    : item.descricaoLancamento} 
-                                R$ ${item.valorLancamento} - 
-                                ${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
-                                href={`/lancamentofinanceiros/registro/${item.id}`}
-                                style={{ lineHeight: '1.5', paddingRight: '8px' }} />
-                        </List.Item>
-                    ))}
-
-                </List>
-                <List
-                    spacing="md"
-                    size="sm"
-                    center
-                    bg={'blue.1'}
-                    p={'xl'}
-                    icon={
-                        <ThemeIcon color="blue" size={24} radius="xl">
-                            <IconCircleDashed style={{ width: rem(16), height: rem(16) }} />
-                        </ThemeIcon>
-                    }
-                >
-                    {filtroVinteDiasAtrasoDespesa.map(item => (
-                        <List.Item key={item.id}>
-                            <NavLink
-                                component={Link}
-                                label={`${item.descricaoLancamento.length > 20
-                                    ? `${item.descricaoLancamento.slice(0, 20)}...`
-                                    : item.descricaoLancamento} 
-                                R$ ${item.valorLancamento} - 
-                                ${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
-                                href={`/lancamentofinanceiros/registro/${item.id}`}
-                                style={{ lineHeight: '1.5', paddingRight: '8px' }} />
-                        </List.Item>
-                    ))}
-                </List>
-            </Group>
-        </Container>
-    )
+        <Group justify='center'>
+            <Card withBorder radius="md" p="xl" className={classes.card}>
+                <Text fz="h3" className={classes.title} fw={500}>
+                    Receita Pendente
+                </Text>
+                <Text fz="h4" c="red.5" mt={3} mb="xl">
+                    20 dias de Atraso
+                </Text>
+                {items}
+            </Card>
+            <Card withBorder radius="md" p="xl" className={classes.card}>
+                <Text fz="h3" className={classes.title} fw={500}>
+                    Despesa Pendente
+                </Text>
+                <Text fz="h4" c="yellow.7" mt={3} mb="xl">
+                    20 dias de Atraso
+                </Text>
+                {items}
+            </Card>
+        </Group >
+    );
 }
-

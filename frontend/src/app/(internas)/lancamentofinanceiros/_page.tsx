@@ -5,8 +5,10 @@ import { useEffect, useState, useContext } from "react"
 import LancamentoFinanceiroFiltro from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
-import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination } from "@mantine/core"
+import { Box, Button, Container, Group, Select, Stack, Text, Paper } from "@mantine/core"
 import LancamentoFinanceiroTabela from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroTabela/LancamentoFinanceiroTabela"
+
+
 
 export default function LancamentoPage() {
     const { getApi } = useApi()
@@ -14,8 +16,6 @@ export default function LancamentoPage() {
     const { usuario } = useContext(ContextoUsuario)
     const [lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([]);
     const [filtroStatus, setFiltroStatus] = useState<string>("Todos")
-    const [activePage, setActivePage] = useState<number>(1)
-    const itemsPerPage = 5
 
     useEffect(() => {
         async function obterLancamentos() {
@@ -26,45 +26,33 @@ export default function LancamentoPage() {
         obterLancamentos();
     }, [])
 
-    useEffect(() => {
-        setActivePage(1);
-    }, [filtroStatus]);
 
     if (carregando) return <div>...</div>
 
-    const lancamentosFiltrados = filtroStatus === "Todos" || filtroStatus == null
+    const lancamentosFiltrados = filtroStatus === "Todos"
         ? lancamentos
         : lancamentos.filter(lancamento => lancamento.statusLancamento === filtroStatus);
 
-    const startIndex = (activePage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentItems = lancamentosFiltrados.slice(startIndex, endIndex);
 
     return (
         <Container size={"xl"}>
-            <Group justify="space-between">
+            <Group justify="space-between" >
                 <Paper radius="md" withBorder p="xs">
                     <Text>Minhas Finanças</Text>
-                    <Text>Você possui {lancamentosFiltrados.length || 0} registro(s)</Text>
+                    <Text>Você possui {lancamentosFiltrados.length || 0} registro(s) </Text>
                 </Paper>
-                <Group>
+                <Group >
                     <LancamentoFinanceiroFiltro
                         labelTexto="Filtro por Status"
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
+
                     />
-                    <Button component={Link} href="/lancamentofinanceiros/registro">+ Novo Lançamento</Button>
+                    <Button component={Link} href="/lancamentofinanceiros/registro"> + Novo Lançamento</Button>
                 </Group>
             </Group>
-            {lancamentosFiltrados.length ?
-                <>
-                    <LancamentoFinanceiroTabela lancamentos={currentItems} />
-                    <Pagination
-                        value={activePage}
-                        onChange={setActivePage}
-                        total={Math.ceil(lancamentosFiltrados.length / itemsPerPage)}
-                    />
-                </>
+            {lancamentos.length ?
+                <LancamentoFinanceiroTabela lancamentos={lancamentosFiltrados} />
                 :
                 <Container size={"xs"}>
                     <Text p={"xl"}>
