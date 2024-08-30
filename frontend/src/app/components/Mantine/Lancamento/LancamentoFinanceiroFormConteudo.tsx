@@ -1,6 +1,8 @@
 'use client'
-import { DateInput, DateInputProps } from "@mantine/dates";
 import dayjs from "dayjs";
+import 'dayjs/locale/pt-br';
+
+import { DateInput, DateInputProps } from "@mantine/dates";
 import { NumberInput, SegmentedControl, Select, TextInput } from "@mantine/core";
 import { UseFormReturnType } from '@mantine/form';
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
@@ -53,6 +55,7 @@ export default function LancamentoFinanceiroFormConteudo({
           label="Status"
           data={['Pendente', 'Consolidado', 'Cancelado']}
           readOnly={!EhAlterado}
+
         />
       </div>
       <div>
@@ -63,6 +66,8 @@ export default function LancamentoFinanceiroFormConteudo({
           valueFormat="YYYY-MM-DD"
           label='Data'
           name="datalancamento"
+          placeholder="2024-01-31"
+          locale="pt-br"
           readOnly={!EhAlterado}
         />
         <NumberInput
@@ -72,9 +77,13 @@ export default function LancamentoFinanceiroFormConteudo({
           name="valorlancamento"
           prefix={'R$'}
           decimalScale={2}
+          fixedDecimalScale
+          decimalSeparator=","
+          thousandSeparator="."
+          placeholder="R$ 0,00"
           readOnly={!EhAlterado}
         />
-        <SegmentedControl mt={"md"} mb={'md'}
+        <SegmentedControl mt={"md"} mb={'md'} color="gray"
           {...form.getInputProps("tipoLancamento")}
           key={form.key("tipoLancamento")}
           data={[

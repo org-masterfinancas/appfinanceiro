@@ -5,8 +5,24 @@ import { useEffect, useState, useContext } from "react"
 import LancamentoFinanceiroFiltro from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
-import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination } from "@mantine/core"
+import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination, TextInput, rem, keys } from "@mantine/core"
 import LancamentoFinanceiroTabela from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroTabela/LancamentoFinanceiroTabela"
+import { IconSearch } from "@tabler/icons-react"
+
+
+function aplicarPesquisa(data: LancamentoFinanceiro[], search: string) {
+    const query = search.toLowerCase().trim();
+  
+    return data.filter((item) => {
+      return (
+        item.descricaoLancamento.toLowerCase().includes(query) ||
+        item.tipoLancamento.toLowerCase().includes(query) ||
+        item.usuario.nome.toLowerCase().includes(query) ||
+        item.valorLancamento.toString().toLowerCase().includes(query)
+      );
+    });
+  }
+  
 
 export default function LancamentoPage() {
     const { getApi } = useApi()
@@ -14,8 +30,13 @@ export default function LancamentoPage() {
     const { usuario } = useContext(ContextoUsuario)
     const [lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([]);
     const [filtroStatus, setFiltroStatus] = useState<string>("Todos")
+
     const [activePage, setActivePage] = useState<number>(1)
     const itemsPerPage = 5
+
+    const [search, setSearch] = useState('')
+
+
 
     useEffect(() => {
         async function obterLancamentos() {
@@ -28,7 +49,7 @@ export default function LancamentoPage() {
 
     useEffect(() => {
         setActivePage(1);
-    }, [filtroStatus]);
+    }, [filtroStatus, search]);
 
     if (carregando) return <div>...</div>
 
@@ -36,19 +57,30 @@ export default function LancamentoPage() {
         ? lancamentos
         : lancamentos.filter(lancamento => lancamento.statusLancamento === filtroStatus);
 
+
+    const lancamentosPesquisa = aplicarPesquisa(lancamentosFiltrados, search);
+
     const startIndex = (activePage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = lancamentosFiltrados.slice(startIndex, endIndex);
+    const currentItems = lancamentosPesquisa.slice(startIndex, endIndex);
+
 
     return (
         <Container size={"xl"}>
             <Group justify="space-between">
                 <Paper radius="md" withBorder p="xs">
                     <Text>Minhas Finanças</Text>
-                    <Text>Você possui {lancamentosFiltrados.length || 0} registro(s)</Text>
+                    <Text>Você possui {lancamentosPesquisa.length || 0} registro(s)</Text>
                 </Paper>
+                <TextInput
+                    placeholder="Buscar Lançamento"
+                    mb="md"
+                    leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
                 <Group>
-                    <LancamentoFinanceiroFiltro
+                    <LancamentoFinanceiroFiltro 
                         labelTexto="Filtro por Status"
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
@@ -56,19 +88,22 @@ export default function LancamentoPage() {
                     <Button component={Link} href="/lancamentofinanceiros/registro">+ Novo Lançamento</Button>
                 </Group>
             </Group>
-            {lancamentosFiltrados.length ?
+            {lancamentosPesquisa.length ?
                 <>
                     <LancamentoFinanceiroTabela lancamentos={currentItems} />
                     <Pagination
-                        value={activePage}
+                        defaultValue={activePage}
                         onChange={setActivePage}
-                        total={Math.ceil(lancamentosFiltrados.length / itemsPerPage)}
+                        total={Math.ceil(lancamentosPesquisa.length / itemsPerPage)}
                     />
                 </>
                 :
                 <Container size={"xs"}>
                     <Text p={"xl"}>
-                        Olá {usuario.nome}, você não possui lançamento cadastrado!
+                        Olá {usuario.nome}, você não possui lançamento cadastrado! 
+                    </Text>
+                    <Text p={"xl"}>
+                      Nenhuma correspondência de filtro ou busca!
                     </Text>
                 </Container>
             }

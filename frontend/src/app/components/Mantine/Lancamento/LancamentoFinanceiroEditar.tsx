@@ -53,6 +53,7 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
       const lancamentoFormatado = {
         ...lancamento,
         dataCriacaoLancamento: dayjs(lancamento.dataCriacaoLancamento).toDate(),
+        id: "#"+lancamento.id.split('-')[0],
         valorLancamento: +lancamento.valorLancamento
       }
       form.setValues(lancamentoFormatado);

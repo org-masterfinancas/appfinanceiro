@@ -23,7 +23,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
   return (
     <ProvedorToken>
       <ProvedorUsuario>
-        <html lang="en">
+        <html lang="pt-br">
           <head>
             <link rel="shortcut icon" href="/next.svg" />
             <meta

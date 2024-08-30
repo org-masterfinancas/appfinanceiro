@@ -4,9 +4,9 @@ import ThemaMantine from "../components/Mantine/ThemaMantine"
 export default function Layout(props: any) {
   return (
     <PaginaInterna>
-      <ThemaMantine>
-        {props.children}
-      </ThemaMantine>
+        <ThemaMantine>
+          {props.children}
+        </ThemaMantine>
     </PaginaInterna>
   )
 }

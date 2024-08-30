@@ -35,7 +35,22 @@ export default function SwitchesCard() {
         obterLancamentos()
     }, [])
 
-    const items = filtroVinteDiasAtrasoReceita.map((item) => (
+    const itemsReceita = filtroVinteDiasAtrasoReceita.map((item) => (
+        <Group justify="space-between" className={classes.item} wrap="nowrap" gap="xl" key={item.id}>
+            <div>
+                <Text>{item.descricaoLancamento}</Text>
+                <Text size="xs" c="dimmed">
+                    {`${dayjs(item.dataCriacaoLancamento).format('YYYY-MM-DD')}`}
+                </Text>
+                <Text>
+                    {`R$ ${item.valorLancamento}`}
+                </Text>
+            </div>
+            <Badge component={Link} href={`/lancamentofinanceiros/registro/${item.id}`} >Vizualizar</Badge>
+        </Group>
+    ));
+
+    const itemsDespesa = filtroVinteDiasAtrasoDespesa.map((item) => (
         <Group justify="space-between" className={classes.item} wrap="nowrap" gap="xl" key={item.id}>
             <div>
                 <Text>{item.descricaoLancamento}</Text>
@@ -59,7 +74,7 @@ export default function SwitchesCard() {
                 <Text fz="h4" c="red.5" mt={3} mb="xl">
                     20 dias de Atraso
                 </Text>
-                {items}
+                {itemsReceita}
             </Card>
             <Card withBorder radius="md" p="xl" className={classes.card}>
                 <Text fz="h3" className={classes.title} fw={500}>
@@ -68,7 +83,7 @@ export default function SwitchesCard() {
                 <Text fz="h4" c="yellow.7" mt={3} mb="xl">
                     20 dias de Atraso
                 </Text>
-                {items}
+                {itemsDespesa}
             </Card>
         </Group >
     );

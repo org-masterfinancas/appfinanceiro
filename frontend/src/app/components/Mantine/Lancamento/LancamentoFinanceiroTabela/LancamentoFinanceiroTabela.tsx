@@ -1,6 +1,7 @@
 'use client'
 
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
+import { formatarMoedaBR } from '@/app/Utils/Moeda';
 import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, rem } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import dayjs from 'dayjs';
@@ -8,19 +9,19 @@ import Link from 'next/link';
 
 
 interface LancamentoFinanceiroTabelaProps {
-  lancamentos?: LancamentoFinanceiro[]
+  lancamentos: LancamentoFinanceiro[]
 }
 
-const jobColors: Record<string, string> = {
-  engineer: 'blue',
-  manager: 'cyan',
-  designer: 'pink',
+const statusCores: Record<string, string> = {
+  consolidado: 'green.7',
+  pendente: 'yellow.7',
+  cancelado: 'red.7',
 };
 
 export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTabelaProps) {
   const data = props.lancamentos
-
-  const rows = data?.map((item) => (
+  
+  const rows = data.map((item) => (
     <Table.Tr key={item.id}>
       <Table.Td>
         <Group gap={0} justify="flex-end">
@@ -33,13 +34,13 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
         <Text fz="sm">{item.descricaoLancamento}</Text>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.valorLancamento}</Text>
+        <Text fz="sm">{formatarMoedaBR(item.valorLancamento)}</Text>
       </Table.Td>
       <Table.Td>
         <Text fz="sm">{item.tipoLancamento}</Text>
       </Table.Td>
       <Table.Td>
-        <Badge color={jobColors[item.statusLancamento.toLowerCase()]} variant="light">
+        <Badge color={statusCores[item.statusLancamento.toLowerCase()]} variant="light">
           {item.statusLancamento}
         </Badge>
       </Table.Td>
@@ -50,7 +51,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
         <Text fz="sm">{item.usuario?.nome}</Text>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.id}</Text>
+        <Text fz="sm">#{item.id?.split('-')[0]}</Text>
       </Table.Td>
     </Table.Tr>
   ));
