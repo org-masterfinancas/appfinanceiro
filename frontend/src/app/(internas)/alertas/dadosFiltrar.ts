@@ -15,13 +15,18 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
         )
     })
 
-   const dados = lancamentoFiltrado.map(lancamento => ({
-        id: lancamento.id,
-        descricaoLancamento: lancamento.descricaoLancamento,
-        dataCriacaoLancamento: lancamento.dataCriacaoLancamento,
-        valorLancamento: lancamento.valorLancamento,
-    }))
-
+    const dados = lancamentoFiltrado.map(lancamento => {
+        const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
+        const qtdDias = Math.floor((hoje.getTime() - dataLancamento.getTime()) / (1000 * 60 * 60 * 24));
+        
+        return {
+            id: lancamento.id,
+            descricaoLancamento: lancamento.descricaoLancamento,
+            valorLancamento: lancamento.valorLancamento,
+            dataCriacaoLancamento: lancamento.dataCriacaoLancamento,
+            qtdDias: qtdDias
+        }
+    })
 
     return dados
 }

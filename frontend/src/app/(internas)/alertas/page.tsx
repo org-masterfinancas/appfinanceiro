@@ -21,12 +21,15 @@ import useApi from '@/app/(internas)/hooks/useApi';
 import { FiltrarLancamentoAtrasadoDespesas, FiltrarLancamentoAtrasadoReceitas } from '@/app/(internas)/alertas/dadosFiltrar';
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
 import dayjs from 'dayjs';
+import { formatarMoedaBR } from '@/app/Utils/Moeda';
+import Stats1 from '@/app/(externas)/state1/page';
 
 interface LinhasLancamentos {
     id: string
     descricaoLancamento: string,
     dataCriacaoLancamento: Date,
     valorLancamento: number,
+    qtdDias: number
 }
 
 
@@ -105,7 +108,7 @@ export default function TableSort() {
             const resultadoDespesas = FiltrarLancamentoAtrasadoDespesas(dados)
             const resultadoReceitas = FiltrarLancamentoAtrasadoReceitas(dados)
             setFiltroVinteDiasAtrasoDespesa(resultadoDespesas)
-            setFiltroVinteDiasAtrasoReceita(resultadoReceitas)
+            // setFiltroVinteDiasAtrasoReceita(resultadoReceitas)
             setSortedData(resultadoDespesas)
         }
         obterLancamentos()
@@ -115,15 +118,17 @@ export default function TableSort() {
 
         <Table.Tr key={row.id}>
             <Table.Td>{row.descricaoLancamento}</Table.Td>
-            <Table.Td>{row.valorLancamento}</Table.Td>
-            <Table.Td>{dayjs(row.dataCriacaoLancamento).format('DD-MMM-YYYY')}</Table.Td>
-            <Table.Td>{row.valorLancamento}</Table.Td>
+            <Table.Td>{formatarMoedaBR(row.valorLancamento)}</Table.Td>
+            <Table.Td>{row.qtdDias}</Table.Td>
         </Table.Tr>
     ))
 
     return (
         <Container size={'xl'}>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
+                <Box>
+
+                    <Stats1 />
                     <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
                         <Table.Tbody>
                             <Table.Tr>
@@ -142,25 +147,20 @@ export default function TableSort() {
                                     Valor
                                 </Th>
                                 <Th
-                                    sorted={sortBy === 'dataCriacaoLancamento'}
+                                    sorted={sortBy === 'qtdDias'}
                                     reversed={reverseSortDirection}
-                                    onSort={() => setSorting('dataCriacaoLancamento')}
+                                    onSort={() => setSorting('qtdDias')}
                                 >
-                                    Data
-                                </Th>
-                                <Th
-                                    sorted={sortBy === 'valorLancamento'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('valorLancamento')}
-                                >
-                                    Qtd
+                                    Dias
                                 </Th>
                             </Table.Tr>
                         </Table.Tbody>
                         <Table.Tbody>{rowsDespesas}</Table.Tbody>
                     </Table>
-            
+                </Box>
+                <Box>
 
+                    <Stats1 />
                     <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'yellow.6'}>
                         <Table.Tbody>
                             <Table.Tr>
@@ -196,6 +196,7 @@ export default function TableSort() {
                         </Table.Tbody>
                         <Table.Tbody>{rowsDespesas}</Table.Tbody>
                     </Table>
+                </Box>
             </SimpleGrid>
         </Container>
     );
