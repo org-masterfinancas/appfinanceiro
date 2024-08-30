@@ -6,7 +6,7 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
     const vinteDiasAtras = new Date(hoje)
     vinteDiasAtras.setDate(hoje.getDate() - 20)
     
-    const lancamentoFiltrado = lancamentos.filter(lancamento => {
+    return lancamentos.filter(lancamento => {
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         return (
             lancamento.statusLancamento === "Pendente" &&  
@@ -14,14 +14,6 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
             dataLancamento < vinteDiasAtras
         )
     })
-
-   const dados = lancamentoFiltrado.map(lancamento => ({
-        id: lancamento.id,
-        descricaoLancamento: lancamento.descricaoLancamento,
-    }))
-
-
-    return dados
 }
 
 export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinanceiro[]) {

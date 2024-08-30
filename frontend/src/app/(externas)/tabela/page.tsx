@@ -18,11 +18,10 @@ import useApi from '@/app/(internas)/hooks/useApi';
 import { FiltrarLancamentoAtrasadoDespesas, FiltrarLancamentoAtrasadoReceitas } from '@/app/(internas)/alertas/dadosFiltrar';
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
 
-interface LinhasLancamentos {
+interface RowDataDespesas {
     id: string;
     descricaoLancamento: string;
 }
-
 
 interface ThProps {
     children: React.ReactNode;
@@ -51,12 +50,10 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
 
 
 function sortData(
-    data: LinhasLancamentos[],
-    payload: { sortBy: keyof LinhasLancamentos ; reversed: boolean } 
+    data: RowDataDespesas[],
+    payload: { sortBy: keyof RowDataDespesas ; reversed: boolean } 
 ) {
     const { sortBy } = payload;
-
-    if (!sortBy) return data
 
    return [...data].sort((a, b) => {
         if (payload.reversed) {
@@ -67,19 +64,37 @@ function sortData(
     })
 }
 
+
+const data = [
+    {
+        name: 'Dthena Weissnat',
+        company: 'Gittle - Rippin',
+        email: 'Jlouise.Prohaska@yahoo.com',
+    },
+    {
+        name: 'Beangelo Runolfsson',
+        company: 'Freenfelder - Krajcik',
+        email: 'IKadin_Trantow87@yahoo.com',
+    },
+    {
+        name: 'Aanny Carter',
+        company: 'Eohler and Sons',
+        email: 'HJarina3@hotmail.com',
+    },
+];
+
 export default function TableSort() {
 
     const { getApi } = useApi()
     const [carregando, setCarregando] = useState<boolean>(true)
-    const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<LinhasLancamentos[]>([])
-    const [filtroVinteDiasAtrasoReceita, setFiltroVinteDiasAtrasoReceita] = useState<LinhasLancamentos[]>([])
+    const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<RowDataDespesas[]>([])
+    const [filtroVinteDiasAtrasoReceita, setFiltroVinteDiasAtrasoReceita] = useState<LancamentoFinanceiro[]>([])
 
-    //const [sortedData, setSortedData] = useState(filtroVinteDiasAtrasoDespesa);
-    const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
-    const [sortBy, setSortBy] = useState<keyof LinhasLancamentos | null>(null);
+    const [sortedData, setSortedData] = useState(filtroVinteDiasAtrasoDespesa);
+    const [sortBy, setSortBy] = useState<keyof RowDataDespesas | null>(null);
     const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
-    const setSorting = (field: keyof LinhasLancamentos) => {
+    const setSorting = (field: keyof RowDataDespesas) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
@@ -95,12 +110,11 @@ export default function TableSort() {
             const resultadoReceitas = FiltrarLancamentoAtrasadoReceitas(dados)
             setFiltroVinteDiasAtrasoDespesa(resultadoDespesas)
             setFiltroVinteDiasAtrasoReceita(resultadoReceitas)
-            setSortedData(resultadoDespesas)
         }
         obterLancamentos()
     }, [])
  
-    const rowsDespesas = sortedData.map((row) => (
+    const rowsDespesas = filtroVinteDiasAtrasoDespesa.map((row) => (
         <Table.Tr key={row.id}>
             <Table.Td>{row.descricaoLancamento}</Table.Td>
             <Table.Td>{row.id}</Table.Td>
