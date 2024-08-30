@@ -18,6 +18,8 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
    const dados = lancamentoFiltrado.map(lancamento => ({
         id: lancamento.id,
         descricaoLancamento: lancamento.descricaoLancamento,
+        dataCriacaoLancamento: lancamento.dataCriacaoLancamento,
+        valorLancamento: lancamento.valorLancamento,
     }))
 
 

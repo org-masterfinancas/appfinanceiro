@@ -11,16 +11,22 @@ import {
     rem,
     keys,
     Container,
+    Stack,
+    SimpleGrid,
+    Box,
 } from '@mantine/core';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
 import classes from './TableSort.module.css';
 import useApi from '@/app/(internas)/hooks/useApi';
 import { FiltrarLancamentoAtrasadoDespesas, FiltrarLancamentoAtrasadoReceitas } from '@/app/(internas)/alertas/dadosFiltrar';
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
+import dayjs from 'dayjs';
 
 interface LinhasLancamentos {
-    id: string;
-    descricaoLancamento: string;
+    id: string
+    descricaoLancamento: string,
+    dataCriacaoLancamento: Date,
+    valorLancamento: number,
 }
 
 
@@ -52,19 +58,25 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
 
 function sortData(
     data: LinhasLancamentos[],
-    payload: { sortBy: keyof LinhasLancamentos ; reversed: boolean } 
+    payload: { sortBy: keyof LinhasLancamentos; reversed: boolean }
 ) {
     const { sortBy } = payload;
 
-    if (!sortBy) return data
+    if (!sortBy) return data;
 
-   return [...data].sort((a, b) => {
-        if (payload.reversed) {
-            return b[sortBy].localeCompare(a[sortBy]);
+    return [...data].sort((a, b) => {
+        let compareResult = 0;
+
+        if (typeof a[sortBy] === 'string' && typeof b[sortBy] === 'string') {
+            compareResult = a[sortBy].localeCompare(b[sortBy]);
+        } else if (typeof a[sortBy] === 'number' && typeof b[sortBy] === 'number') {
+            compareResult = a[sortBy] - b[sortBy];
+        } else if (a[sortBy] instanceof Date && b[sortBy] instanceof Date) {
+            compareResult = (a[sortBy] as Date).getTime() - (b[sortBy] as Date).getTime();
         }
 
-        return a[sortBy].localeCompare(b[sortBy]);
-    })
+        return payload.reversed ? -compareResult : compareResult;
+    });
 }
 
 export default function TableSort() {
@@ -74,7 +86,6 @@ export default function TableSort() {
     const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<LinhasLancamentos[]>([])
     const [filtroVinteDiasAtrasoReceita, setFiltroVinteDiasAtrasoReceita] = useState<LinhasLancamentos[]>([])
 
-    //const [sortedData, setSortedData] = useState(filtroVinteDiasAtrasoDespesa);
     const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
     const [sortBy, setSortBy] = useState<keyof LinhasLancamentos | null>(null);
     const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -83,10 +94,10 @@ export default function TableSort() {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
-        setSortedData(sortData(filtroVinteDiasAtrasoDespesa, { sortBy: field, reversed })); 
+        setSortedData(sortData(filtroVinteDiasAtrasoDespesa, { sortBy: field, reversed }));
     };
 
-    
+
 
     useEffect(() => {
         async function obterLancamentos() {
@@ -99,39 +110,93 @@ export default function TableSort() {
         }
         obterLancamentos()
     }, [])
- 
+
     const rowsDespesas = sortedData.map((row) => (
+
         <Table.Tr key={row.id}>
             <Table.Td>{row.descricaoLancamento}</Table.Td>
-            <Table.Td>{row.id}</Table.Td>
+            <Table.Td>{row.valorLancamento}</Table.Td>
+            <Table.Td>{dayjs(row.dataCriacaoLancamento).format('DD-MMM-YYYY')}</Table.Td>
+            <Table.Td>{row.valorLancamento}</Table.Td>
         </Table.Tr>
-    ));
+    ))
 
     return (
-        <Container>
-            <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} layout="fixed">
-                <Table.Tbody>
-                    <Table.Tr>
-                        <Th
-                            sorted={sortBy === 'descricaoLancamento'}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting('descricaoLancamento')}
-                        >
-                            Descrição
-                        </Th>
-                        <Th
-                            sorted={sortBy === 'id'}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting('id')}
-                        >
-                            Id
-                        </Th>
-                    </Table.Tr>
-                </Table.Tbody>
-                <Table.Tbody>
-                    {rowsDespesas}                  
-                </Table.Tbody>
-            </Table>
+        <Container size={'xl'}>
+            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
+                    <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
+                        <Table.Tbody>
+                            <Table.Tr>
+                                <Th
+                                    sorted={sortBy === 'descricaoLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('descricaoLancamento')}
+                                >
+                                    Descrição
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'valorLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('valorLancamento')}
+                                >
+                                    Valor
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'dataCriacaoLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('dataCriacaoLancamento')}
+                                >
+                                    Data
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'valorLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('valorLancamento')}
+                                >
+                                    Qtd
+                                </Th>
+                            </Table.Tr>
+                        </Table.Tbody>
+                        <Table.Tbody>{rowsDespesas}</Table.Tbody>
+                    </Table>
+            
+
+                    <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'yellow.6'}>
+                        <Table.Tbody>
+                            <Table.Tr>
+                                <Th
+                                    sorted={sortBy === 'descricaoLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('descricaoLancamento')}
+                                >
+                                    Descrição
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'valorLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('valorLancamento')}
+                                >
+                                    Valor
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'dataCriacaoLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('dataCriacaoLancamento')}
+                                >
+                                    Data
+                                </Th>
+                                <Th
+                                    sorted={sortBy === 'valorLancamento'}
+                                    reversed={reverseSortDirection}
+                                    onSort={() => setSorting('valorLancamento')}
+                                >
+                                    Qtd
+                                </Th>
+                            </Table.Tr>
+                        </Table.Tbody>
+                        <Table.Tbody>{rowsDespesas}</Table.Tbody>
+                    </Table>
+            </SimpleGrid>
         </Container>
     );
 }
