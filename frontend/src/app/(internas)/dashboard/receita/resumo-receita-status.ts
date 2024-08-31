@@ -12,15 +12,20 @@ const statusColors: { [key: string]: string } = {
     Cancelado: 'red.6'
 };
 
-export function DataDonuChart(lancamentos: LancamentoFinanceiro[]): ResumoStatus[] {
+export function processarResumoStatusReceita(lancamentos: LancamentoFinanceiro[]): ResumoStatus[] {
 
+    const lancamentoReceita = lancamentos.filter((l => {
+        return (
+            l.tipoLancamento === 'Receita'
+        )
+       }))
     const acumulador: { [key: string]: number } = {
         Pendente: 0,
         Consolidado: 0,
         Cancelado: 0
     };
 
-    lancamentos.forEach(lancamento => {
+    lancamentoReceita.forEach(lancamento => {
         const status = lancamento.statusLancamento;
         if (acumulador.hasOwnProperty(status)) {
             acumulador[status] += 1;  

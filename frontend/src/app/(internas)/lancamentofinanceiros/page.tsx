@@ -5,7 +5,7 @@ import { useEffect, useState, useContext } from "react"
 import LancamentoFinanceiroFiltro from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
-import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination, TextInput, rem, keys } from "@mantine/core"
+import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination, TextInput, rem, keys, Loader } from "@mantine/core"
 import LancamentoFinanceiroTabela from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroTabela/LancamentoFinanceiroTabela"
 import { IconSearch } from "@tabler/icons-react"
 
@@ -51,7 +51,7 @@ export default function LancamentoPage() {
         setActivePage(1);
     }, [filtroStatus, search]);
 
-    if (carregando) return <div>...</div>
+    if (carregando) return <Loader color="yellow" type="bars" />
 
     const lancamentosFiltrados = filtroStatus === "Todos" || filtroStatus == null
         ? lancamentos

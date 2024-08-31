@@ -1,12 +1,12 @@
 import { DonutChart } from '@mantine/charts';
 import { dataDonutChart } from '../data';
-import { ResumoStatus } from './dataDonuChart';
+import { ResumoStatus } from './resumo-receita-status';
 
 interface PageDonutChartProps {
   resumo: ResumoStatus[]
 }
 
-export default function PageDonutChart({resumo}: PageDonutChartProps) {
+export default function GraficoReceitaStatus({resumo}: PageDonutChartProps) {
   return (
   <DonutChart 
   size={250} 

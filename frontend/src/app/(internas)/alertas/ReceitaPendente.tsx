@@ -2,27 +2,16 @@
 import { useEffect, useState } from 'react';
 import {
     Table,
-    ScrollArea,
     UnstyledButton,
     Group,
     Text,
     Center,
-    TextInput,
     rem,
-    keys,
-    Container,
-    Stack,
-    SimpleGrid,
     Box,
 } from '@mantine/core';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
 import classes from './TableSort.module.css';
-import useApi from '@/app/(internas)/hooks/useApi';
-import dayjs from 'dayjs';
 import { formatarMoedaBR } from '@/app/Utils/Moeda';
-import Stats1 from '@/app/(externas)/state1/page';
-import { FiltrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alertas/despesaFiltrar';
-import { FiltrarLancamentoAtrasadoReceitas } from './receitaFiltrar';
 import { LancamentoTotalizado, LinhasLancamentos } from './page';
 import { sortData } from './ordenarDados';
 import Estatistica from '@/app/components/Mantine/Estatistica/Estatistica';

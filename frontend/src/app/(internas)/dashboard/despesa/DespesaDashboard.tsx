@@ -1,40 +1,22 @@
 'use client'
-import { Container, Divider, Stack } from "@mantine/core";
-import useApi from "../../hooks/useApi";
-import { useEffect, useState } from "react";
-import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
+import { Container, Stack } from "@mantine/core";
+import { ResumoStatus } from "./resumo-despesa-status";
+import { ResumoMensal } from "./resumo-despesa-mensal";
+import GraficoDespesaMensal from "./GraficoDespesaMensal";
+import GraficoDespesaStatus from "./GraficoDespesaStatus";
 
-import PageDonutChart from "./PageDonutChart";
-import PageBarChart from "./PageBarChart";
+interface DespesaDashboardProps{
+   resumoMensal: ResumoMensal[]
+   resumoStatus: ResumoStatus[]
+}
 
-import { DataDonuChart, ResumoStatus } from "./dataDonuChart";
-import { DataBarChart, ResumoMensal } from "./dataBarChart";
-
-export default function DespesaDashboard() {
-
-   const { getApi } = useApi()
-   const [ carregando, setCarregando ] = useState<boolean>(true)
-   const [ lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([])
-   const [ dataBarChart, setDataBarChart] = useState<ResumoMensal[]>([])
-   const [ dataDonuChart, setdataDonuChart] = useState<ResumoStatus[]>([])
-
-   useEffect(() =>{
-      async function obterLancamentos(){
-         const dados = await getApi('/lancamentofinanceiros/')
-         const resumoMensal = DataBarChart(dados)
-         const resumoStatus = DataDonuChart(dados)
-         setLancamentos(dados)
-         setDataBarChart(resumoMensal)
-         setdataDonuChart(resumoStatus)
-      }
-      obterLancamentos()
-   }, [])
+export default function DespesaDashboard({resumoMensal, resumoStatus}: DespesaDashboardProps) {
 
    return (
       <Container>
          <Stack align="center">
-            <PageBarChart resumo={dataBarChart}/>
-            <PageDonutChart resumo={dataDonuChart}/>
+            <GraficoDespesaMensal resumo={resumoMensal}/>
+            <GraficoDespesaStatus resumo={resumoStatus}/>
          </Stack>
       </Container>
    )

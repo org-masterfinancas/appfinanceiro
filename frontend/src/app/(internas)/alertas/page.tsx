@@ -5,6 +5,7 @@ import {
     Container,
     SimpleGrid,
     Box,
+    Loader,
 } from '@mantine/core';
 import useApi from '@/app/(internas)/hooks/useApi';
 import { formatarMoedaBR } from '@/app/Utils/Moeda';
@@ -31,6 +32,8 @@ export default function Alertas() {
 
     const { getApi } = useApi()
 
+    const [carregando, setCarregando] = useState<boolean>(true);
+
     const [despesa, SetDespesa] = useState<LinhasLancamentos[]>([])
     const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
 
@@ -50,9 +53,14 @@ export default function Alertas() {
             const { receitaFiltrada, receitaTotalizada } = resultadoReceita
             setEstatisticaReceita(receitaTotalizada)
             SetReceita(receitaFiltrada)
+            
+            setCarregando(false)
+
         }
         obterLancamentos()
     }, [])
+
+    if (carregando) return <Loader color="yellow" type="bars" />
 
     const rowsDespesas = despesa.map((row) => (
 

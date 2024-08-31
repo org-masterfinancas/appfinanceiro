@@ -8,7 +8,7 @@ export interface ResumoMensal {
     Cancelado: number;
 }
 
-export function DataBarChart(lancamentos: LancamentoFinanceiro[]) {
+export function processarResumoMensalDespesa(lancamentos: LancamentoFinanceiro[]) {
 
    const lancamentoDespesa = lancamentos.filter((l => {
     return (
