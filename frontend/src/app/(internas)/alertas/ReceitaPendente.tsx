@@ -27,9 +27,9 @@ import { LancamentoTotalizado, LinhasLancamentos } from './page';
 import { sortData } from './ordenarDados';
 
 
-interface DespesaPendenteProps {
+interface ReceitaPendenteProps {
     linhasLancamentos: LinhasLancamentos[]
-    despesaTotalizada: LancamentoTotalizado
+    receitaTotalizada: LancamentoTotalizado
 
 }
 
@@ -58,7 +58,7 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
     );
 }
 
-export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }: DespesaPendenteProps) {
+export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }: ReceitaPendenteProps) {
 
 
     const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
@@ -69,9 +69,9 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
     const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
 
     useEffect(() => {
-        setEstatisticaDespesa(despesaTotalizada);
+        setEstatisticaDespesa(receitaTotalizada);
         setSortedData(linhasLancamentos);
-    }, [linhasLancamentos, despesaTotalizada]); 
+    }, [linhasLancamentos, receitaTotalizada]); 
 
     const setSorting = (field: keyof LinhasLancamentos) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -93,7 +93,7 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
 
     return (
         <Box>
-            <Stats1 titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
+            <Stats1 titulo='RECEITA PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
             <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
                 <Table.Tbody>
                     <Table.Tr>

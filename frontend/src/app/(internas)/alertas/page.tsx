@@ -24,16 +24,22 @@ import Stats1 from '@/app/(externas)/state1/page';
 import { FiltrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alertas/despesaFiltrar';
 import { FiltrarLancamentoAtrasadoReceitas } from './receitaFiltrar';
 import DespesaPendente from './DespesaPendente';
+import ReceitaPendente from './ReceitaPendente';
 
-interface LinhasLancamentos {
+export interface LinhasLancamentos {
     id: string
-    descricaoLancamento: string,
-    dataCriacaoLancamento: Date,
-    valorLancamento: number,
+    descricaoLancamento: string
+    dataCriacaoLancamento: Date
+    valorLancamento: number
     qtdDias: number
 }
 
-
+export interface LancamentoTotalizado {
+    quantidade: number
+    totalValor: number
+}
+    
+    
 interface ThProps {
     children: React.ReactNode;
     reversed: boolean;
@@ -129,9 +135,9 @@ export default function TableSort() {
         <Container size={'xl'}>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
                 <Box>
-                    <DespesaPendente />
+                    <DespesaPendente linhasLancamentos={sortedData} despesaTotalizada={estatisticaDespesa} />
                 </Box>
-                    <DespesaPendente />
+                    <ReceitaPendente linhasLancamentos={sortedData} receitaTotalizada={estatisticaDespesa} />
                 <Box>
                 </Box>
             </SimpleGrid>
