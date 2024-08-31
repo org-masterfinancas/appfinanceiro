@@ -4,6 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import UserMenu from './UserMenu/UserMenu';
 import NavbarSimple from './NavBar/NavbarSimple';
 import MeuLogo from './logo/MeuLogo';
+import PageHeader from './PageHeader/PageHeader';
 
 export default function ThemaMantine(props: any) {
   const [opened, { toggle }] = useDisclosure();
@@ -33,7 +34,10 @@ export default function ThemaMantine(props: any) {
       <AppShell.Navbar>
         <NavbarSimple toggle={toggle} />
       </AppShell.Navbar>
-      <AppShell.Main>{props.children}</AppShell.Main>
+      <AppShell.Main>
+        <PageHeader/>
+        {props.children}
+        </AppShell.Main>
     </AppShell>
   );
 }

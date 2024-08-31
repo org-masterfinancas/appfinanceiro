@@ -25,6 +25,7 @@ import { FiltrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alertas/desp
 import { FiltrarLancamentoAtrasadoReceitas } from './receitaFiltrar';
 import { LancamentoTotalizado, LinhasLancamentos } from './page';
 import { sortData } from './ordenarDados';
+import Estatistica from '@/app/components/Mantine/Estatistica/Estatistica';
 
 
 interface ReceitaPendenteProps {
@@ -81,7 +82,7 @@ export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }
     };
 
 
-    const rowsDespesas = sortedData.map((row) => (
+    const rowsReceitas = sortedData.map((row) => (
 
         <Table.Tr key={row.id}>
             <Table.Td>{row.descricaoLancamento}</Table.Td>
@@ -93,7 +94,7 @@ export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }
 
     return (
         <Box>
-            <Stats1 titulo='RECEITA PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
+            <Estatistica titulo='RECEITA PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
             <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
                 <Table.Tbody>
                     <Table.Tr>
@@ -120,7 +121,7 @@ export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }
                         </Th>
                     </Table.Tr>
                 </Table.Tbody>
-                <Table.Tbody>{rowsDespesas}</Table.Tbody>
+                <Table.Tbody>{rowsReceitas}</Table.Tbody>
             </Table>
         </Box>
     );

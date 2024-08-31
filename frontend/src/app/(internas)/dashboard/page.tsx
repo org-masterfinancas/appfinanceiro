@@ -1,41 +1,23 @@
 'use client'
-import { Container, Stack } from "@mantine/core";
-import useApi from "../hooks/useApi";
-import { useEffect, useState } from "react";
-import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
 
-import PageDonutChart from "./PageDonutChart";
-import PageBarChart from "./PageBarChart";
+import { Tabs } from '@mantine/core';
+import DespesaDashboard from './despesa/DespesaDashboard';
 
-import { DataDonuChart, ResumoStatus } from "./dataDonuChart";
-import { DataBarChart, ResumoMensal } from "./dataBarChart";
+export default function Dashboard() {
+  return (
+    <Tabs color="teal" defaultValue="first" >
+      <Tabs.List mb={'xl'}>
+        <Tabs.Tab value="first">RECEITAS</Tabs.Tab>
+        <Tabs.Tab value="second" color="blue">DESPESAS</Tabs.Tab>
+      </Tabs.List>
 
-export default function Page() {
+      <Tabs.Panel value="first" pt="xs">
+       <DespesaDashboard/>
+      </Tabs.Panel>
 
-   const { getApi } = useApi()
-   const [ carregando, setCarregando ] = useState<boolean>(true)
-   const [ lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([])
-   const [ dataBarChart, setDataBarChart] = useState<ResumoMensal[]>([])
-   const [ dataDonuChart, setdataDonuChart] = useState<ResumoStatus[]>([])
-
-   useEffect(() =>{
-      async function obterLancamentos(){
-         const dados = await getApi('/lancamentofinanceiros/')
-         const resumoMensal = DataBarChart(dados)
-         const resumoStatus = DataDonuChart(dados)
-         setLancamentos(dados)
-         setDataBarChart(resumoMensal)
-         setdataDonuChart(resumoStatus)
-      }
-      obterLancamentos()
-   }, [])
-
-   return (
-      <Container>
-         <Stack align="center">
-            <PageBarChart resumo={dataBarChart}/>
-            <PageDonutChart resumo={dataDonuChart}/>
-         </Stack>
-      </Container>
-   )
+      <Tabs.Panel value="second" pt="xs">
+       <DespesaDashboard/>
+      </Tabs.Panel>
+    </Tabs>
+  );
 }

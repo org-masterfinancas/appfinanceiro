@@ -21,16 +21,15 @@ export function DataDonuChart(lancamentos: LancamentoFinanceiro[]): ResumoStatus
     };
 
     lancamentos.forEach(lancamento => {
-        const valor = +lancamento.valorLancamento;
         const status = lancamento.statusLancamento;
         if (acumulador.hasOwnProperty(status)) {
-            acumulador[status] += valor;
+            acumulador[status] += 1;  
         }
     });
 
     const resumo: ResumoStatus[] = Object.keys(acumulador).map(status => ({
         name: status,
-        value: acumulador[status],
+        value: acumulador[status], 
         color: statusColors[status]
     }));
 

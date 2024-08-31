@@ -17,14 +17,10 @@ import {
 } from '@mantine/core';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
 import classes from './TableSort.module.css';
-import useApi from '@/app/(internas)/hooks/useApi';
-import dayjs from 'dayjs';
 import { formatarMoedaBR } from '@/app/Utils/Moeda';
-import Stats1 from '@/app/(externas)/state1/page';
-import { FiltrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alertas/despesaFiltrar';
-import { FiltrarLancamentoAtrasadoReceitas } from './receitaFiltrar';
 import { LancamentoTotalizado, LinhasLancamentos } from './page';
 import { sortData } from './ordenarDados';
+import Estatistica from '@/app/components/Mantine/Estatistica/Estatistica';
 
 
 interface DespesaPendenteProps {
@@ -93,8 +89,8 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
 
     return (
         <Box>
-            <Stats1 titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
-            <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
+            <Estatistica titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
+            <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'orange.6'}>
                 <Table.Tbody>
                     <Table.Tr>
                         <Th

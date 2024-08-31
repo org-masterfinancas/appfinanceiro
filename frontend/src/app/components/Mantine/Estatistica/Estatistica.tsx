@@ -26,7 +26,7 @@ const icons = {
 
 const data =  { title: '', icon: 'receipt', value: 0, diff: 34 }
   
-export default function Estatisticas({titulo, total, qtde}: EstatisticasProps) {
+export default function Estatistica({titulo, total, qtde}: EstatisticasProps) {
 
     return (
       <Paper withBorder p="md" radius="md">

@@ -1,5 +1,5 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-import { mesesMap } from "./utils";
+import { mesesMap } from "../utils";
 
 export interface ResumoMensal {
     mes: string;
@@ -10,7 +10,13 @@ export interface ResumoMensal {
 
 export function DataBarChart(lancamentos: LancamentoFinanceiro[]) {
 
-   const resumo = lancamentos.reduce<ResumoMensal[]>((acc, lancamento) => {
+   const lancamentoDespesa = lancamentos.filter((l => {
+    return (
+        l.tipoLancamento === 'Despesa'
+    )
+   }))
+
+   const resumo = lancamentoDespesa.reduce<ResumoMensal[]>((acc, lancamento) => {
         const mes = new Date(lancamento.dataCriacaoLancamento).toLocaleString('pt-BR', { month: 'long' });
         const valor = +lancamento.valorLancamento
 

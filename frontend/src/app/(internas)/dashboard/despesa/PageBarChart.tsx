@@ -13,6 +13,11 @@ export default function PageBarChart({ resumo }: PageBarChartProps) {
       data={resumo}
       dataKey="mes"
       withLegend
+      withBarValueLabel
+      legendProps={{ verticalAlign: 'bottom', height: 50 }}
+      yAxisLabel="Despesas R$"
+      valueFormatter={(value) => new Intl.NumberFormat('pt-BR').format(value)}
+      
       series={[
         { name: 'Consolidado', color: 'indigo.6' },
         { name: 'Pendente', color: 'yellow.6' },
