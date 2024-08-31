@@ -9,7 +9,13 @@ import {
   IconArrowDownRight,
 } from '@tabler/icons-react';
 import classes from './StatsGrid.module.css';
+import { formatarMoedaBR } from '@/app/Utils/Moeda';
 
+interface EstatisticasProps{
+  titulo: string,
+  total: number
+  qtde: number
+}
 const icons = {
   user: IconUserPlus,
   discount: IconDiscount2,
@@ -17,24 +23,24 @@ const icons = {
   coin: IconCoin,
 };
 
-const data =  { title: 'DESPESAS PENDENTES', icon: 'receipt', value: 'R$ 2.500,45', diff: 34 }
+
+const data =  { title: '', icon: 'receipt', value: 0, diff: 34 }
   
-export default function Stats1() {
-    const Icon = data.icon
+export default function Estatisticas({titulo, total, qtde}: EstatisticasProps) {
 
     return (
       <Paper withBorder p="md" radius="md">
         <Group justify="space-between">
           <Text size="xs" c="dimmed" className={classes.title}>
-            {data.title}
+            {titulo}
           </Text>
           <IconReceipt2 className={classes.icon} size="1.4rem" stroke={1.5} />
         </Group>
 
         <Group align="flex-end" gap="xs" mt={25}>
-          <Text className={classes.value}>{data.value}</Text>
-          <Text c={data.diff > 0 ? 'teal' : 'red'} fz="sm" fw={500} className={classes.diff}>
-            <span>{data.diff} Lançamentos</span>
+          <Text className={classes.value}>{formatarMoedaBR(total)}</Text>
+          <Text c={qtde > 0 ? 'teal' : 'red'} fz="sm" fw={500} className={classes.diff}>
+            <span>{qtde} Lançamentos</span>
           </Text>
         </Group>
         <Text fz="xs" c="dimmed" mt={7}>

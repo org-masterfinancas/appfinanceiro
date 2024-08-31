@@ -1,7 +1,7 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
 import dayjs from "dayjs";
 
-export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinanceiro[]) {
+export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinanceiro[]) {
     const hoje = new Date()
     const vinteDiasAtras = new Date(hoje)
     vinteDiasAtras.setDate(hoje.getDate() - 20)
@@ -10,12 +10,12 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         return (
             lancamento.statusLancamento === "Pendente" &&  
-            lancamento.tipoLancamento === "Despesa" &&
+            lancamento.tipoLancamento === "Receita" &&
             dataLancamento < vinteDiasAtras
         )
     })
 
-    const dados = lancamentoFiltrado.map(lancamento => {
+    const receitaFiltrada = lancamentoFiltrado.map(lancamento => {
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         const qtdDias = Math.floor((hoje.getTime() - dataLancamento.getTime()) / (1000 * 60 * 60 * 24));
         
@@ -27,21 +27,16 @@ export function FiltrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinance
             qtdDias: qtdDias
         }
     })
-
-    return dados
-}
-
-export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinanceiro[]) {
-    const hoje = new Date()
-    const vinteDiasAtras = new Date(hoje)
-    vinteDiasAtras.setDate(hoje.getDate() - 20)
     
-    return lancamentos.filter(lancamento => {
-        const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
-        return (
-            lancamento.statusLancamento === "Pendente" &&  
-            lancamento.tipoLancamento === "Receita" &&
-            dataLancamento < vinteDiasAtras
-        )
-    })
+    const totalValor = receitaFiltrada.reduce((total, lancamento) => total + +lancamento.valorLancamento, 0);
+    const quantidade = receitaFiltrada.length;
+
+    return {
+        receitaFiltrada,
+        receitaTotalizada: {
+            totalValor,
+            quantidade,
+        }
+    }
+
 }
