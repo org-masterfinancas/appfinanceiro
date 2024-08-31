@@ -82,27 +82,22 @@ function sortData(
     });
 }
 
-export default function TableSort() {
+export default function DespesaPendente() {
 
     const { getApi } = useApi()
-    const [carregando, setCarregando] = useState<boolean>(true)
-    const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<LinhasLancamentos[]>([])
-    const [filtroVinteDiasAtrasoReceita, setFiltroVinteDiasAtrasoReceita] = useState<LinhasLancamentos[]>([])
 
     const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
-    const [sortedDataReceita, setSortedDataReceita] = useState<LinhasLancamentos[]>([])
 
     const [sortBy, setSortBy] = useState<keyof LinhasLancamentos | null>(null);
     const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
     const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
-    const [estatisticaReceita, setEstatisticaReceita] = useState<any>({})
 
     const setSorting = (field: keyof LinhasLancamentos) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
-        setSortedData(sortData(filtroVinteDiasAtrasoDespesa, { sortBy: field, reversed }));
+        setSortedData(sortData(sortedData, { sortBy: field, reversed }));
     };
 
 
@@ -115,8 +110,6 @@ export default function TableSort() {
             const { despesaFiltrada, despesaTotalizada} = resultadoDespesa
             setEstatisticaDespesa(despesaTotalizada)
             setSortedData(despesaFiltrada)
-            setFiltroVinteDiasAtrasoDespesa(despesaFiltrada)
-
         }
         obterLancamentos()
     }, [])
@@ -132,8 +125,6 @@ export default function TableSort() {
 
 
     return (
-        <Container size={'xl'}>
-            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
                 <Box>
                     <Stats1 titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
                     <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
@@ -165,9 +156,5 @@ export default function TableSort() {
                         <Table.Tbody>{rowsDespesas}</Table.Tbody>
                     </Table>
                 </Box>
-                <Box>
-                </Box>
-            </SimpleGrid>
-        </Container>
     );
 }

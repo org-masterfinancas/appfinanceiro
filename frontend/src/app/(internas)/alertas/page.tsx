@@ -23,6 +23,7 @@ import { formatarMoedaBR } from '@/app/Utils/Moeda';
 import Stats1 from '@/app/(externas)/state1/page';
 import { FiltrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alertas/despesaFiltrar';
 import { FiltrarLancamentoAtrasadoReceitas } from './receitaFiltrar';
+import DespesaPendente from './DespesaPendente';
 
 interface LinhasLancamentos {
     id: string
@@ -85,24 +86,19 @@ function sortData(
 export default function TableSort() {
 
     const { getApi } = useApi()
-    const [carregando, setCarregando] = useState<boolean>(true)
-    const [filtroVinteDiasAtrasoDespesa, setFiltroVinteDiasAtrasoDespesa] = useState<LinhasLancamentos[]>([])
-    const [filtroVinteDiasAtrasoReceita, setFiltroVinteDiasAtrasoReceita] = useState<LinhasLancamentos[]>([])
 
     const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
-    const [sortedDataReceita, setSortedDataReceita] = useState<LinhasLancamentos[]>([])
 
     const [sortBy, setSortBy] = useState<keyof LinhasLancamentos | null>(null);
     const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
     const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
-    const [estatisticaReceita, setEstatisticaReceita] = useState<any>({})
 
     const setSorting = (field: keyof LinhasLancamentos) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
-        setSortedData(sortData(filtroVinteDiasAtrasoDespesa, { sortBy: field, reversed }));
+        setSortedData(sortData(sortedData, { sortBy: field, reversed }));
     };
 
 
@@ -112,16 +108,9 @@ export default function TableSort() {
             const dados = await getApi('/lancamentofinanceiros/')
 
             const resultadoDespesa = FiltrarLancamentoAtrasadoDespesas(dados)
-            const { despesaFiltrada, despesaTotalizada} = resultadoDespesa
+            const { despesaFiltrada, despesaTotalizada } = resultadoDespesa
             setEstatisticaDespesa(despesaTotalizada)
             setSortedData(despesaFiltrada)
-            setFiltroVinteDiasAtrasoDespesa(despesaFiltrada)
-
-            const resultadoReceita = FiltrarLancamentoAtrasadoReceitas(dados)
-            const { receitaFiltrada, receitaTotalizada} = resultadoReceita
-            setEstatisticaReceita(receitaTotalizada)
-            setSortedDataReceita(receitaFiltrada)
-            setFiltroVinteDiasAtrasoDespesa(receitaFiltrada)
         }
         obterLancamentos()
     }, [])
@@ -135,81 +124,15 @@ export default function TableSort() {
         </Table.Tr>
     ))
 
-    const rowsReceitas = sortedDataReceita.map((row) => (
-
-        <Table.Tr key={row.id}>
-            <Table.Td>{row.descricaoLancamento}</Table.Td>
-            <Table.Td>{formatarMoedaBR(row.valorLancamento)}</Table.Td>
-            <Table.Td>{row.qtdDias}</Table.Td>
-        </Table.Tr>
-    ))
-
 
     return (
         <Container size={'xl'}>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
                 <Box>
-                    <Stats1 titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
-                    <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
-                        <Table.Tbody>
-                            <Table.Tr>
-                                <Th
-                                    sorted={sortBy === 'descricaoLancamento'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('descricaoLancamento')}
-                                >
-                                    Descrição
-                                </Th>
-                                <Th
-                                    sorted={sortBy === 'valorLancamento'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('valorLancamento')}
-                                >
-                                    Valor
-                                </Th>
-                                <Th
-                                    sorted={sortBy === 'qtdDias'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('qtdDias')}
-                                >
-                                    Dias
-                                </Th>
-                            </Table.Tr>
-                        </Table.Tbody>
-                        <Table.Tbody>{rowsDespesas}</Table.Tbody>
-                    </Table>
+                    <DespesaPendente />
                 </Box>
+                    <DespesaPendente />
                 <Box>
-
-                    <Stats1 titulo='RECEITAS PENDENTES' total={estatisticaReceita.totalValor} qtde={estatisticaReceita.quantidade}/>
-                    <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'red.6'}>
-                        <Table.Tbody>
-                            <Table.Tr>
-                                <Th
-                                    sorted={sortBy === 'descricaoLancamento'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('descricaoLancamento')}
-                                >
-                                    Descrição
-                                </Th>
-                                <Th
-                                    sorted={sortBy === 'valorLancamento'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('valorLancamento')}
-                                >
-                                    Valor
-                                </Th>
-                                <Th
-                                    sorted={sortBy === 'qtdDias'}
-                                    reversed={reverseSortDirection}
-                                    onSort={() => setSorting('qtdDias')}
-                                >
-                                    Dias
-                                </Th>
-                            </Table.Tr>
-                        </Table.Tbody>
-                        <Table.Tbody>{rowsReceitas}</Table.Tbody>
-                    </Table>
                 </Box>
             </SimpleGrid>
         </Container>
