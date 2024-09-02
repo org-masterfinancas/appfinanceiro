@@ -1,6 +1,11 @@
 import RepositorioUsuario from '../Repositorio/RepositorioUsuario';
+import ValidationError from '../errors/ValidationError';
 import Usuario from '../model/Usuario';
+import { UsurioSenha } from '../model/UsuarioSenha';
 import Senha from '../shared/Senha';
+import ServiceLogin from './ServiceLogin';
+
+const servicoLogin = new ServiceLogin()
 
 export class ServiceUsuario {
   private repo: RepositorioUsuario
@@ -48,6 +53,24 @@ export class ServiceUsuario {
       throw new Error('404')
     }
     return this.repo.alterar(usuario);
+  }
+
+  async alterarSenha(usuario: UsurioSenha): Promise<void> {
+
+    const resultadoUsuario = await this.repo.obterPorId(usuario.id);
+    if (!resultadoUsuario) {
+      throw new Error('404')
+    }
+
+    const resultadoSenha = await servicoLogin.loginSucesso(usuario.email, usuario.senha)
+
+    if(!resultadoSenha.result){
+      throw new ValidationError('Senha atual incorreta');
+    }
+
+    resultadoUsuario.senha = Senha.criptografar(usuario.novasenha)
+    return this.repo.alterar(resultadoUsuario)
+
   }
 
   //

@@ -1,17 +1,20 @@
 "use client";
-import useApi from "../../../(internas)/hooks/useApi";
-import useToggle from "../../../(internas)/hooks/useToogle";
+import useApi from "../hooks/useApi";
+import useToggle from "../hooks/useToogle";
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from "react";
 import { ContextoUsuario } from "@/app/data/contexts/ContextoUsuario";
 import Usuario from "@/app/data/model/usuario";
 import { hasLength, useForm } from '@mantine/form'
-import { Avatar, Box, Button, Container, keys, Paper, Space, Text, TextInput } from "@mantine/core"
+import { Avatar, Box, Button, Container, keys, Loader, Paper, Space, Text, TextInput } from "@mantine/core"
+import { useToggle as useToggleMantine } from '@mantine/hooks';
+import AtualizarPerfil from "@/app/(internas)/usuario/AtualizarPerfil";
+import AtualizarSenha from "@/app/(internas)/usuario/AtualizarSenha";
 
 interface UsuarioFormularioProps {
 }
 
-export default function UsuarioFormulario() {
+export default function UsuarioPage() {
 
   const router = useRouter();
 
@@ -20,6 +23,7 @@ export default function UsuarioFormulario() {
   const [EhAlterado, atlernar] = useToggle()
   const { delApi, putApi } = useApi();
   const { usuario, atualizarUsuario } = useContext(ContextoUsuario)
+  const [tipoAtualizacao, toogle] = useToggleMantine(['perfil', 'senha'])
 
   const form = useForm<Usuario>({
     mode: 'uncontrolled',
@@ -49,21 +53,8 @@ export default function UsuarioFormulario() {
     }
   }, [usuario]);
 
-  if (carregando) return <div>...</div>
+  if (carregando) return <Loader color="yellow" type="bars" />
 
-
-  const handleExcluir = async () => {
-    const result = await delApi(`/usuarios/${usuario.id}`,);
-
-    if (result === null) {
-      setMensagem("Não foi possível excluir!")
-    } else if (result.error) {
-      setMensagem(result.errror)
-    } else {
-
-      router.push('/login')
-    }
-  }
 
   const handleSalvar = async (formUsuario: Usuario) => {
 
@@ -111,52 +102,14 @@ export default function UsuarioFormulario() {
             {usuario.email} • {usuario.perfil}
           </Text>
 
-          <Button variant="default" fullWidth mt="md">
-            Alterar Senha
+          <Button variant="default" fullWidth mt="md" onClick={() => toogle()}>
+            {tipoAtualizacao === 'perfil' ? 
+            'Atualizar Senha' :
+            'Atualizar Perfil'}
           </Button>
         </Paper>
       </Container>
-      <form onSubmit={form.onSubmit(handleSalvar)}>
-        {mensagem && <Text c={'red'}>{JSON.stringify(mensagem)}</Text>}
-        <TextInput
-          {...form.getInputProps("id")}
-          key={form.key("id")}
-          label={"Id"}
-          style={{ display: 'none' }}
-          readOnly
-        />
-        <TextInput
-          {...form.getInputProps('email')}
-          key={form.key("email")}
-          label={'email'}
-          style={{ display: 'none' }}
-          readOnly
-        />
-        <TextInput
-          {...form.getInputProps("perfil")}
-          key={form.key('perfil')}
-          label={'Perfil'}
-          style={{ display: 'none' }}
-          readOnly
-        />
-        <TextInput
-          {...form.getInputProps("nome")}
-          key={form.key("nome")}
-          label={'Nome'}
-        />
-        <TextInput
-          {...form.getInputProps("sobrenome")}
-          key={form.key("sobrenome")}
-          label={'SobreNome'}
-        />
-
-        <TextInput
-          {...form.getInputProps("avatar")}
-          key={form.key('avatar')}
-          label={'Avatar'}
-        />
-        <Button type="submit" mt={"md"}>Salvar</Button>
-      </form>
+      {tipoAtualizacao === 'perfil' ? <AtualizarPerfil/> : <AtualizarSenha/>}
     </Box>
   )
 }

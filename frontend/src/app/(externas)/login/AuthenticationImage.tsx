@@ -48,7 +48,7 @@ export default function AuthenticationImage() {
       if (resultadoLogin.retornoLogin === 'ok') {
         await login(resultadoLogin.token)
 
-        route.push('/lancamentofinanceiros')
+        route.push('/lancamentofinanceiro')
       }
     }
     entrar()

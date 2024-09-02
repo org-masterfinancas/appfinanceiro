@@ -1,9 +1,8 @@
 'use client'
 import { Container, Stack } from "@mantine/core";
-import { ResumoStatus } from "./resumo-receita-status";
-import { ResumoMensal } from "./resumo-receita-mensal";
 import GraficoReceitaMensal from "./GraficoReceitaMensal";
 import GraficoReceitaStatus from "./GraficoReceitaStatus";
+import { ResumoMensal, ResumoStatus } from "../shared/interface";
 
 interface ReceitaDashboardProps{
    resumoMensal: ResumoMensal[]

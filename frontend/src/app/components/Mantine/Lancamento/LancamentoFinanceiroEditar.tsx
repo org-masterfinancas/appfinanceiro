@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
 import useApi from "../../../(internas)/hooks/useApi";
 import useToggle from "../../../(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
+import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
+import { DateInputProps } from "@mantine/dates";
+import dayjs from "dayjs";
+import { Text } from "@mantine/core";
+import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
 import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
 import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
 import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
-
-import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
-import { DateInput, DateInputProps } from "@mantine/dates";
-import dayjs from "dayjs";
-import { Text } from "@mantine/core";
 
 interface LancamentoFinanceiroEditarProps {
   lancamento: LancamentoFinanceiro
@@ -26,7 +25,6 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
   const router = useRouter();
   const idItem = lancamento?.id ?? "";
   const novoLancamento = false
-
 
   const form = useForm<LancamentoFinanceiro>({
     mode: 'uncontrolled',
@@ -63,9 +61,6 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
 
   if (carregando) return <div>...</div>
 
-
-
-
   const handleExcluir = async () => {
     const result = await delApi(`/lancamentofinanceiros/${idItem}`,);
 
@@ -74,7 +69,7 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
     } else if (result.error) {
       setMensagem(result.errror)
     } else {
-      router.push('/lancamentofinanceiros')
+      router.push('/lancamentofinanceiro')
     }
   }
 
@@ -105,32 +100,27 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
     } else if (result.error) {
       setMensagem(result.error)
     } else {
-      router.push('/lancamentofinanceiros')
+      router.push('/lancamentofinanceiro')
     }
   }
 
   const handleCancelar = async () => {
-    router.push('/lancamentofinanceiros')
+    router.push('/lancamentofinanceiro')
   }
-
 
   return (
     <div>
-
       <LancamentoFinanceiroCabecalho EhAlterado={EhAlterado} alternar={atlernar} />
       <form onSubmit={form.onSubmit(handleSalvar)}>
         {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
-        {/* Início Conteúdo Formulário */}
         <LancamentoFinanceiroFormulario
           form={form}
           EhAlterado={EhAlterado}
           novoLancamento={novoLancamento} />
-        {/* Fim Conteúdo Formulário */}
         <div>
           <LancamentoFinanceiroRodape EhAlterado={EhAlterado} handleCancelar={handleCancelar} handleExcluir={handleExcluir} />
         </div>
       </form>
-
     </div>
   )
 }

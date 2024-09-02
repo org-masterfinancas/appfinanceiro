@@ -1,10 +1,11 @@
 export default class RequisicaoApi {
     
+    
     static headers: Record<string, string> = {
         "Content-Type": "application/json",
 
     }
-    static urlBase = `https://appfinanceiro.onrender.com`
+    static urlBase =  process.env.NEXT_PUBLIC_URL_BACKEND
 
     static adicionaToken(token: string) {
         RequisicaoApi.headers = { ...RequisicaoApi.headers, Authorization: `Bearer ${token}`}

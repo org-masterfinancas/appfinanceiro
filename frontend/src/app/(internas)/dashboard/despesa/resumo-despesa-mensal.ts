@@ -1,12 +1,6 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-import { mesesMap } from "../utils";
-
-export interface ResumoMensal {
-    mes: string;
-    Consolidado: number;
-    Pendente: number;
-    Cancelado: number;
-}
+import { mesesMap } from "../shared/util";
+import { ResumoMensal } from "../shared/interface";
 
 export function processarResumoMensalDespesa(lancamentos: LancamentoFinanceiro[]) {
 

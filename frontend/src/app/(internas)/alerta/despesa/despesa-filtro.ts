@@ -1,7 +1,7 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
 import dayjs from "dayjs";
 
-export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinanceiro[]) {
+export function filtrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinanceiro[]) {
     const hoje = new Date()
     const vinteDiasAtras = new Date(hoje)
     vinteDiasAtras.setDate(hoje.getDate() - 20)
@@ -10,12 +10,12 @@ export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinance
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         return (
             lancamento.statusLancamento === "Pendente" &&  
-            lancamento.tipoLancamento === "Receita" &&
+            lancamento.tipoLancamento === "Despesa" &&
             dataLancamento < vinteDiasAtras
         )
     })
 
-    const receitaFiltrada = lancamentoFiltrado.map(lancamento => {
+    const despesaFiltrada = lancamentoFiltrado.map(lancamento => {
         const dataLancamento = new Date(lancamento.dataCriacaoLancamento);
         const qtdDias = Math.floor((hoje.getTime() - dataLancamento.getTime()) / (1000 * 60 * 60 * 24));
         
@@ -28,12 +28,12 @@ export function FiltrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinance
         }
     })
     
-    const totalValor = receitaFiltrada.reduce((total, lancamento) => total + +lancamento.valorLancamento, 0);
-    const quantidade = receitaFiltrada.length;
+    const totalValor = despesaFiltrada.reduce((total, lancamento) => total + +lancamento.valorLancamento, 0);
+    const quantidade = despesaFiltrada.length;
 
     return {
-        receitaFiltrada,
-        receitaTotalizada: {
+        despesaFiltrada,
+        despesaTotalizada: {
             totalValor,
             quantidade,
         }

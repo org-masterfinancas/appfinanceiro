@@ -6,7 +6,7 @@ export default function Page() {
     return (
         <Box>
             <div>
-                <Button component={Link} href="/lancamentofinanceiros/">Voltar</Button>
+                <Button component={Link} href="/lancamentofinanceiro/">Voltar</Button>
             </div>
             <LancamentoFinanceiroAdicionar />
         </Box>

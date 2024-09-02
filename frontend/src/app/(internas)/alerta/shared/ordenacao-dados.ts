@@ -1,6 +1,6 @@
-import { LinhasLancamentos } from "./page";
+import { LinhasLancamentos } from "@/app/(internas)/alertas/shared/interface";
 
-export function sortData(
+export function ordenarDados(
     data: LinhasLancamentos[],
     payload: { sortBy: keyof LinhasLancamentos; reversed: boolean }
 ) {

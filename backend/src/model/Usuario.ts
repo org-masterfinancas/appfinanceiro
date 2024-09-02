@@ -7,6 +7,7 @@ export default class Usuario {
     sobrenome: string
     email: string
     senha?: string | null
+    novaSenha?: string
     perfil?: string
     avatar?: string
     dataCriacao: Date

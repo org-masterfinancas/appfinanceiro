@@ -16,8 +16,6 @@ router.get('/:id', async (req: any, res: any) => {
 
 })
 
-
-
 router.delete('/:id', async (req: any, res: any) => {
   const id = req.params.id;
   const usuario = await service.excluir(id);
@@ -33,6 +31,15 @@ router.put('/', async (req: any, res: any) => {
   const usuarioAtualizado = await service.alterar(user);
   return res.status(200).send(usuarioAtualizado);
 })
+
+router.put('/senha', async (req: any, res: any) => {
+  const { usuarioSenha } = req.body;
+
+  await service.alterarSenha(usuarioSenha);
+  
+  return res.status(201).send();
+})
+
 router.get('/', async (_: any, res: any) => {
   const users = await service.ObterTodos()
   return res.status(200).json({ users });
@@ -46,6 +53,5 @@ router.post('/', async (req: any, res: any) => {
   await service.adicionar(usuario);
   return res.status(201).end();
 })
-
 
 export default router;

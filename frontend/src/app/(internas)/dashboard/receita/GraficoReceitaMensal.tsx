@@ -1,6 +1,6 @@
 
 import { BarChart } from '@mantine/charts';
-import { ResumoMensal } from './resumo-receita-mensal';
+import { ResumoMensal } from '../shared/interface';
 
 interface PageBarChartProps {
   resumo: ResumoMensal[]
@@ -15,7 +15,7 @@ export default function GraficoReceitaMensal({ resumo }: PageBarChartProps) {
       withLegend
       withBarValueLabel
       legendProps={{ verticalAlign: 'bottom', height: 50 }}
-      yAxisLabel="Despesas R$"
+      yAxisLabel="Receitas R$"
       valueFormatter={(value) => new Intl.NumberFormat('pt-BR').format(value)}
       
       series={[

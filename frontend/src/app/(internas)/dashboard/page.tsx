@@ -1,14 +1,14 @@
 'use client'
-
 import { Loader, Tabs } from '@mantine/core';
-import DespesaDashboard from './despesa/DespesaDashboard';
 import useApi from '../hooks/useApi';
 import { useEffect, useState } from 'react';
-import { processarResumoMensalDespesa, ResumoMensal } from './despesa/resumo-despesa-mensal';
-import { processarResumoStatusDespesa, ResumoStatus } from './despesa/resumo-despesa-status';
-import { processarResumoMensalReceita } from './receita/resumo-receita-mensal';
-import { processarResumoStatusReceita } from './receita/resumo-receita-status';
 import ReceitaDashboard from './receita/ReceitaDashboard';
+import DespesaDashboard from './despesa/DespesaDashboard';
+import { ResumoMensal, ResumoStatus } from './shared/interface';
+import { processarResumoMensalDespesa } from './despesa/resumo-despesa-mensal';
+import { processarResumoMensalReceita } from './receita/resumo-receita-mensal';
+import { processarResumoStatusDespesa } from './despesa/resumo-despesa-status';
+import { processarResumoStatusReceita } from './receita/resumo-receita-status';
 
 export default function Dashboard() {
 
@@ -43,17 +43,17 @@ export default function Dashboard() {
    if (carregando) return <Loader color="yellow" type="bars" />
 
   return (
-    <Tabs color="teal" defaultValue="first" >
+    <Tabs color="teal" defaultValue="primeiro" >
       <Tabs.List mb={'xl'}>
-        <Tabs.Tab value="first">RECEITAS</Tabs.Tab>
-        <Tabs.Tab value="second" color="dark">DESPESAS</Tabs.Tab>
+        <Tabs.Tab value="primeiro">RECEITAS</Tabs.Tab>
+        <Tabs.Tab value="segundo" color="dark">DESPESAS</Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="first" pt="xs">
+      <Tabs.Panel value="primeiro" pt="xs">
        <ReceitaDashboard resumoMensal={dadoGraficoMensalReceita} resumoStatus={dadoGraficoStatusReceita}/>
       </Tabs.Panel>
 
-      <Tabs.Panel value="second" pt="xs">
+      <Tabs.Panel value="segundo" pt="xs">
        <DespesaDashboard resumoMensal={dadoGraficoMensalDespesa} resumoStatus={dadoGraficoStatusDespesa}/>
       </Tabs.Panel>
     </Tabs>

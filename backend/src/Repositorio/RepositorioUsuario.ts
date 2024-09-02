@@ -135,5 +135,11 @@ export default class RepositorioUsuario {
             where: { email: String(email) }
         })
     }
+
+    async obterParaVerficarSenhaPorId(id: any): Promise<any> {
+        return await this.db.usuarios.findUnique({
+            where: { id: String(id) }
+        })
+    }
 }
 

@@ -1,19 +1,18 @@
 import { DonutChart } from '@mantine/charts';
-import { dataDonutChart } from '../data';
-import { ResumoStatus } from './resumo-receita-status';
+import { ResumoStatus } from '../shared/interface';
 
 interface PageDonutChartProps {
   resumo: ResumoStatus[]
 }
 
-export default function GraficoReceitaStatus({resumo}: PageDonutChartProps) {
+export default function GraficoReceitaStatus({ resumo }: PageDonutChartProps) {
   return (
-  <DonutChart 
-  size={250} 
-  thickness={30} 
-  withLabelsLine 
-  paddingAngle={11}
- chartLabel="Qtd por Status"
-  withLabels data={resumo} />
+    <DonutChart
+      size={250}
+      thickness={30}
+      withLabelsLine
+      paddingAngle={11}
+      chartLabel="Qtd por Status"
+      withLabels data={resumo} />
   )
 }

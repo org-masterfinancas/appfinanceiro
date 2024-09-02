@@ -2,8 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors';
 import cors from 'cors'
 import autenticacao from './middleware/MiddlewareAutenticacao'
-import rotasV1LancamentoFinanceiros from './router/RouterV1LancamentoFinaceiros'
-import rotasV2LancamentoFinanceiros from './router/RouterV2LancamentoFinaceiros'
+import rotasLancamentoFinanceiros from './router/RouterLancamentoFinaceiros'
 
 import rotasLogin from './router/Routerlogin';
 import rotasUsuarios from './router/RouterUsuarios';
@@ -14,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/lancamentofinanceiros', autenticacao, rotasV2LancamentoFinanceiros);
+app.use('/lancamentofinanceiros', autenticacao, rotasLancamentoFinanceiros);
 app.use('/usuarios', rotasUsuarios);
 app.use('/login', rotasLogin);
 

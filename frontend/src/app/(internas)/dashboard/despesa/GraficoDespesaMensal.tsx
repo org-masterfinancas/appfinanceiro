@@ -1,6 +1,6 @@
 
 import { BarChart } from '@mantine/charts';
-import { ResumoMensal } from './resumo-despesa-mensal';
+import { ResumoMensal } from '../shared/interface';
 
 interface PageBarChartProps {
   resumo: ResumoMensal[]

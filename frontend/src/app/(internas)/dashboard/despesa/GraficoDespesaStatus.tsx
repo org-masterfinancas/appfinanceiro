@@ -1,6 +1,5 @@
 import { DonutChart } from '@mantine/charts';
-import { dataDonutChart } from '../data';
-import { ResumoStatus } from './resumo-despesa-status';
+import { ResumoStatus } from '../shared/interface';
 
 interface PageDonutChartProps {
   resumo: ResumoStatus[]

@@ -1,32 +1,17 @@
 'use client'
 import { useEffect, useState } from 'react';
-import {
-    Table,
-    ScrollArea,
-    UnstyledButton,
-    Group,
-    Text,
-    Center,
-    TextInput,
-    rem,
-    keys,
-    Container,
-    Stack,
-    SimpleGrid,
-    Box,
-} from '@mantine/core';
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
-import classes from './TableSort.module.css';
+import { Table, UnstyledButton, Group, Text, Center, rem, Box, ActionIcon } from '@mantine/core';
+import { IconSelector, IconChevronDown, IconChevronUp, IconPencil, IconView360, IconViewportWide, IconEye } from '@tabler/icons-react';
+import classes from '@/app/(internas)/alerta/shared/TabelaAlerta.module.css';
 import { formatarMoedaBR } from '@/app/Utils/Moeda';
-import { LancamentoTotalizado, LinhasLancamentos } from './page';
-import { sortData } from './ordenarDados';
+import { LancamentoTotalizado, LinhasLancamentos } from '@/app/(internas)/alerta/shared/interface';
+import { ordenarDados } from '../shared/ordenacao-dados';
 import Estatistica from '@/app/components/Mantine/Estatistica/Estatistica';
+import Link from 'next/link';
 
-
-interface DespesaPendenteProps {
+interface ReceitaPendenteProps {
     linhasLancamentos: LinhasLancamentos[]
-    despesaTotalizada: LancamentoTotalizado
-
+    receitaTotalizada: LancamentoTotalizado
 }
 
 interface ThProps {
@@ -51,11 +36,10 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
                 </Group>
             </UnstyledButton>
         </Table.Th>
-    );
+    )
 }
 
-export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }: DespesaPendenteProps) {
-
+export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }: ReceitaPendenteProps) {
 
     const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
 
@@ -65,34 +49,40 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
     const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
 
     useEffect(() => {
-        setEstatisticaDespesa(despesaTotalizada);
+        setEstatisticaDespesa(receitaTotalizada);
         setSortedData(linhasLancamentos);
-    }, [linhasLancamentos, despesaTotalizada]); 
+    }, [linhasLancamentos, receitaTotalizada]); 
 
     const setSorting = (field: keyof LinhasLancamentos) => {
         const reversed = field === sortBy ? !reverseSortDirection : false;
         setReverseSortDirection(reversed);
         setSortBy(field);
-        setSortedData(sortData(sortedData, { sortBy: field, reversed }));
+        setSortedData(ordenarDados(sortedData, { sortBy: field, reversed }));
     };
 
-
-    const rowsDespesas = sortedData.map((row) => (
+    const rowsReceitas = sortedData.map((row) => (
 
         <Table.Tr key={row.id}>
+            <Table.Td>
+                <Group gap={0} justify="center" >
+                    <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamentofinanceiro/registro/${row.id}`}>
+                        <IconEye style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
+                    </ActionIcon>
+                </Group>
+            </Table.Td>
             <Table.Td>{row.descricaoLancamento}</Table.Td>
             <Table.Td>{formatarMoedaBR(row.valorLancamento)}</Table.Td>
             <Table.Td>{row.qtdDias}</Table.Td>
         </Table.Tr>
     ))
 
-
     return (
         <Box>
-            <Estatistica titulo='DESPESAS PENDENTES' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
-            <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" bg={'orange.6'}>
+            <Estatistica titulo='RECEITA' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
+            <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" highlightOnHover withTableBorder withColumnBorders>
                 <Table.Tbody>
                     <Table.Tr>
+                    <Table.Th />
                         <Th
                             sorted={sortBy === 'descricaoLancamento'}
                             reversed={reverseSortDirection}
@@ -116,8 +106,8 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
                         </Th>
                     </Table.Tr>
                 </Table.Tbody>
-                <Table.Tbody>{rowsDespesas}</Table.Tbody>
+                <Table.Tbody>{rowsReceitas}</Table.Tbody>
             </Table>
         </Box>
-    );
+    )
 }

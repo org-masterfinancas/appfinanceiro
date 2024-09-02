@@ -22,11 +22,10 @@ export default function LancamentoFormPage({ params }: LancamentoFormPageProps) 
     lancamentoPorId()
   }, [])
 
-
   return (
     <main className="flex flex-col">
       <div className=''>
-        <Button component={Link} href="/lancamentofinanceiros/">Voltar</Button>
+        <Button component={Link} href="/lancamentofinanceiro/">Voltar</Button>
       </div>
       <div>
         <LancamentoFinanceiroEditar lancamento={lancamento} />

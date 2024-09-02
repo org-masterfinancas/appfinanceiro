@@ -56,12 +56,12 @@ export default function LancamentoFinanceiroAdicionar() {
     } else if (result.error) {
       setMensagem(result.error)
     } else {
-      router.push('/lancamentofinanceiros')
+      router.push('/lancamentofinanceiro')
     }
   }
 
   const handleCancelar = async () => {
-    router.push('/lancamentofinanceiros')
+    router.push('/lancamentofinanceiro')
   }
 
   return (

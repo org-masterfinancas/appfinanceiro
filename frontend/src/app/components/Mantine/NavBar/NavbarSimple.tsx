@@ -13,10 +13,10 @@ interface NavbarSimpleProps {
   toggle: () => void;
 }
 const data = [
-  { link: '/lancamentofinanceiros', label: 'Lançamentos', icon: IconReceipt2 },
+  { link: '/lancamentofinanceiro', label: 'Lançamentos', icon: IconReceipt2 },
   { link: '/dashboard', label: 'Dashboard', icon: IconChartDots2 },
-  { link: '/alertas', label: 'Alertas', icon: IconBellRinging },
-  { link: '/usuarios/', label: 'Usuário', icon: IconFingerprint },
+  { link: '/alerta', label: 'Alertas', icon: IconBellRinging },
+  { link: '/usuario/', label: 'Usuário', icon: IconFingerprint },
 ];
 
 export default function NavbarSimple({toggle}: NavbarSimpleProps) {

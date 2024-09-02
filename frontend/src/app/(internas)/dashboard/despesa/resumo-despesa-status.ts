@@ -1,10 +1,5 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-
-export interface ResumoStatus {
-    name: string;
-    value: number;
-    color: string;
-}
+import { ResumoStatus } from "../shared/interface";
 
 const statusColors: { [key: string]: string } = {
     Pendente: 'yellow.6',
