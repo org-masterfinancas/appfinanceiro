@@ -18,7 +18,6 @@ import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 type UsuarioLogin = {
   email: string
   senha: string
-  manterseLogado: boolean
 }
 
 export default function Autenticacao() {
@@ -35,7 +34,6 @@ export default function Autenticacao() {
     initialValues: {
       email: '',
       senha: '',
-      manterseLogado: true,
     },
     validate: {
       email: isEmail('E-mail Inválido'),
@@ -89,14 +87,6 @@ return (
         mt="md"
         size="md" />
 
-      <Checkbox 
-      {...form.getInputProps('manterseLogado')}
-      key={form.key('manterseLogado')}
-      label="Manter-se logado" 
-      mt="xl" 
-      size="md" 
-      checked={form.values.manterseLogado}
-      />
       <Button fullWidth mt="xl" size="md" type='submit'>
         Login
       </Button>
