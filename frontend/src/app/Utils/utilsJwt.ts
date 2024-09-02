@@ -10,4 +10,3 @@ export default function decodificarJwt(token: string) {
     
     return usuario
 }
-//const email = tokenDecodificado?.email

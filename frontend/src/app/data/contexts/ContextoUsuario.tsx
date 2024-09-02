@@ -5,7 +5,6 @@ import decodificarJwt from '../../Utils/utilsJwt'
 import useCookies from "@/app/(internas)/hooks/useCookies"
 import { cookiesInserirToken, cookiesObterToken, cookiesRemoverToken } from "@/app/serverActions/actionsCookies"
 import RequisicaoApi from "@/app/requisicao/requisicaoApi"
-import { adicionaToken, apagaToken } from "../../serverActions/requisicaoApiServerAction"
 
 
 const ContextoUsuario = createContext<any>({})
@@ -24,7 +23,6 @@ export default function ProvedorUsuario(props: any) {
                 const usuario = decodificarJwt(token)
                 setUsuario(usuario)
                 setJwt(token)
-                await adicionaToken(token)
                 RequisicaoApi.adicionaToken(token)
             }
             setCarregando(false)
@@ -39,13 +37,11 @@ export default function ProvedorUsuario(props: any) {
         setJwt(token)
         RequisicaoApi.adicionaToken(token)
         await cookiesInserirToken(token)
-        await adicionaToken(token)
     }
 
     async function logout() {
         await cookiesRemoverToken()
         RequisicaoApi.apagaToken()
-        await apagaToken()
         setJwt(null)
         setUsuario(null)
     }
