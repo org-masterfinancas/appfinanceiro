@@ -1,10 +1,8 @@
-import { backendUrl } from "@/app/Utils/backend-url";
-import AuthenticationImage from "./AuthenticationImage";
+import Autenticacao from "./Autenticacao";
 
-export default function Page() {
-
+export default function LoginPage() {
    
     return (
-        <AuthenticationImage />
+        <Autenticacao />
     )
 }

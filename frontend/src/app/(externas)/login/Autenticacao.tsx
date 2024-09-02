@@ -8,7 +8,7 @@ import {
   Title,
   Text,
 } from '@mantine/core';
-import classes from './AuthenticationImage.module.css';
+import classes from './Autenticacao.module.css';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import useApi from '@/app/(internas)/hooks/useApi';
@@ -21,7 +21,7 @@ type UsuarioLogin = {
   manterseLogado: boolean
 }
 
-export default function AuthenticationImage() {
+export default function Autenticacao() {
 
   const route = useRouter()
 
