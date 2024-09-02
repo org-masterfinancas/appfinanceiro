@@ -1,4 +1,4 @@
-import { LinhasLancamentos } from "@/app/(internas)/alertas/shared/interface";
+import { LinhasLancamentos } from "@/app/(internas)/alerta/shared/interface";
 
 export function ordenarDados(
     data: LinhasLancamentos[],
