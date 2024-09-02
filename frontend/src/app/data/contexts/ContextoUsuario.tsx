@@ -1,11 +1,9 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from "react"
 import { ContextoToken } from "./ContextoToken"
-import decodificarJwt from '../../Utils/utilsJwt'
-import useCookies from "@/app/(internas)/hooks/useCookies"
-import { cookiesInserirToken, cookiesObterToken, cookiesRemoverToken } from "@/app/serverActions/actionsCookies"
-import RequisicaoApi from "@/app/requisicao/requisicaoApi"
-
+import decodificarJwt from '@/app/util/jwt'
+import { cookiesInserirToken, cookiesObterToken, cookiesRemoverToken } from "@/app/server-actions/actions-cookies"
+import RequisicaoApi from "@/app/requisicao/requisicao-api"
 
 const ContextoUsuario = createContext<any>({})
 export { ContextoUsuario }
@@ -13,7 +11,6 @@ export { ContextoUsuario }
 export default function ProvedorUsuario(props: any) {
     const [carregando, setCarregando] = useState(true)
     const [usuario, setUsuario] = useState<{} | null>(null)
-    const { getCookies, setCookies, delCookies } = useCookies()
     const { jwt, setJwt } = useContext(ContextoToken)
 
     useEffect(() => {

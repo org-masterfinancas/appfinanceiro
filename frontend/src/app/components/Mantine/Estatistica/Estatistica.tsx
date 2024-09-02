@@ -1,22 +1,14 @@
 'use client'
 import { Group, Paper, Text } from '@mantine/core';
-import {IconUserPlus, IconDiscount2, IconReceipt2, IconCoin } from '@tabler/icons-react';
-import classes from './StatsGrid.module.css';
-import { formatarMoedaBR } from '@/app/Utils/Moeda';
+import { IconReceipt2 } from '@tabler/icons-react';
+import classes from './Estatistica.module.css';
+import { formatarMoedaBR } from '@/app/util/moeda';
 
 interface EstatisticasProps{
   titulo: string,
   total: number
   qtde: number
 }
-const icons = {
-  user: IconUserPlus,
-  discount: IconDiscount2,
-  receipt: IconReceipt2,
-  coin: IconCoin,
-}
-
-const data =  { title: '', icon: 'receipt', value: 0, diff: 34 }
   
 export default function Estatistica({titulo, total, qtde}: EstatisticasProps) {
 
@@ -37,7 +29,6 @@ export default function Estatistica({titulo, total, qtde}: EstatisticasProps) {
             <span>{qtde} Lançamentos</span>
           </Text>
         </Group>
- 
       </Paper>
     )
   }

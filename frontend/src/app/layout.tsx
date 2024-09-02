@@ -2,17 +2,11 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/charts/styles.css';
-
-
 import ProvedorToken from './data/contexts/ContextoToken'
 import ProvedorUsuario from './data/contexts/ContextoUsuario'
-
-
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { theme } from './mantineTheme'
+import { theme } from './components/mantine/tema-mantine/config-tema'
 import { Notifications } from '@mantine/notifications';
-
-
 
 export const metadata = {
   title: 'App - Financeiro',

@@ -47,7 +47,6 @@ export default function AtualizarPerfil() {
 
   if (carregando) return <div>...</div>
 
-
   const handleSalvar = async (formUsuario: Usuario) => {
 
     const dados = {

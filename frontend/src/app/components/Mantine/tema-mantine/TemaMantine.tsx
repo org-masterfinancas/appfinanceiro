@@ -1,12 +1,12 @@
 'use client'
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import UserMenu from './UserMenu/UserMenu';
-import NavbarSimple from './NavBar/NavbarSimple';
-import MeuLogo from './logo/MeuLogo';
-import PageHeader from './PageHeader/PageHeader';
+import MenuUsuario from '@/app/components/mantine/menu-usuario/MenuUsuario';
+import BarraNavegacao from '@/app/components/mantine/barra-navegacao/BarraNavegacao';
+import MeuLogo from '@/app/components/mantine/logo/Logo';
+import PageHeader from '@/app/components/mantine/cabecalho-pagina/CabecalhoPagina';
 
-export default function ThemaMantine(props: any) {
+export default function TemaMantine(props: any) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -28,11 +28,11 @@ export default function ThemaMantine(props: any) {
             size="sm"
           />
           <MeuLogo />
-          <UserMenu />
+          <MenuUsuario />
         </Group>
       </AppShell.Header>
       <AppShell.Navbar>
-        <NavbarSimple toggle={toggle} />
+        <BarraNavegacao toggle={toggle} />
       </AppShell.Navbar>
       <AppShell.Main>
         <PageHeader/>

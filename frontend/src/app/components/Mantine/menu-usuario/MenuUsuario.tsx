@@ -1,24 +1,13 @@
 'use client'
 import cx from 'clsx';
 import { useContext, useState } from 'react';
-import {
-  Avatar,
-  UnstyledButton,
-  Group,
-  Text,
-  Menu,
-  rem,
-} from '@mantine/core';
-import {
-  IconLogout,
-  IconChevronDown,
-} from '@tabler/icons-react';
-import classes from './UserMenu.module.css';
+import { Avatar, UnstyledButton, Group, Text, Menu, rem} from '@mantine/core';
+import { IconLogout, IconChevronDown} from '@tabler/icons-react';
+import classes from './MenuUsuario.module.css';
 import { ContextoUsuario } from '@/app/data/contexts/ContextoUsuario';
 import Link from 'next/link';
 
-
-export default function UserMenu() {
+export default function MenuUsuario() {
   const [userMenuOpened, setUserMenuOpened] = useState(true);
   const { usuario } = useContext(ContextoUsuario)
 

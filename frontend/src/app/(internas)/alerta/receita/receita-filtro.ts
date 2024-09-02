@@ -27,8 +27,8 @@ export function filtrarLancamentoAtrasadoReceitas(lancamentos: LancamentoFinance
         }
     })
     
-    const totalValor = receitaFiltrada.reduce((total, lancamento) => total + +lancamento.valorLancamento, 0);
-    const quantidade = receitaFiltrada.length;
+    const totalValor = receitaFiltrada.reduce((total, lancamento) => total + +lancamento.valorLancamento, 0)
+    const quantidade = receitaFiltrada.length
 
     return {
         receitaFiltrada,

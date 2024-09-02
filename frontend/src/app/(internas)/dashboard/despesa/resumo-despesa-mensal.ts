@@ -34,4 +34,3 @@ export function processarResumoMensalDespesa(lancamentos: LancamentoFinanceiro[]
     resumo.sort((a, b) => mesesMap[a.mes] - mesesMap[b.mes]);
     return resumo
 }
-// resumo.sort((a, b) => parseInt(a.mes) - parseInt(b.mes));

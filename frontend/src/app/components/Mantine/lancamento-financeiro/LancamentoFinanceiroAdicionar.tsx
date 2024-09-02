@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
-import useApi from "../../../(internas)/hooks/useApi";
-import useToggle from "../../../(internas)/hooks/useToogle";
+import useApi from "@/app/(internas)/hooks/useApi";
+import useToggle from "@/app/(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
-import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
-import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
-import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
 import { Box, Text } from "@mantine/core";
 import dayjs from "dayjs";
-import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
+import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
+import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
+import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
+import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
 
 export default function LancamentoFinanceiroAdicionar() {
 
@@ -27,7 +27,7 @@ export default function LancamentoFinanceiroAdicionar() {
       tipoLancamento: isNotEmpty('Tipo lançamento vazio'),
       valorLancamento: isInRange({min:0.1},'Valor inválido'),
   },
-  });
+  })
 
   const [mensagem, setMensagem] = useState<string>("");
   const [EhAlterado, atlernar] = useToggle()
@@ -69,12 +69,10 @@ export default function LancamentoFinanceiroAdicionar() {
        <LancamentoFinanceiroCabecalho novoLancamento EhAlterado={EhAlterado} alternar={atlernar} />
       <form onSubmit={form.onSubmit(handleSalvar)}>
         {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
-        {/* Início Conteúdo Formulário */}
           <LancamentoFinanceiroFormulario 
           form={form}
           EhAlterado
           novoLancamento/>
-        {/* Fim Conteúdo Formulário */}
         <div>
           <LancamentoFinanceiroRodape novoLancamento EhAlterado={EhAlterado} handleCancelar={handleCancelar}/>
         </div>

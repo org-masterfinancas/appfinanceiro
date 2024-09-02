@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { Table, UnstyledButton, Group, Text, Center, rem, Box, ActionIcon } from '@mantine/core';
-import { IconSelector, IconChevronDown, IconChevronUp, IconPencil, IconView360, IconViewportWide, IconEye } from '@tabler/icons-react';
+import { IconSelector, IconChevronDown, IconChevronUp, IconEye } from '@tabler/icons-react';
 import classes from '@/app/(internas)/alerta/shared/TabelaAlerta.module.css';
-import { formatarMoedaBR } from '@/app/Utils/Moeda';
+import { formatarMoedaBR } from '@/app/util/moeda';
 import { LancamentoTotalizado, LinhasLancamentos } from '@/app/(internas)/alerta/shared/interface';
 import { ordenarDados } from '../shared/ordenacao-dados';
-import Estatistica from '@/app/components/Mantine/Estatistica/Estatistica';
+import Estatistica from '@/app/components/mantine/estatistica/Estatistica';
 import Link from 'next/link';
 
 interface ReceitaPendenteProps {
@@ -16,16 +16,16 @@ interface ReceitaPendenteProps {
 
 interface ThProps {
     children: React.ReactNode;
-    reversed: boolean;
-    sorted: boolean;
-    onSort(): void;
+    invertido: boolean;
+    classificado: boolean;
+    classificar(): void;
 }
 
-function Th({ children, reversed, sorted, onSort }: ThProps) {
-    const Icon = sorted ? (reversed ? IconChevronUp : IconChevronDown) : IconSelector;
+function Th({ children, invertido, classificado, classificar }: ThProps) {
+    const Icon = classificado ? (invertido ? IconChevronUp : IconChevronDown) : IconSelector;
     return (
         <Table.Th className={classes.th}>
-            <UnstyledButton onClick={onSort} className={classes.control}>
+            <UnstyledButton onClick={classificar} className={classes.control}>
                 <Group justify="space-between">
                     <Text fw={500} fz="sm">
                         {children}
@@ -41,72 +41,72 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
 
 export default function ReceitaPendente({ linhasLancamentos, receitaTotalizada }: ReceitaPendenteProps) {
 
-    const [sortedData, setSortedData] = useState<LinhasLancamentos[]>([])
+    const [dadosClassificado, setDadosClassificado] = useState<LinhasLancamentos[]>([])
 
-    const [sortBy, setSortBy] = useState<keyof LinhasLancamentos | null>(null);
-    const [reverseSortDirection, setReverseSortDirection] = useState(false);
+    const [classificarPor, setClassificarPor] = useState<keyof LinhasLancamentos | null>(null);
+    const [inverterClassificacao, setInverterClassificacao] = useState(false);
 
-    const [estatisticaDespesa, setEstatisticaDespesa] = useState<any>({})
+    const [estatisticaReceita, setEstatisticaReceita] = useState<any>({})
 
     useEffect(() => {
-        setEstatisticaDespesa(receitaTotalizada);
-        setSortedData(linhasLancamentos);
+        setEstatisticaReceita(receitaTotalizada);
+        setDadosClassificado(linhasLancamentos);
     }, [linhasLancamentos, receitaTotalizada]); 
 
-    const setSorting = (field: keyof LinhasLancamentos) => {
-        const reversed = field === sortBy ? !reverseSortDirection : false;
-        setReverseSortDirection(reversed);
-        setSortBy(field);
-        setSortedData(ordenarDados(sortedData, { sortBy: field, reversed }));
+    const classificandoPor = (campo: keyof LinhasLancamentos) => {
+        const invertido = campo === classificarPor ? !inverterClassificacao : false;
+        setInverterClassificacao(invertido);
+        setClassificarPor(campo);
+        setDadosClassificado(ordenarDados(dadosClassificado, { ordenarPor: campo, invertido }));
     };
 
-    const rowsReceitas = sortedData.map((row) => (
+    const linhasReceitas = dadosClassificado.map((linha) => (
 
-        <Table.Tr key={row.id}>
+        <Table.Tr key={linha.id}>
             <Table.Td>
                 <Group gap={0} justify="center" >
-                    <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamentofinanceiro/registro/${row.id}`}>
+                    <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamentofinanceiro/registro/${linha.id}`}>
                         <IconEye style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>
             </Table.Td>
-            <Table.Td>{row.descricaoLancamento}</Table.Td>
-            <Table.Td>{formatarMoedaBR(row.valorLancamento)}</Table.Td>
-            <Table.Td>{row.qtdDias}</Table.Td>
+            <Table.Td>{linha.descricaoLancamento}</Table.Td>
+            <Table.Td>{formatarMoedaBR(linha.valorLancamento)}</Table.Td>
+            <Table.Td>{linha.qtdDias}</Table.Td>
         </Table.Tr>
     ))
 
     return (
         <Box>
-            <Estatistica titulo='RECEITA' total={estatisticaDespesa.totalValor} qtde={estatisticaDespesa.quantidade} />
+            <Estatistica titulo='RECEITA' total={estatisticaReceita.totalValor} qtde={estatisticaReceita.quantidade} />
             <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed" highlightOnHover withTableBorder withColumnBorders>
                 <Table.Tbody>
                     <Table.Tr>
                     <Table.Th />
                         <Th
-                            sorted={sortBy === 'descricaoLancamento'}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting('descricaoLancamento')}
+                            classificado={classificarPor === 'descricaoLancamento'}
+                            invertido={inverterClassificacao}
+                            classificar={() => classificandoPor('descricaoLancamento')}
                         >
                             Descrição
                         </Th>
                         <Th
-                            sorted={sortBy === 'valorLancamento'}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting('valorLancamento')}
+                            classificado={classificarPor === 'valorLancamento'}
+                            invertido={inverterClassificacao}
+                            classificar={() => classificandoPor('valorLancamento')}
                         >
                             Valor
                         </Th>
                         <Th
-                            sorted={sortBy === 'qtdDias'}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting('qtdDias')}
+                            classificado={classificarPor === 'qtdDias'}
+                            invertido={inverterClassificacao}
+                            classificar={() => classificandoPor('qtdDias')}
                         >
                             Dias
                         </Th>
                     </Table.Tr>
                 </Table.Tbody>
-                <Table.Tbody>{rowsReceitas}</Table.Tbody>
+                <Table.Tbody>{linhasReceitas}</Table.Tbody>
             </Table>
         </Box>
     )

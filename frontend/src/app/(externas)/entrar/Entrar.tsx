@@ -1,26 +1,18 @@
 'use client'
-import {
-  Paper,
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Button,
-  Title,
-  Text,
-} from '@mantine/core';
-import classes from './Autenticacao.module.css';
+import { Paper, TextInput, PasswordInput, Button, Title, Text } from '@mantine/core';
+import classes from './Entrar.module.css';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
-import useApi from '@/app/(internas)/hooks/useApi';
 import { ContextoUsuario } from '@/app/data/contexts/ContextoUsuario';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import useApi from '@/app/(internas)/hooks/useApi';
 
 type UsuarioLogin = {
   email: string
   senha: string
 }
 
-export default function Autenticacao() {
+export default function Entrar() {
 
   const route = useRouter()
 
@@ -61,36 +53,37 @@ export default function Autenticacao() {
     } else {
       setResultadoLogin({ retornoLogin: 'ok', token: result.token })
     }
-}
+  }
 
-return (
-  <form className={classes.wrapper} onSubmit={form.onSubmit(handleLogin)}>
-   
-    <Paper className={classes.form} radius={0} p={30}>
-      <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-        Lançamento Financeiro
-      </Title>
-      {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
+  return (
+    <div className={classes.wrapper}>
+      <Paper className={classes.form} radius={0} p={30}>
+        <form onSubmit={form.onSubmit(handleLogin)}>
+          <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+            Lançamento Financeiro
+          </Title>
+          {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
 
-      <TextInput
-        {...form.getInputProps('email')}
-        key={form.key('email')}
-        label="E-mail"
-        placeholder="Digite seu e-mail"
-        size="md" />
-        
-      <PasswordInput
-        {...form.getInputProps('senha')}
-        key={form.key('senha')}
-        label="Senha"
-        placeholder="Digite sua senha"
-        mt="md"
-        size="md" />
+          <TextInput
+            {...form.getInputProps('email')}
+            key={form.key('email')}
+            label="E-mail"
+            placeholder="Digite seu e-mail"
+            size="md" />
 
-      <Button fullWidth mt="xl" size="md" type='submit'>
-        Login
-      </Button>
-    </Paper>
-  </form>
-);
+          <PasswordInput
+            {...form.getInputProps('senha')}
+            key={form.key('senha')}
+            label="Senha"
+            placeholder="Digite sua senha"
+            mt="md"
+            size="md" />
+
+          <Button fullWidth mt="xl" size="md" type='submit'>
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </div>
+  );
 }

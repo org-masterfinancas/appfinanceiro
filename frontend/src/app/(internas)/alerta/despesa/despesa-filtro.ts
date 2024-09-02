@@ -1,5 +1,4 @@
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-import dayjs from "dayjs";
 
 export function filtrarLancamentoAtrasadoDespesas(lancamentos: LancamentoFinanceiro[]) {
     const hoje = new Date()

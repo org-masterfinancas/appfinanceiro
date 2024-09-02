@@ -1,7 +1,6 @@
 "use client";
 import { Button, Text } from '@mantine/core'
 
-
 interface LancamentoFinanceiroCabecalhoProps {
   EhAlterado: boolean;
   alternar: () => void;

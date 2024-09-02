@@ -2,6 +2,7 @@
 import { useContext, useEffect } from "react"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import { useRouter } from "next/navigation"
+import { Loader } from "@mantine/core"
 
 export default function ForcarUsuarioLogado(props: any){
     const {usuario, carregando} = useContext(ContextoUsuario)
@@ -14,7 +15,7 @@ export default function ForcarUsuarioLogado(props: any){
     }, [carregando, usuario, router])
     
     if (carregando) {
-        return <div className="h-screen">...</div>
+         return <Loader color="yellow" type="bars" />
     }
     
     if (usuario === null) {

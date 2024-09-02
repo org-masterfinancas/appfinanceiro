@@ -1,12 +1,7 @@
 'use client'
 import { useState } from 'react';
-import {
-  IconBellRinging,
-  IconFingerprint,
-  IconReceipt2,
-  IconChartDots2
-} from '@tabler/icons-react';
-import classes from './NavbarSimple.module.css';
+import { IconBellRinging, IconFingerprint, IconReceipt2, IconChartDots2 } from '@tabler/icons-react';
+import classes from './BarraNavegacao.module.css';
 import Link from 'next/link';
 
 interface NavbarSimpleProps {
@@ -19,8 +14,8 @@ const data = [
   { link: '/usuario/', label: 'Usuário', icon: IconFingerprint },
 ];
 
-export default function NavbarSimple({toggle}: NavbarSimpleProps) {
-  const [active, setActive] = useState('Billing');
+export default function BarraNavegacao({toggle}: NavbarSimpleProps) {
+  const [active, setActive] = useState('Lançamentos');
 
   const links = data.map((item) => (
     <Link
@@ -44,5 +39,5 @@ export default function NavbarSimple({toggle}: NavbarSimpleProps) {
         {links}
       </div>
     </nav>
-  );
+  )
 }

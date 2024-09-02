@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import RequisicaoApi from '@/app/requisicao/requisicaoApi';
+import RequisicaoApi from '@/app/requisicao/requisicao-api';
 
 export default function useApi() {
     return {

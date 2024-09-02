@@ -1,26 +1,27 @@
 'use client'
 import React from 'react';
 import { Group, Text, Button, Divider } from '@mantine/core';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-export default function PageHeader() {
+export default function CabecalhoPagina() {
   const phathname = usePathname()
-  const getTitle = () => {
+
+  const obterTitulo = () => {
       switch (phathname) {
         case '/lancamentofinanceiro':
-          return 'Lançamentos';
+          return 'Lançamentos'
         case '/dashboard':
-          return 'Dashboard';
+          return 'Dashboard'
         case '/alerta':
-          return 'Alertas';
+          return 'Alertas'
         case '/usuario':
-          return 'Usuário';
+          return 'Usuário'
         default:
-          return 'Página';
+          return 'Página'
       }
-    };
+    }
   
-    const titulo = getTitle();
+    const titulo = obterTitulo();
   return (
     <div>
       <Group  align="center" mb="xl" justify='start'> 
@@ -30,5 +31,5 @@ export default function PageHeader() {
       </Group>
       <Divider mb={'md'} />
     </div>
-  );
+  )
 }

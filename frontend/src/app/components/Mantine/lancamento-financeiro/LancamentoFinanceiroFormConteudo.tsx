@@ -41,9 +41,18 @@ export default function LancamentoFinanceiroFormConteudo({
             </>
           )
         }
+        <SegmentedControl mt={"md"} mb={'md'} color="gray"
+          {...form.getInputProps("tipoLancamento")}
+          key={form.key("tipoLancamento")}
+          data={[
+            { label: 'Receita', value: 'Receita' },
+            { label: 'Despesa', value: 'Despesa' },
+          ]}
+          readOnly={!EhAlterado}
+        />
         <TextInput
           {...form.getInputProps('descricaoLancamento')}
-          
+
           key={form.key('descricaoLancamento')}
           label="Descrição"
           name="descricaolancamento"
@@ -83,15 +92,7 @@ export default function LancamentoFinanceiroFormConteudo({
           placeholder="R$ 0,00"
           readOnly={!EhAlterado}
         />
-        <SegmentedControl mt={"md"} mb={'md'} color="gray"
-          {...form.getInputProps("tipoLancamento")}
-          key={form.key("tipoLancamento")}
-          data={[
-            { label: 'Receita', value: 'Receita' },
-            { label: 'Despesa', value: 'Despesa' },
-          ]}
-          readOnly={!EhAlterado}
-        />
+
       </div>
     </div>
   );

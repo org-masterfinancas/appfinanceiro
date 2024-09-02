@@ -1,12 +1,10 @@
 'use client'
-
 import { LancamentoFinanceiro } from '@/app/data/model/lancamentoFinanceiro';
-import { formatarMoedaBR } from '@/app/Utils/Moeda';
-import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, rem } from '@mantine/core';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { formatarMoedaBR } from '@/app/util/moeda';
+import { Badge, Table, Group, Text, ActionIcon, rem } from '@mantine/core';
+import { IconPencil } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-
 
 interface LancamentoFinanceiroTabelaProps {
   lancamentos: LancamentoFinanceiro[]
@@ -16,12 +14,12 @@ const statusCores: Record<string, string> = {
   consolidado: 'green.7',
   pendente: 'yellow.7',
   cancelado: 'red.7',
-};
+}
 
 export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTabelaProps) {
-  const data = props.lancamentos
+  const dados = props.lancamentos
   
-  const rows = data.map((item) => (
+  const linhas = dados.map((item) => (
     <Table.Tr key={item.id}>
       <Table.Td>
         <Group gap={0} justify="flex-end">
@@ -54,7 +52,7 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
         <Text fz="sm">#{item.id?.split('-')[0]}</Text>
       </Table.Td>
     </Table.Tr>
-  ));
+  ))
 
   return (
     <Table.ScrollContainer minWidth={800}>
@@ -71,8 +69,8 @@ export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTa
             <Table.Th>Id</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody>{linhas}</Table.Tbody>
       </Table>
     </Table.ScrollContainer>
-  );
+  )
 }

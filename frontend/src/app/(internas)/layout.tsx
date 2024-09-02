@@ -1,12 +1,12 @@
-import PaginaInterna from "@/app/components/Autenticacao/PaginaInterna"
-import ThemaMantine from "../components/Mantine/ThemaMantine"
+import PaginaInterna from "@/app/components/autenticacao/PaginaInterna"
+import TemaMantine from "@/app/components/mantine/tema-mantine/TemaMantine"
 
 export default function Layout(props: any) {
   return (
     <PaginaInterna>
-        <ThemaMantine>
+        <TemaMantine>
           {props.children}
-        </ThemaMantine>
+        </TemaMantine>
     </PaginaInterna>
   )
 }

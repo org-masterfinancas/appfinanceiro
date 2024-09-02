@@ -1,8 +1,8 @@
 'use client'
 import useApi from '@/app/(internas)/hooks/useApi';
-import LancamentoFinanceiroEditar from '@/app/components/Mantine/Lancamento/LancamentoFinanceiroEditar';
+import LancamentoFinanceiroEditar from '@/app/components/mantine/lancamento-financeiro/LancamentoFinanceiroEditar';
 import { useEffect, useState } from 'react';
-import { Button } from '@mantine/core';
+import { Box, Button } from '@mantine/core';
 import Link from 'next/link';
 
 interface LancamentoFormPageProps {
@@ -10,7 +10,9 @@ interface LancamentoFormPageProps {
 }
 
 export default function LancamentoFormPage({ params }: LancamentoFormPageProps) {
-  const { id } = params;
+  
+  const { id } = params
+
   const { getApi } = useApi()
   const [lancamento, setLancamento] = useState<any>()
 
@@ -23,13 +25,13 @@ export default function LancamentoFormPage({ params }: LancamentoFormPageProps) 
   }, [])
 
   return (
-    <main className="flex flex-col">
-      <div className=''>
+    <Box>
+      <div>
         <Button component={Link} href="/lancamentofinanceiro/">Voltar</Button>
       </div>
       <div>
         <LancamentoFinanceiroEditar lancamento={lancamento} />
       </div>
-    </main>
+    </Box>
   )
 }

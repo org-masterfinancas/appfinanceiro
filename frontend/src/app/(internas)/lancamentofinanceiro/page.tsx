@@ -2,41 +2,36 @@
 import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
 import { useEffect, useState, useContext } from "react"
-import LancamentoFinanceiroFiltro from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroFiltro"
+import LancamentoFinanceiroFiltro from "@/app/components/mantine/lancamento-financeiro/LancamentoFinanceiroFiltro"
 import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
-import { Box, Button, Container, Group, Select, Stack, Text, Paper, Pagination, TextInput, rem, keys, Loader } from "@mantine/core"
-import LancamentoFinanceiroTabela from "@/app/components/Mantine/Lancamento/LancamentoFinanceiroTabela/LancamentoFinanceiroTabela"
+import { Button, Container, Group, Text, Paper, Pagination, TextInput, rem, Loader } from "@mantine/core"
+import LancamentoFinanceiroTabela from "@/app/components/mantine/lancamento-financeiro/lancamento-financeiro-tabela/LancamentoFinanceiroTabela"
 import { IconSearch } from "@tabler/icons-react"
 
-
-function aplicarPesquisa(data: LancamentoFinanceiro[], search: string) {
-    const query = search.toLowerCase().trim();
+function aplicarPesquisa(dados: LancamentoFinanceiro[], procurar: string) {
+    
+    const consulta = procurar.toLowerCase().trim()
   
-    return data.filter((item) => {
+    return dados.filter((item) => {
       return (
-        item.descricaoLancamento.toLowerCase().includes(query) ||
-        item.tipoLancamento.toLowerCase().includes(query) ||
-        item.usuario.nome.toLowerCase().includes(query) ||
-        item.valorLancamento.toString().toLowerCase().includes(query)
-      );
-    });
+        item.descricaoLancamento.toLowerCase().includes(consulta) ||
+        item.tipoLancamento.toLowerCase().includes(consulta) ||
+        item.usuario.nome.toLowerCase().includes(consulta) ||
+        item.valorLancamento.toString().toLowerCase().includes(consulta)
+      )
+    })
   }
   
-
 export default function LancamentoPage() {
     const { getApi } = useApi()
     const [carregando, setCarregando] = useState<boolean>(true);
     const { usuario } = useContext(ContextoUsuario)
     const [lancamentos, setLancamentos] = useState<LancamentoFinanceiro[]>([]);
     const [filtroStatus, setFiltroStatus] = useState<string>("Todos")
-
-    const [activePage, setActivePage] = useState<number>(1)
-    const itemsPerPage = 5
-
-    const [search, setSearch] = useState('')
-
-
+    const [paginaAtiva, setPaginaAtiva] = useState<number>(1)
+    const [procurar, setProcurar] = useState('')
+    const itensPorPagina = 5
 
     useEffect(() => {
         async function obterLancamentos() {
@@ -48,8 +43,8 @@ export default function LancamentoPage() {
     }, [])
 
     useEffect(() => {
-        setActivePage(1);
-    }, [filtroStatus, search]);
+        setPaginaAtiva(1);
+    }, [filtroStatus, procurar]);
 
     if (carregando) return <Loader color="yellow" type="bars" />
 
@@ -58,11 +53,11 @@ export default function LancamentoPage() {
         : lancamentos.filter(lancamento => lancamento.statusLancamento === filtroStatus);
 
 
-    const lancamentosPesquisa = aplicarPesquisa(lancamentosFiltrados, search);
+    const lancamentosPesquisa = aplicarPesquisa(lancamentosFiltrados, procurar);
 
-    const startIndex = (activePage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentItems = lancamentosPesquisa.slice(startIndex, endIndex);
+    const indiceInicio = (paginaAtiva - 1) * itensPorPagina;
+    const indiceFim = indiceInicio + itensPorPagina;
+    const itensAtuais = lancamentosPesquisa.slice(indiceInicio, indiceFim);
 
 
     return (
@@ -76,8 +71,8 @@ export default function LancamentoPage() {
                     placeholder="Buscar Lançamento"
                     mb="md"
                     leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={procurar}
+                    onChange={(e) => setProcurar(e.target.value)}
                 />
                 <Group>
                     <LancamentoFinanceiroFiltro 
@@ -90,11 +85,11 @@ export default function LancamentoPage() {
             </Group>
             {lancamentosPesquisa.length ?
                 <>
-                    <LancamentoFinanceiroTabela lancamentos={currentItems} />
+                    <LancamentoFinanceiroTabela lancamentos={itensAtuais} />
                     <Pagination
-                        defaultValue={activePage}
-                        onChange={setActivePage}
-                        total={Math.ceil(lancamentosPesquisa.length / itemsPerPage)}
+                        defaultValue={paginaAtiva}
+                        onChange={setPaginaAtiva}
+                        total={Math.ceil(lancamentosPesquisa.length / itensPorPagina)}
                     />
                 </>
                 :

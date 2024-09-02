@@ -1,23 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import useApi from "../../../(internas)/hooks/useApi";
-import useToggle from "../../../(internas)/hooks/useToogle";
+import useApi from "@/app/(internas)/hooks/useApi";
+import useToggle from "@/app/(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
-import { DateInputProps } from "@mantine/dates";
 import dayjs from "dayjs";
-import { Text } from "@mantine/core";
+import { Loader, Text } from "@mantine/core";
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
 import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
-import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
 import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
+import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
 
 interface LancamentoFinanceiroEditarProps {
   lancamento: LancamentoFinanceiro
-}
-
-const dateParser: DateInputProps['dateParser'] = (input) => {
-  return dayjs(input, 'YYYY-MM-DD').toDate();
 }
 
 export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFinanceiroEditarProps) {
@@ -37,8 +32,7 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
       tipoLancamento: isNotEmpty('Tipo lançamento vazio'),
       valorLancamento: isInRange({ min: 0.1 }, 'Valor inválido'),
     },
-  });
-
+  })
   const [carregando, setCarregando] = useState<boolean>(true);
   const [mensagem, setMensagem] = useState<string>("");
   const [EhAlterado, atlernar] = useToggle()
@@ -59,7 +53,7 @@ export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFin
     }
   }, [lancamento]);
 
-  if (carregando) return <div>...</div>
+  if (carregando) return  <Loader color="yellow" type="bars" />
 
   const handleExcluir = async () => {
     const result = await delApi(`/lancamentofinanceiros/${idItem}`,);
