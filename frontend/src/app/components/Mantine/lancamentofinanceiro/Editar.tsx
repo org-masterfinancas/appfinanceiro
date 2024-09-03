@@ -63,7 +63,7 @@ export default function Editar({ lancamento }: EditarProps) {
     } else if (result.error) {
       setMensagem(result.errror)
     } else {
-      router.push('/lancamentofinanceiro')
+      router.push('/lancamento-financeiro')
     }
   }
 
@@ -94,12 +94,12 @@ export default function Editar({ lancamento }: EditarProps) {
     } else if (result.error) {
       setMensagem(result.error)
     } else {
-      router.push('/lancamentofinanceiro')
+      router.push('/lancamento-financeiro')
     }
   }
 
   const handleCancelar = async () => {
-    router.push('/lancamentofinanceiro')
+    router.push('/lancamento-financeiro')
   }
 
   return (

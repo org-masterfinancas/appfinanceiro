@@ -3,7 +3,7 @@ import useApi from '@/app/(internas)/hooks/useApi';
 import { useEffect, useState } from 'react';
 import { Box, Button } from '@mantine/core';
 import Link from 'next/link';
-import Editar from '@/app/components/mantine/lancamento-financeiro/Editar';
+import Editar from '@/app/components/mantine/lancamentofinanceiro/Editar';
 
 interface LancamentoFormPageProps {
   params: { id: string };
