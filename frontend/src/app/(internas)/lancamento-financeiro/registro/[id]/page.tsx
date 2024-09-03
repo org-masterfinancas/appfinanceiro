@@ -1,7 +1,7 @@
 'use client'
 import useApi from '@/app/(internas)/hooks/useApi';
 import { useEffect, useState } from 'react';
-import { Box, Button } from '@mantine/core';
+import { Box, Button, Container } from '@mantine/core';
 import Link from 'next/link';
 import Editar from '@/app/components/mantine/lancamento-financeiro/Editar';
 
@@ -25,13 +25,13 @@ export default function LancamentoFormPage({ params }: LancamentoFormPageProps) 
   }, [])
 
   return (
-    <Box>
+    <Container>
       <div>
-        <Button component={Link} href="/lancamentofinanceiro/">Voltar</Button>
+        <Button component={Link} href="/lancamento-financeiro/" bg={'orange.4'} mb={'md'}>Lançamentos</Button>
       </div>
       <div>
         <Editar lancamento={lancamento} />
       </div>
-    </Box>
+    </Container>
   )
 }

@@ -7,24 +7,24 @@ export default function CabecalhoPagina() {
   const phathname = usePathname()
 
   const obterTitulo = () => {
-      switch (phathname) {
-        case '/lancamentofinanceiro':
-          return 'Lançamentos'
-        case '/dashboard':
-          return 'Dashboard'
-        case '/alerta':
-          return 'Alertas'
-        case '/usuario':
-          return 'Usuário'
-        default:
-          return 'Página'
-      }
+    switch (phathname) {
+      case '/lancamento-financeiro':
+        return 'Lançamentos'
+      case '/dashboard':
+        return 'Dashboard'
+      case '/alerta':
+        return 'Alertas'
+      case '/usuario':
+        return 'Usuário'
+      default:
+        return 'Página'
     }
-  
-    const titulo = obterTitulo();
+  }
+
+  const titulo = obterTitulo();
   return (
     <div>
-      <Group  align="center" mb="xl" justify='start'> 
+      <Group align="center" mb="xl" justify='start'>
         <Text size="xl" >
           {titulo}
         </Text>

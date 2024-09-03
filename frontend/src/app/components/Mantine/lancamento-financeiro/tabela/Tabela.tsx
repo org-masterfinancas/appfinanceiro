@@ -23,7 +23,7 @@ export default function Tabela(props: TabelaProps) {
     <Table.Tr key={item.id}>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamentofinanceiro/registro/${item.id}`}>
+          <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamento-financeiro/registro/${item.id}`}>
             <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={2.5} />
           </ActionIcon>
         </Group>

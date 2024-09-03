@@ -65,7 +65,7 @@ export default function DespesaPendente({ linhasLancamentos, despesaTotalizada }
         <Table.Tr key={linha.id}>
             <Table.Td>
                 <Group gap={0} justify="center" >
-                    <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamentofinanceiro/registro/${linha.id}`}>
+                    <ActionIcon variant="subtle" color="gray" component={Link} href={`/lancamento-financeiro/registro/${linha.id}`}>
                         <IconEye style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>

@@ -80,7 +80,7 @@ export default function LancamentoPage() {
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
                     />
-                    <Button component={Link} href="/lancamentofinanceiro/registro">+ Novo Lançamento</Button>
+                    <Button component={Link} href="/lancamento-financeiro/registro">+ Novo Lançamento</Button>
                 </Group>
             </Group>
             {lancamentosPesquisa.length ?

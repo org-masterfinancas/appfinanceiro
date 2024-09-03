@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button } from "@mantine/core";
+import { Box, Button, Group } from "@mantine/core";
 
 interface FormRodapeProps {
   EhAlterado: boolean;
@@ -16,17 +16,17 @@ export default function FormRodape({ EhAlterado,novoLancamento, handleExcluir, h
   return (
     <div>
     {EhAlterado ? (
-      <Box>
-        <Button type="submit">Salvar</Button>
-        <Button type="button" onClick={handleCancelar}>Cancelar</Button>
-        <Button type="button" onClick={handleExcluir}>Excluir</Button>
-      </Box>
+      <Group mt={"xl"}>
+        <Button type="submit" bg={"green.7"}>Salvar</Button>
+        <Button type="button" bg={'dark.7'} onClick={handleCancelar}>Cancelar</Button>
+        <Button type="button" bg={'red.7'} onClick={handleExcluir}>Excluir</Button>
+      </Group>
     ):null}
      {novoLancamento ? (
-      <div>
-        <Button type="submit" >Salvar</Button>
-        <Button type="button" onClick={handleCancelar}>Cancelar</Button>
-      </div>
+      <Group mt={"xl"}>
+        <Button type="submit" bg={"green.7"} >Salvar</Button>
+        <Button type="button" bg={'dark.7'} onClick={handleCancelar}>Cancelar</Button>
+      </Group>
     ):null}
   </div>
   )

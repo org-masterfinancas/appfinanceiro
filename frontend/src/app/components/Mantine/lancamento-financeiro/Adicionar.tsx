@@ -3,7 +3,7 @@ import { useState } from "react";
 import useApi from "@/app/(internas)/hooks/useApi";
 import useToggle from "@/app/(internas)/hooks/useToogle";
 import { useRouter } from 'next/navigation';
-import { Box, Text } from "@mantine/core";
+import { Box, Container, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
