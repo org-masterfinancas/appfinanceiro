@@ -6,7 +6,7 @@ import { LinhasLancamentos } from './shared/interface';
 import { filtrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alerta/despesa/despesa-filtro';
 import { filtrarLancamentoAtrasadoReceitas } from './receita/receita-filtro';
 import ReceitaPendente from './receita/ReceitaPendente';
-import DespesaPendente from './despesa/DespesaPendente';
+import DespesaPendente from './despesa/DespesaPendentee';
 
     
 export default function Alertas() {
