@@ -1,10 +1,10 @@
 'use client'
 import { AppShell, Burger, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import MenuUsuario from '@/app/components/mantine/menu-usuario/MenuUsuario';
-import BarraNavegacao from '@/app/components/mantine/barra-navegacao/BarraNavegacao';
-import MeuLogo from '@/app/components/mantine/logo/Logo';
-import PageHeader from '@/app/components/mantine/cabecalho-pagina/CabecalhoPagina';
+import MenuUsuario from '@/app/components/mantineee/menu-usuario/MenuUsuario';
+import BarraNavegacao from '@/app/components/mantineee/barra-navegacao/BarraNavegacao';
+import MeuLogo from '@/app/components/mantineee/logo/Logo';
+import PageHeader from '@/app/components/mantineee/cabecalho-pagina/CabecalhoPagina';
 
 export default function TemaMantine(props: any) {
   const [opened, { toggle }] = useDisclosure();
