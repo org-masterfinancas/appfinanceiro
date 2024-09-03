@@ -6,8 +6,8 @@ import classes from '@/app/(internas)/alerta/shared/TabelaAlerta.module.css';
 import Link from 'next/link';
 import { formatarMoedaBR } from '@/app/util/moeda';
 import { ordenarDados } from '../shared/ordenacao-dados';
-import Estatistica from '@/app/components/mantine/estatistica/Estatistica';
 import { LancamentoTotalizado, LinhasLancamentos } from '@/app/(internas)/alerta/shared/interface';
+import Estatistica from '@/app/components/mantine/estatistica/Estatistica';
 
 interface DespesaPendenteProps {
     linhasLancamentos: LinhasLancamentos[]
