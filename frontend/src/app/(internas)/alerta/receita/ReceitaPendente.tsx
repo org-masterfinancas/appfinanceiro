@@ -6,7 +6,7 @@ import classes from '@/app/(internas)/alerta/shared/TabelaAlerta.module.css';
 import { formatarMoedaBR } from '@/app/util/moeda';
 import { LancamentoTotalizado, LinhasLancamentos } from '@/app/(internas)/alerta/shared/interface';
 import { ordenarDados } from '../shared/ordenacao-dados';
-import Estatistica from '@/app/components/mantineee/estatistica/Estatistica';
+import Estatistica from '@/app/components/mantine/estatistica/Estatistica';
 import Link from 'next/link';
 
 interface ReceitaPendenteProps {

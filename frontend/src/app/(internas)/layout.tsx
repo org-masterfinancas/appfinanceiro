@@ -1,5 +1,5 @@
-import PaginaInterna from "@/app/components/autenticacaooo/PaginaInterna"
-import TemaMantine from "@/app/components/mantineee/tema-mantine/TemaMantine"
+import PaginaInterna from "@/app/components/autenticacao/PaginaInterna"
+import TemaMantine from "@/app/components/mantine/tema-mantine/TemaMantine"
 
 export default function Layout(props: any) {
   return (

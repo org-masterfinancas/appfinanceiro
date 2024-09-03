@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { formatarMoedaBR } from '@/app/util/moeda';
 import { ordenarDados } from '../shared/ordenacao-dados';
 import { LancamentoTotalizado, LinhasLancamentos } from '@/app/(internas)/alerta/shared/interface';
-import Estatistica from '@/app/components/mantineee/estatistica/Estatistica';
+import Estatistica from '@/app/components/mantine/estatistica/Estatistica';
 
 interface DespesaPendenteProps {
     linhasLancamentos: LinhasLancamentos[]

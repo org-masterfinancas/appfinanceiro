@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors';
 import cors from 'cors'
 import autenticacao from './middleware/MiddlewareAutenticacao'
-import rotasLancamentoFinanceiros from './router/RouterLancamentoFinaceiros'
+import rotasLancamentoFinanceiros from './router/RouterLancamentoFinanceiros'
 
 import rotasLogin from './router/Routerlogin';
 import rotasUsuarios from './router/RouterUsuarios';
