@@ -6,8 +6,8 @@ import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
 import { Button, Container, Group, Text, Paper, Pagination, TextInput, rem, Loader } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react"
-import LancamentoFinanceiroFiltro from "@/app/components/mantine/lancamento-financeiro/LancamentoFinanceiroFiltro"
-import LancamentoFinanceiroTabela from "@/app/components/mantine/lancamento-financeiro/lancamento-financeiro-tabela/LancamentoFinanceiroTabela"
+import LancamentoFinanceiroFiltro from "../../components/mantine/lancamento-financeiro/LancamentoFinanceiroFiltro"
+import LancamentoFinanceiroTabela from "../../components/mantine/lancamento-financeiro/lancamento-financeiro-tabela/LancamentoFinanceiroTabela"
 
 function aplicarPesquisa(dados: LancamentoFinanceiro[], procurar: string) {
     
