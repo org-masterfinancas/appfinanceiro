@@ -1,4 +1,4 @@
-import Adicionar from "@/app/components/mantine/lancamento-financeiro/Adicionar";
+import Adicionar from "@/app/components/mantineee/lancamento-financeiro/Adicionar";
 import { Box, Button, Container } from "@mantine/core";
 import Link from "next/link";
 
