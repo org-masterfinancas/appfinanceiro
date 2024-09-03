@@ -1,13 +1,13 @@
 "use client";
 import { Button, Text } from '@mantine/core'
 
-interface LancamentoFinanceiroCabecalhoProps {
+interface FormCabecalhoProps {
   EhAlterado: boolean;
   alternar: () => void;
   novoLancamento?: boolean
 }
 
-export default function LancamentoFinanceiroCabecalho({ EhAlterado, alternar, novoLancamento }: LancamentoFinanceiroCabecalhoProps) {
+export default function FormCabecalho({ EhAlterado, alternar, novoLancamento }: FormCabecalhoProps) {
   return (
     <div>
       {novoLancamento ?

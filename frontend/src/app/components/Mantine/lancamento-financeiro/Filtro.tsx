@@ -2,7 +2,7 @@
 import React from 'react';
 import { Select } from '@mantine/core';
 
-interface LancamentoFinanceiroFiltroProps {
+interface FiltroProps {
   labelTexto?: string;
   valor?: any;
   nome?: string;
@@ -13,7 +13,7 @@ interface LancamentoFinanceiroFiltroProps {
   valorMudou?: (valor: any) => void;
 }
 
-export default function LancamentoFinanceiroFiltro(props: LancamentoFinanceiroFiltroProps) {
+export default function Filtro(props: FiltroProps) {
   return (
       <Select
 

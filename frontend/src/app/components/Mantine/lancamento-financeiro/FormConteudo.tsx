@@ -7,7 +7,7 @@ import { NumberInput, SegmentedControl, Select, TextInput } from "@mantine/core"
 import { UseFormReturnType } from '@mantine/form';
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
 
-interface LancamentoFinanceiroFormConteudoProps {
+interface FormConteudoProps {
   form: UseFormReturnType<LancamentoFinanceiro>;
   EhAlterado: boolean;
   novoLancamento: boolean;
@@ -17,11 +17,11 @@ const dateParser: DateInputProps['dateParser'] = (input) => {
   return dayjs(input, 'YYYY-MM-DD').toDate();
 }
 
-export default function LancamentoFinanceiroFormConteudo({
+export default function FormConteudo({
   form,
   EhAlterado,
   novoLancamento,
-}: LancamentoFinanceiroFormConteudoProps) {
+}: FormConteudoProps) {
 
   return (
     <div>

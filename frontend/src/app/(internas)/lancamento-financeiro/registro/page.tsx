@@ -1,4 +1,4 @@
-import LancamentoFinanceiroAdicionar from "@/app/components/mantine/lancamento-financeiro/LancamentoFinanceiroAdicionar";
+import Adicionar from "@/app/components/mantine/lancamento-financeiro/Adicionar";
 import { Box, Button } from "@mantine/core";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ export default function Page() {
             <div>
                 <Button component={Link} href="/lancamentofinanceiro/">Voltar</Button>
             </div>
-            <LancamentoFinanceiroAdicionar />
+            <Adicionar />
         </Box>
     )
 }

@@ -38,7 +38,7 @@ export default function Entrar() {
       if (resultadoLogin.retornoLogin === 'ok') {
         await login(resultadoLogin.token)
 
-        route.push('/lancamentofinanceiro')
+        route.push('/lancamento-financeiro')
       }
     }
     entrar()

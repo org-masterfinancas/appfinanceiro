@@ -8,7 +8,7 @@ interface NavbarSimpleProps {
   toggle: () => void;
 }
 const data = [
-  { link: '/lancamentofinanceiro', label: 'Lançamentos', icon: IconReceipt2 },
+  { link: '/lancamento-financeiro', label: 'Lançamentos', icon: IconReceipt2 },
   { link: '/dashboard', label: 'Dashboard', icon: IconChartDots2 },
   { link: '/alerta', label: 'Alertas', icon: IconBellRinging },
   { link: '/usuario/', label: 'Usuário', icon: IconFingerprint },

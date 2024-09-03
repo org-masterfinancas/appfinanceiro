@@ -7,11 +7,11 @@ import { Box, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
-import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
-import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
+import LancamentoFinanceiroCabecalho from "./FormCabecalho";
+import LancamentoFinanceiroFormulario from "./FormConteudo";
+import LancamentoFinanceiroRodape from "./FormRodape";
 
-export default function LancamentoFinanceiroAdicionar() {
+export default function Adicionar() {
 
   const router = useRouter();
 

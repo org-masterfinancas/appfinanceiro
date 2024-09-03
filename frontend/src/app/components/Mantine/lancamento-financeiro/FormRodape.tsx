@@ -1,14 +1,14 @@
 "use client";
 import { Box, Button } from "@mantine/core";
 
-interface LancamentoFinanceiroRodapeProps {
+interface FormRodapeProps {
   EhAlterado: boolean;
   novoLancamento?:boolean
   handleCancelar: () => void
   handleExcluir?: () => void
 }
 
-export default function LancamentoFinanceiroRodape({ EhAlterado,novoLancamento, handleExcluir, handleCancelar }: LancamentoFinanceiroRodapeProps) {
+export default function FormRodape({ EhAlterado,novoLancamento, handleExcluir, handleCancelar }: FormRodapeProps) {
   
   if(novoLancamento){
     EhAlterado = false

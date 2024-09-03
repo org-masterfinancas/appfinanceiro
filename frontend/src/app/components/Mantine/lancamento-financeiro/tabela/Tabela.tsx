@@ -16,7 +16,7 @@ const statusCores: Record<string, string> = {
   cancelado: 'red.7',
 }
 
-export default function LancamentoFinanceiroTabela(props: LancamentoFinanceiroTabelaProps) {
+export default function Tabela(props: LancamentoFinanceiroTabelaProps) {
   const dados = props.lancamentos
   
   const linhas = dados.map((item) => (

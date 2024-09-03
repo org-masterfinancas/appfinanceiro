@@ -7,15 +7,15 @@ import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { Loader, Text } from "@mantine/core";
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
-import LancamentoFinanceiroCabecalho from "./LancamentoFinanceiroFormCabecalho";
-import LancamentoFinanceiroFormulario from "./LancamentoFinanceiroFormConteudo";
-import LancamentoFinanceiroRodape from "./LancamentoFinanceiroFormRodape";
+import LancamentoFinanceiroCabecalho from "./FormCabecalho";
+import LancamentoFinanceiroFormulario from "./FormConteudo";
+import LancamentoFinanceiroRodape from "./FormRodape";
 
-interface LancamentoFinanceiroEditarProps {
+interface EditarProps {
   lancamento: LancamentoFinanceiro
 }
 
-export default function LancamentoFinanceiroEditar({ lancamento }: LancamentoFinanceiroEditarProps) {
+export default function Editar({ lancamento }: EditarProps) {
 
   const router = useRouter();
   const idItem = lancamento?.id ?? "";

@@ -6,8 +6,8 @@ import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
 import { Button, Container, Group, Text, Paper, Pagination, TextInput, rem, Loader } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react"
-import LancamentoFinanceiroFiltro from "@/app/components/mantine/lancamento-financeiro/LancamentoFinanceiroFiltro"
-import LancamentoFinanceiroTabela from "@/app/components/mantine/lancamento-financeiro/lancamento-financeiro-tabela/LancamentoFinanceiroTabela"
+import Filtro from "@/app/components/mantine/lancamento-financeiro/Filtro"
+import Tabela from "@/app/components/mantine/lancamento-financeiro/tabela/Tabela"
 
 function aplicarPesquisa(dados: LancamentoFinanceiro[], procurar: string) {
     
@@ -75,7 +75,7 @@ export default function LancamentoPage() {
                     onChange={(e) => setProcurar(e.target.value)}
                 />
                 <Group>
-                    <LancamentoFinanceiroFiltro 
+                    <Filtro 
                         labelTexto="Filtro por Status"
                         valor={filtroStatus}
                         valorMudou={setFiltroStatus}
@@ -85,7 +85,7 @@ export default function LancamentoPage() {
             </Group>
             {lancamentosPesquisa.length ?
                 <>
-                    <LancamentoFinanceiroTabela lancamentos={itensAtuais} />
+                    <Tabela lancamentos={itensAtuais} />
                     <Pagination
                         defaultValue={paginaAtiva}
                         onChange={setPaginaAtiva}
