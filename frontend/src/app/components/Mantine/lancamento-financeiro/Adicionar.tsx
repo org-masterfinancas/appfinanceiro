@@ -7,9 +7,9 @@ import { Box, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro";
-import LancamentoFinanceiroCabecalho from "./FormCabecalho";
-import LancamentoFinanceiroFormulario from "./FormConteudo";
-import LancamentoFinanceiroRodape from "./FormRodape";
+import FormCabecalho from "./FormCabecalho";
+import FormRodape from "./FormRodape";
+import FormConteudo from "./FormConteudo";
 
 export default function Adicionar() {
 
@@ -66,15 +66,15 @@ export default function Adicionar() {
 
   return (
     <Box>
-       <LancamentoFinanceiroCabecalho novoLancamento EhAlterado={EhAlterado} alternar={atlernar} />
+       <FormCabecalho novoLancamento EhAlterado={EhAlterado} alternar={atlernar} />
       <form onSubmit={form.onSubmit(handleSalvar)}>
         {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
-          <LancamentoFinanceiroFormulario 
+          <FormConteudo 
           form={form}
           EhAlterado
           novoLancamento/>
         <div>
-          <LancamentoFinanceiroRodape novoLancamento EhAlterado={EhAlterado} handleCancelar={handleCancelar}/>
+          <FormRodape novoLancamento EhAlterado={EhAlterado} handleCancelar={handleCancelar}/>
         </div>
       </form>
     </Box>

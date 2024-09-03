@@ -7,9 +7,9 @@ import { hasLength, isInRange, isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { Loader, Text } from "@mantine/core";
 import { LancamentoFinanceiro } from "../../../data/model/lancamentoFinanceiro";
-import LancamentoFinanceiroCabecalho from "./FormCabecalho";
-import LancamentoFinanceiroFormulario from "./FormConteudo";
-import LancamentoFinanceiroRodape from "./FormRodape";
+import FormCabecalho from "./FormCabecalho";
+import FormConteudo from "./FormConteudo";
+import FormRodape from "./FormRodape";
 
 interface EditarProps {
   lancamento: LancamentoFinanceiro
@@ -104,15 +104,15 @@ export default function Editar({ lancamento }: EditarProps) {
 
   return (
     <div>
-      <LancamentoFinanceiroCabecalho EhAlterado={EhAlterado} alternar={atlernar} />
+      <FormCabecalho EhAlterado={EhAlterado} alternar={atlernar} />
       <form onSubmit={form.onSubmit(handleSalvar)}>
         {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
-        <LancamentoFinanceiroFormulario
+        <FormConteudo
           form={form}
           EhAlterado={EhAlterado}
           novoLancamento={novoLancamento} />
         <div>
-          <LancamentoFinanceiroRodape EhAlterado={EhAlterado} handleCancelar={handleCancelar} handleExcluir={handleExcluir} />
+          <FormRodape EhAlterado={EhAlterado} handleCancelar={handleCancelar} handleExcluir={handleExcluir} />
         </div>
       </form>
     </div>

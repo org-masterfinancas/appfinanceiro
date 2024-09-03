@@ -6,7 +6,7 @@ import { IconPencil } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-interface LancamentoFinanceiroTabelaProps {
+interface TabelaProps {
   lancamentos: LancamentoFinanceiro[]
 }
 
@@ -16,7 +16,7 @@ const statusCores: Record<string, string> = {
   cancelado: 'red.7',
 }
 
-export default function Tabela(props: LancamentoFinanceiroTabelaProps) {
+export default function Tabela(props: TabelaProps) {
   const dados = props.lancamentos
   
   const linhas = dados.map((item) => (

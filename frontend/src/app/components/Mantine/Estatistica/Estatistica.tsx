@@ -4,13 +4,13 @@ import { IconReceipt2 } from '@tabler/icons-react';
 import classes from './Estatistica.module.css';
 import { formatarMoedaBR } from '@/app/util/moeda';
 
-interface EstatisticasProps{
+interface EstatisticaProps{
   titulo: string,
   total: number
   qtde: number
 }
   
-export default function Estatistica({titulo, total, qtde}: EstatisticasProps) {
+export default function Estatistica({titulo, total, qtde}: EstatisticaProps) {
 
     return (
       <Paper withBorder p="sm">

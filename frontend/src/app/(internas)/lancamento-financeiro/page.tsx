@@ -1,6 +1,6 @@
 'use client'
-import Tabela from "@/app/components/mantine/lancamentofinanceiro/tabela/Tabela"
-import Filtro from "@/app/components/mantine/lancamentofinanceiro/Filtro"
+import Tabela from "@/app/components/mantine/lancamento-financeiro/tabela/Tabela"
+import Filtro from "@/app/components/mantine/lancamento-financeiro/Filtro"
 import useApi from "../hooks/useApi"
 import { LancamentoFinanceiro } from "@/app/data/model/lancamentoFinanceiro"
 import { useEffect, useState, useContext } from "react"
