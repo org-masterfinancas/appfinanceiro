@@ -7,6 +7,7 @@ import { filtrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alerta/despe
 import { filtrarLancamentoAtrasadoReceitas } from './receita/receita-filtro';
 import ReceitaPendente from './receita/ReceitaPendente';
 import DespesaPendente from './despesa/DespesaPendente';
+
     
 export default function Alertas() {
 
