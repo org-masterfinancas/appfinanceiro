@@ -34,7 +34,7 @@ export default function AtualizarPerfil() {
             ? null
             : 'URL inválida';
         }
-        return null;
+        return "Campo não pode estar vazio";
       }
     }
   })
@@ -50,7 +50,7 @@ export default function AtualizarPerfil() {
   const handleSalvar = async (formUsuario: Usuario) => {
 
     const dados = {
-      user: {
+      usuario: {
         id: usuario.id,
         nome: formUsuario.nome,
         sobrenome: formUsuario.sobrenome,
@@ -59,18 +59,17 @@ export default function AtualizarPerfil() {
       }
     }
 
-    const result = await putApi('/usuarios/', dados);
+    const resultado = await putApi('/usuarios/perfil', dados);
 
-    if (result === null) {
-      setMensagem("Não foi possível atualizar!")
-    } else if (result.error) {
-      setMensagem(result.error)
+    if (resultado.error) {
+      setMensagem(resultado.error)
     } else {
-      const { nome, sobrenome, avatar } = result
+      const { nome, sobrenome, avatar } = resultado
       atualizarUsuario(nome, sobrenome, avatar)
-      router.push('/usuario')
+      setMensagem("Perfil atualizado com sucesso!")
     }
   }
+
   return (
     <form onSubmit={form.onSubmit(handleSalvar)}>
       {mensagem && <Text c={'red'}>{JSON.stringify(mensagem)}</Text>}

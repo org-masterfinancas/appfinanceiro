@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ContextoUsuario } from '@/app/data/contexts/ContextoUsuario';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import useApi from '@/app/(internas)/hooks/useApi';
+import jwt from 'jsonwebtoken'
 
 type UsuarioLogin = {
   email: string
@@ -45,14 +46,12 @@ export default function Entrar() {
   }, [resultadoLogin.retornoLogin]);
 
   const handleLogin = async (dados: UsuarioLogin) => {
-    const result = await postApi('/login', dados);
-    if (result === null) {
-      setMensagem("Não Foi possível Logar!")
-    } else if (result.error) {
-      setMensagem(result.error)
-    } else {
-      setResultadoLogin({ retornoLogin: 'ok', token: result.token })
-    }
+    const resultado = await postApi('/usuarios/entrar', dados);
+
+    if (resultado.error) {
+      setMensagem(resultado.error)
+    } else if (resultado.token)
+      setResultadoLogin({ retornoLogin: 'ok', token: resultado.token })
   }
 
   return (

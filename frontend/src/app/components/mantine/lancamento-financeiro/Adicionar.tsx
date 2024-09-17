@@ -22,11 +22,11 @@ export default function Adicionar() {
     } as LancamentoFinanceiro,
     validate: {
       dataCriacaoLancamento: isNotEmpty('Data vazia'),
-      descricaoLancamento: hasLength({min:3, max:50}, 'A descrição deve ter de 2 a 10 caracteres'),
+      descricaoLancamento: hasLength({ min: 3, max: 50 }, 'A descrição deve ter de 2 a 10 caracteres'),
       statusLancamento: isNotEmpty('Status vazio'),
       tipoLancamento: isNotEmpty('Tipo lançamento vazio'),
-      valorLancamento: isInRange({min:0.1},'Valor inválido'),
-  },
+      valorLancamento: isInRange({ min: 0.1 }, 'Valor inválido'),
+    },
   })
 
   const [mensagem, setMensagem] = useState<string>("");
@@ -50,11 +50,10 @@ export default function Adicionar() {
       }
     }
 
-    const result = await postApi(`/lancamentofinanceiros/`, dados);
-    if (result === null) {
-      setMensagem("Não foi possível atualizar!")
-    } else if (result.error) {
-      setMensagem(result.error)
+    const resultado = await postApi(`/lancamentofinanceiros/`, dados);
+    
+    if (resultado.error) {
+      setMensagem(resultado.error)
     } else {
       router.push('/lancamento-financeiro')
     }
@@ -66,15 +65,15 @@ export default function Adicionar() {
 
   return (
     <Box>
-       <FormCabecalho novoLancamento EhAlterado={EhAlterado} alternar={atlernar} />
+      <FormCabecalho novoLancamento EhAlterado={EhAlterado} alternar={atlernar} />
       <form onSubmit={form.onSubmit(handleSalvar)}>
         {mensagem && <Text c={"red"}>{JSON.stringify(mensagem)}</Text>}
-          <FormConteudo 
+        <FormConteudo
           form={form}
           EhAlterado
-          novoLancamento/>
+          novoLancamento />
         <div>
-          <FormRodape novoLancamento EhAlterado={EhAlterado} handleCancelar={handleCancelar}/>
+          <FormRodape novoLancamento EhAlterado={EhAlterado} handleCancelar={handleCancelar} />
         </div>
       </form>
     </Box>

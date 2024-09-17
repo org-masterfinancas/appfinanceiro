@@ -9,21 +9,22 @@ import { ContextoUsuario } from "../../data/contexts/ContextoUsuario"
 import Link from "next/link"
 import { Button, Container, Group, Text, Paper, Pagination, TextInput, rem, Loader } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react"
+import CabecalhoPagina from "@/app/components/mantine/cabecalho-pagina/CabecalhoPagina"
 
 function aplicarPesquisa(dados: LancamentoFinanceiro[], procurar: string) {
-    
+
     const consulta = procurar.toLowerCase().trim()
-  
+
     return dados.filter((item) => {
-      return (
-        item.descricaoLancamento.toLowerCase().includes(consulta) ||
-        item.tipoLancamento.toLowerCase().includes(consulta) ||
-        item.usuario.nome.toLowerCase().includes(consulta) ||
-        item.valorLancamento.toString().toLowerCase().includes(consulta)
-      )
+        return (
+            item.descricaoLancamento.toLowerCase().includes(consulta) ||
+            item.tipoLancamento.toLowerCase().includes(consulta) ||
+            item.usuario.nome.toLowerCase().includes(consulta) ||
+            item.valorLancamento.toString().toLowerCase().includes(consulta)
+        )
     })
-  }
-  
+}
+
 export default function LancamentoPage() {
     const { getApi } = useApi()
     const [carregando, setCarregando] = useState<boolean>(true);
@@ -62,47 +63,50 @@ export default function LancamentoPage() {
 
 
     return (
-        <Container size={"xl"}>
-            <Group justify="space-between">
-                <Paper radius="md" withBorder p="xs">
-                    <Text>Minhas Finanças</Text>
-                    <Text>Você possui {lancamentosPesquisa.length || 0} registro(s)</Text>
-                </Paper>
-                <TextInput
-                    placeholder="Buscar Lançamento"
-                    mb="md"
-                    leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                    value={procurar}
-                    onChange={(e) => setProcurar(e.target.value)}
-                />
-                <Group>
-                    <Filtro 
-                        labelTexto="Filtro por Status"
-                        valor={filtroStatus}
-                        valorMudou={setFiltroStatus}
+        <>
+            <CabecalhoPagina/>
+            <Container size={"xl"}>
+                <Group justify="space-between">
+                    <Paper radius="md" withBorder p="xs">
+                        <Text>Minhas Finanças</Text>
+                        <Text>Você possui {lancamentosPesquisa.length || 0} registro(s)</Text>
+                    </Paper>
+                    <TextInput
+                        placeholder="Buscar Lançamento"
+                        mb="md"
+                        leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+                        value={procurar}
+                        onChange={(e) => setProcurar(e.target.value)}
                     />
-                    <Button component={Link} href="/lancamento-financeiro/registro">+ Novo Lançamento</Button>
+                    <Group>
+                        <Filtro
+                            labelTexto="Filtro por Status"
+                            valor={filtroStatus}
+                            valorMudou={setFiltroStatus}
+                        />
+                        <Button component={Link} href="/lancamento-financeiro/registro">+ Novo Lançamento</Button>
+                    </Group>
                 </Group>
-            </Group>
-            {lancamentosPesquisa.length ?
-                <>
-                    <Tabela lancamentos={itensAtuais} />
-                    <Pagination
-                        defaultValue={paginaAtiva}
-                        onChange={setPaginaAtiva}
-                        total={Math.ceil(lancamentosPesquisa.length / itensPorPagina)}
-                    />
-                </>
-                :
-                <Container size={"xs"}>
-                    <Text p={"xl"}>
-                        Olá {usuario.nome}, você não possui lançamento cadastrado! 
-                    </Text>
-                    <Text p={"xl"}>
-                      Nenhuma correspondência de filtro ou busca!
-                    </Text>
-                </Container>
-            }
-        </Container>
+                {lancamentosPesquisa.length ?
+                    <>
+                        <Tabela lancamentos={itensAtuais} />
+                        <Pagination
+                            defaultValue={paginaAtiva}
+                            onChange={setPaginaAtiva}
+                            total={Math.ceil(lancamentosPesquisa.length / itensPorPagina)}
+                        />
+                    </>
+                    :
+                    <Container size={"xs"}>
+                        <Text p={"xl"}>
+                            Olá {usuario.nome}, você não possui lançamento cadastrado!
+                        </Text>
+                        <Text p={"xl"}>
+                            Nenhuma correspondência de filtro ou busca!
+                        </Text>
+                    </Container>
+                }
+            </Container>
+        </>
     )
 }

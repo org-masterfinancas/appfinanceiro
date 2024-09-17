@@ -7,27 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum StatusLancamento {
+  PENDENTE
+  CONSOLIDADO
+  CANCELADO 
+}
 
 model Usuarios {
-    id                        String @id
-    nome                      String
-    sobrenome                 String
-    email                     String @unique
-    senha                     String?
-    perfil                    String?
-    avatar                    String?
-    dataCriacao               DateTime @default(now())
-    lancamentoFinanceiros     LancamentoFinanceiros[]
+  id                    String                  @id
+  nome                  String
+  sobrenome             String
+  email                 String                  @unique
+  senha                 String?
+  perfil                String?
+  avatar                String?
+  dataCriacao           DateTime                @default(now())
+  lancamentoFinanceiros LancamentoFinanceiros[]
 }
 
 model LancamentoFinanceiros {
-    id                      String @id
-    descricaoLancamento     String
-    valorLancamento         Decimal 
-    tipoLancamento          String
-    statusLancamento        String
-    dataCriacaoLancamento   DateTime @default(now())
-    usuario                 Usuarios  @relation(fields: [usuarioId], references: [id])
-    usuarioId               String
-
+  id                    String   @id
+  descricaoLancamento   String
+  valorLancamento       Float
+  tipoLancamento        String
+  statusLancamento      String
+  dataCriacaoLancamento DateTime @default(now())
+  usuario               Usuarios @relation(fields: [usuarioId], references: [id])
+  usuarioId             String
 }

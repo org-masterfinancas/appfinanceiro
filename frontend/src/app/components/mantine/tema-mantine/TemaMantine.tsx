@@ -35,7 +35,6 @@ export default function TemaMantine(props: any) {
         <BarraNavegacao toggle={toggle} />
       </AppShell.Navbar>
       <AppShell.Main>
-        <PageHeader/>
         {props.children}
         </AppShell.Main>
     </AppShell>

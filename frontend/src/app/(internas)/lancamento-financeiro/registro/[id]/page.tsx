@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Container } from '@mantine/core';
 import Link from 'next/link';
 import Editar from '@/app/components/mantine/lancamento-financeiro/Editar';
+import CabecalhoPagina from '@/app/components/mantine/cabecalho-pagina/CabecalhoPagina';
 
 interface LancamentoFormPageProps {
   params: { id: string };
 }
 
 export default function LancamentoFormPage({ params }: LancamentoFormPageProps) {
-  
+
   const { id } = params
 
   const { getApi } = useApi()
@@ -25,13 +26,16 @@ export default function LancamentoFormPage({ params }: LancamentoFormPageProps) 
   }, [])
 
   return (
-    <Container>
-      <div>
-        <Button component={Link} href="/lancamento-financeiro/" bg={'orange.4'} mb={'md'}>Lançamentos</Button>
-      </div>
-      <div>
-        <Editar lancamento={lancamento} />
-      </div>
-    </Container>
+    <>
+      <CabecalhoPagina/>
+      <Container>
+        <div>
+          <Button component={Link} href="/lancamento-financeiro/" bg={'orange.4'} mb={'md'}>Lançamentos</Button>
+        </div>
+        <div>
+          <Editar lancamento={lancamento} />
+        </div>
+      </Container>
+    </>
   )
 }

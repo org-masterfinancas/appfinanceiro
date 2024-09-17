@@ -9,6 +9,7 @@ import { processarResumoMensalDespesa } from './despesa/resumo-despesa-mensal';
 import { processarResumoMensalReceita } from './receita/resumo-receita-mensal';
 import { processarResumoStatusDespesa } from './despesa/resumo-despesa-status';
 import { processarResumoStatusReceita } from './receita/resumo-receita-status';
+import CabecalhoPagina from '@/app/components/mantine/cabecalho-pagina/CabecalhoPagina';
 
 export default function Dashboard() {
 
@@ -43,6 +44,8 @@ export default function Dashboard() {
    if (carregando) return <Loader color="yellow" type="bars" />
 
   return (
+    <>
+    <CabecalhoPagina/>
     <Tabs color="teal" defaultValue="primeiro" >
       <Tabs.List mb={'xl'}>
         <Tabs.Tab value="primeiro">RECEITAS</Tabs.Tab>
@@ -57,5 +60,6 @@ export default function Dashboard() {
        <DespesaDashboard resumoMensal={dadoGraficoMensalDespesa} resumoStatus={dadoGraficoStatusDespesa}/>
       </Tabs.Panel>
     </Tabs>
-  );
+    </>
+  )
 }

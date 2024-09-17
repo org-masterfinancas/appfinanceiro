@@ -7,8 +7,9 @@ import { filtrarLancamentoAtrasadoDespesas } from '@/app/(internas)/alerta/despe
 import { filtrarLancamentoAtrasadoReceitas } from './receita/receita-filtro';
 import ReceitaPendente from './receita/ReceitaPendente';
 import DespesaPendente from './despesa/DespesaPendente';
+import CabecalhoPagina from '@/app/components/mantine/cabecalho-pagina/CabecalhoPagina';
 
-    
+
 export default function Alertas() {
 
     const { getApi } = useApi()
@@ -34,7 +35,7 @@ export default function Alertas() {
             const { receitaFiltrada, receitaTotalizada } = resultadoReceita
             setEstatisticaReceita(receitaTotalizada)
             SetReceita(receitaFiltrada)
-            
+
             setCarregando(false)
 
         }
@@ -43,16 +44,19 @@ export default function Alertas() {
 
     if (carregando) return <Loader color="yellow" type="bars" />
 
-     return (
-        <Container size={'xl'}>
-            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
-                <Box>
-                    <ReceitaPendente linhasLancamentos={receita} receitaTotalizada={estatisticaReceita} />
-                </Box>
+    return (
+        <>
+            <CabecalhoPagina/>
+            <Container size={'xl'}>
+                <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={'sm'}>
+                    <Box>
+                        <ReceitaPendente linhasLancamentos={receita} receitaTotalizada={estatisticaReceita} />
+                    </Box>
                     <DespesaPendente linhasLancamentos={despesa} despesaTotalizada={estatisticaDespesa} />
-                <Box>
-                </Box>
-            </SimpleGrid>
-        </Container>
+                    <Box>
+                    </Box>
+                </SimpleGrid>
+            </Container>
+        </>
     );
 }

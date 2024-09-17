@@ -10,6 +10,7 @@ import { Avatar, Box, Button, Container, keys, Loader, Paper, Space, Text, TextI
 import { useToggle as useToggleMantine } from '@mantine/hooks';
 import AtualizarPerfil from "@/app/(internas)/usuario/AtualizarPerfil";
 import AtualizarSenha from "@/app/(internas)/usuario/AtualizarSenha";
+import CabecalhoPagina from "@/app/components/mantine/cabecalho-pagina/CabecalhoPagina";
 
 interface UsuarioFormularioProps {
 }
@@ -42,7 +43,7 @@ export default function UsuarioPage() {
         }
         return null;
       }
-      
+
     }
 
   })
@@ -86,7 +87,8 @@ export default function UsuarioPage() {
   }
 
   return (
-    <Box>
+    <>
+      <CabecalhoPagina />
       <Container>
         <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)">
           <Avatar
@@ -103,13 +105,13 @@ export default function UsuarioPage() {
           </Text>
 
           <Button variant="default" fullWidth mt="md" onClick={() => toogle()}>
-            {tipoAtualizacao === 'perfil' ? 
-            'Atualizar Senha' :
-            'Atualizar Perfil'}
+            {tipoAtualizacao === 'perfil' ?
+              'Atualizar Senha' :
+              'Atualizar Perfil'}
           </Button>
         </Paper>
       </Container>
-      {tipoAtualizacao === 'perfil' ? <AtualizarPerfil/> : <AtualizarSenha/>}
-    </Box>
+      {tipoAtualizacao === 'perfil' ? <AtualizarPerfil /> : <AtualizarSenha />}
+    </>
   )
 }

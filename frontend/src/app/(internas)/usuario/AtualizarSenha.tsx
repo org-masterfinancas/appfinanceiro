@@ -33,25 +33,23 @@ export default function AtualizarSenha() {
   const handleSalvar = async (formUsuario: AtualizarSenha) => {
 
     const dados = {
-      usuarioSenha: {
+      usuario: {
         id: usuario.id,
-        email: usuario.email,
         senha: formUsuario.senha,
-        novasenha: formUsuario.novasenha,
+        novaSenha: formUsuario.novasenha,
       }
     }
 
-    const result = await putApi('/usuarios/senha', dados);
-
-    if (result === null) {
-      setMensagem("Não foi possível atualizar!")
-    } else if (result.error) {
-      setMensagem(result.error)
+    const resultado = await putApi('/usuarios/senha', dados);
+    
+    if (resultado.error) {
+      setMensagem(resultado.error)
     } else {
       setMensagem('Senha Atualizada com sucesso!')
-      router.push('/usuarios')
+      router.push('/usuario')
     }
   }
+
   return (
     <form onSubmit={form.onSubmit(handleSalvar)}>
       {mensagem && <Text c={'red'}>{JSON.stringify(mensagem)}</Text>}

@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client'
-import id from '../src/shared/Id'
-import { StatusLancamento } from '../src/model/enum/StatusLancamento'
-import { TipoLancamento } from '../src/model/enum/TipoLancamento'
-import Senha from '../src/shared/Senha'
+import id from '../src/shared/id'
+import { StatusLancamento } from '../src/model/enum/status-lancamento'
+import { TipoLancamento } from '../src/model/enum/tipo-lancamento'
+import Senha from '../src/shared/senha'
 
 const prisma = new PrismaClient()
 

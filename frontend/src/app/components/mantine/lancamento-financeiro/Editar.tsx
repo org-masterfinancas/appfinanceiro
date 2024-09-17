@@ -77,6 +77,7 @@ export default function Editar({ lancamento }: EditarProps) {
 
     const dados = {
       lancamentofinanceiro: {
+        id: idItem,
         descricaoLancamento: dadosFormulario.descricaoLancamento,
         valorLancamento: +dadosFormulario.valorLancamento,
         tipoLancamento: dadosFormulario.tipoLancamento,
@@ -87,7 +88,6 @@ export default function Editar({ lancamento }: EditarProps) {
     }
 
     const result = await putApi(`/lancamentofinanceiros/${idItem}`, dados);
-    console.log(result)
 
     if (result === null) {
       setMensagem("Não foi possível atualizar!")

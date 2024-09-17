@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt'
 
 export default class Senha {
-    static criptografar(senha: string) {
-        const senhaCriptografada = bcrypt.hashSync(senha, 5)
+     static async criptografar(senha: string) {
+        const senhaCriptografada = bcrypt.hash(senha, 5)
         return senhaCriptografada
     }
 
-    static comparar(senha: string, senhaCriptografada: string){
-        const senhaIguais = bcrypt.compareSync(senha, senhaCriptografada)
+    static async comparar(senha: string, senhaCriptografada: string){
+        const senhaIguais = bcrypt.compare(senha, senhaCriptografada)
         return senhaIguais
     }
 }
