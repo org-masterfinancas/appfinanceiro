@@ -104,6 +104,25 @@ function isUid(
   return _checkWrapper(reqObj, params, _checkUid);
 }
 
+function _checkEmail(val: unknown): string | undefined {
+  if (typeof val === 'string') {
+    const trimVal = val.trim();
+    if (validator.isEmail(trimVal)) {
+      return trimVal.toLowerCase();
+    }
+  }
+  return undefined;
+}
+
+function isEmail(reqObj: TReqObj, params: string): string;
+function isEmail(reqObj: TReqObj, params: ReadonlyArray<string>): string[];
+function isEmail(
+  reqObj: TReqObj,
+  params: string | ReadonlyArray<string>,
+): string | string[] {
+  return _checkWrapper(reqObj, params, _checkEmail);
+}
+
 
 
 
@@ -165,4 +184,5 @@ export default {
   isBool,
   isValid,
   isUid,
+  isEmail
 } as const;

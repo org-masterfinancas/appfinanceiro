@@ -26,14 +26,14 @@ export class ControllerErro extends Error {
 
 export class ValidacaoErro extends ControllerErro {
 
-  public static MSG = 'Regra Aplicação - Parâmetro inválido ou ausente"';
+  public static MSG = 'Parâmetro inválido ou ausente: ';
 
   public constructor(paramName: string) {
     super(HttpStatusCodes.BAD_REQUEST, ValidacaoErro.GetMsg(paramName));
   }
 
   public static GetMsg(param: string) {
-    return ValidacaoErro.MSG + param + '".';
+    return ValidacaoErro.MSG + param;
   }
 }
 

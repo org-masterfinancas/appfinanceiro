@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import EfetuarLogin from '@src/service/autenticacao/efetuar-login';
 
 async function entrar(req: IReq, res: IRes) {
-  const email = check.isStr(req.body, 'email')
+  const email = check.isEmail(req.body, 'email')
   const senha = check.isStr(req.body, 'senha')
   
   const usuario = await EfetuarLogin.executar(email, senha)
