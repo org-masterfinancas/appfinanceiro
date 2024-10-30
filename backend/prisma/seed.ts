@@ -7,36 +7,29 @@ import Senha from '../src/shared/senha'
 const prisma = new PrismaClient()
 
 async function main() {
-  const usuariosData = [
-    { email: 'dev@financeiro.io', senha: 'd123', nome: 'dev', sobrenome: 'sobrenome', descricaoLancamento: 'dev', valorLancamento: 3000 },
-    { email: 'evandro@financeiro.io', senha: 'e123', nome: 'evandro', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'jair@financeiro.io', senha: 'j123', nome: 'jair', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'marllon@financeiro.io', senha: 'm123', nome: 'marllon', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'rafael@financeiro.io', senha: 'r123', nome: 'rafael', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'emannuel@financeiro.io', senha: 'e123', nome: 'emannuel', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'francisco@financeiro.io', senha: 'f123', nome: 'francisco', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'itajacy@financeiro.io', senha: 'i123', nome: 'itajacy', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'leonardo@financeiro.io', senha: 'l123', nome: 'leonardo', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
-    { email: 'victor@financeiro.io', senha: 'v123', nome: 'victor', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 }
-  ];
+  const usuarios = [
+    { email: 'evandro@webapp.dev.br', senha: 'e123', nome: 'evandro', sobrenome: 'sobrenome', descricaoLancamento: 'aws', valorLancamento: 1850 },
+    { email: 'dev@webapp.dev.br', senha: 'd123', nome: 'dev', sobrenome: 'sobrenome', descricaoLancamento: 'dev', valorLancamento: 3000 },
+    { email: 'visitante@webapp.dev.br', senha: 'v123', nome: 'Visitante', sobrenome: 'sobrenome', descricaoLancamento: 'dev', valorLancamento: 3000 }
+  ]
 
-  for (const usuarioData of usuariosData) {
+  for (const usuario of usuarios) {
     await prisma.usuarios.upsert({
-      where: { email: usuarioData.email },
+      where: { email: usuario.email },
       update: {},
       create: {
         id: id.novo(),
-        email: usuarioData.email,
-        senha: Senha.criptografar(usuarioData.senha),
-        nome: usuarioData.nome,
-        sobrenome: usuarioData.sobrenome,
+        email: usuario.email,
+        senha: await Senha.criptografar(usuario.senha),
+        nome: usuario.nome,
+        sobrenome: usuario.sobrenome,
         lancamentoFinanceiros: {
           create: {
             id: id.novo(),
-            descricaoLancamento: usuarioData.descricaoLancamento,
-            statusLancamento: StatusLancamento.Consolidade,
-            tipoLancamento: TipoLancamento.Receita,
-            valorLancamento: usuarioData.valorLancamento,
+            descricaoLancamento: usuario.descricaoLancamento,
+            statusLancamento: StatusLancamento.CONSOLIDADO,
+            tipoLancamento: TipoLancamento.RECEITA,
+            valorLancamento: usuario.valorLancamento,
             dataCriacaoLancamento: new Date('2024-07-02')
           }
         }

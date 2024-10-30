@@ -5,6 +5,9 @@ import HttpStatusCodes from './shared/http-status-code';
 import { ControllerErro, ModelErro, ServiceErro } from './shared/erro';
 import paths from './shared/paths';
 import  apiRouter  from './router/';
+import { configDotenv } from 'dotenv';
+
+configDotenv()
 
 const app = express();
 

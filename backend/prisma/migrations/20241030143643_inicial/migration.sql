@@ -16,7 +16,7 @@ CREATE TABLE "Usuarios" (
 CREATE TABLE "LancamentoFinanceiros" (
     "id" TEXT NOT NULL,
     "descricaoLancamento" TEXT NOT NULL,
-    "valorLancamento" DECIMAL(65,30) NOT NULL,
+    "valorLancamento" DOUBLE PRECISION NOT NULL,
     "tipoLancamento" TEXT NOT NULL,
     "statusLancamento" TEXT NOT NULL,
     "dataCriacaoLancamento" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
